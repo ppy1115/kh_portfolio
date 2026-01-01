@@ -183,9 +183,9 @@
 
         h1 {
             font-family: 'Noto Sans KR', sans-serif;
-            font-size: 96px;
+            font-size: 94px;
             font-weight: 900;
-            line-height: 1.1;
+            line-height: 1.4;
             margin-bottom: 30px;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-purple-light), var(--accent-blue));
             -webkit-background-clip: text;
@@ -346,70 +346,7 @@
             color: var(--accent-purple-light);
         }
 
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--accent-purple-dark), var(--accent-purple));
-            padding: 100px 80px;
-            border-radius: 40px;
-            text-align: center;
-            margin: 120px 0;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 30s linear infinite;
-        }
-
-        .cta-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-desc {
-            font-size: 22px;
-            margin-bottom: 50px;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 20px 50px;
-            background: var(--primary-bg);
-            color: var(--text-primary);
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            position: relative;
-            z-index: 1;
-            border: 2px solid transparent;
-        }
-
-        .cta-button:hover {
-            background: var(--text-primary);
-            color: var(--accent-purple-dark);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
 
         /* Footer */
         footer {
@@ -541,7 +478,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-tag">Portfolio 2025</div>
-            <h1>Digital Transformation<br>Project</h1>
+            <h1>Digital Transformation</h1>
             <p class="hero-subtitle">
                 반복 작업의 지옥에서 벗어나, 진짜 중요한 일에 집중하기 위한 여정.<br>
                 수십 개의 자동화 시스템으로 업무 환경을 완전히 재설계했습니다.
@@ -813,16 +750,7 @@
             </div>
         </div>
 
-        <!-- CTA Section -->
-        <section class="cta-section reveal">
-            <h2 class="cta-title">반복 작업에서 해방되고 싶으신가요?</h2>
-            <p class="cta-desc">
-                비즈니스 프로세스 자동화가 필요하다면 언제든 연락주세요.<br>
-                당신의 시간을 되찾아드리겠습니다.
-            </p>
-            <a href="#contact" class="cta-button">프로젝트 문의하기</a>
-        </section>
-    </div>
+        
 
     <!-- Footer -->
     <footer>
