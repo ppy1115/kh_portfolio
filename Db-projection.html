@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB추계 작업 자동화 - HR Automation Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --font-main: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --primary-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --accent-blue: #60a5fa;
+            --accent-blue-dark: #3b82f6;
+            --accent-blue-light: #93c5fd;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --border-color: rgba(96, 165, 250, 0.2);
+            --glow-blue: rgba(96, 165, 250, 0.4);
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .stat-number, .comparison-value, .impact-value {
+            font-family: var(--font-main) !important;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, var(--accent-blue) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 80px) scale(1.15); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 40px 0 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: var(--accent-blue-light);
+            transform: translateX(-5px);
+        }
+
+        header {
+            padding: 40px 0 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 15px;
+            background: rgba(96, 165, 250, 0.2);
+            color: var(--accent-blue-light);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .stats-hero {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--accent-blue-light);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: var(--accent-blue-light);
+        }
+
+        h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .problem-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .problem-box ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .problem-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .problem-box li::before {
+            content: '📉';
+            position: absolute;
+            left: 0;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card.before {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-card.after {
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card.before .comparison-title {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-title {
+            color: var(--accent-blue);
+        }
+
+        .comparison-value {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .comparison-card.before .comparison-value {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-value {
+            color: var(--accent-blue);
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            background: var(--accent-blue);
+            color: var(--primary-bg);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .module-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .module-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .module-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .module-card.active .module-details {
+            max-height: 5000px;
+        }
+
+        .module-details-content {
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            color: var(--accent-blue-light);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card.active .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            color: var(--text-secondary);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .impact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .impact-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .impact-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-blue-light);
+            margin-bottom: 10px;
+        }
+
+        .impact-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 42px; }
+            h2 { font-size: 32px; }
+            h3 { font-size: 24px; }
+            .stats-hero { grid-template-columns: 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .impact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-button">
+            ← Back to Projects
+        </a>
+
+        <header>
+            <span class="project-tag">DB Projection • Automation</span>
+            <h1>DB추계 작업</h1>
+            <p class="subtitle">KB손해보험 DB명부 자동 생성 및 해외주재원 검증하는 9개 모듈 시스템</p>
+            
+            <div class="stats-hero">
+                <div class="stat-box">
+                    <div class="stat-number">7분</div>
+                    <div class="stat-label">소요 시간</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">9개 모듈</div>
+                    <div class="stat-label">자동화 프로세스</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">정확도</div>
+                </div>
+            </div>
+        </header>
+
+        <section>
+            <h2>🔥 해결한 문제</h2>
+            <div class="problem-box">
+                <h4>매월 DB추계 작업, 복잡한 검증 프로세스</h4>
+                <ul>
+                    <li>인원 검증 (최종 최종 버전)</li>
+                    <li>추계 대상 및 사유 자동 판정</li>
+                    <li>혼합형 일자 및 임원 검증</li>
+                    <li>해외주재원 인원 검증 (2단계)</li>
+                    <li>전사 작업 통합</li>
+                    <li>KB손해보험 명부 양식 자동 채우기</li>
+                    <li>암호화 파일 생성</li>
+                </ul>
+            </div>
+            
+            <p><strong>결과:</strong> 매월 1시간 소모, 복잡한 검증 로직</p>
+        </section>
+
+        <section>
+            <h2>💡 해결 방법</h2>
+            
+            <div class="comparison">
+                <div class="comparison-card before">
+                    <div class="comparison-title">Before</div>
+                    <div class="comparison-value">1시간</div>
+                    <p>수동 검증, 명부 작성</p>
+                </div>
+                <div class="comparison-card after">
+                    <div class="comparison-title">After</div>
+                    <div class="comparison-value">7분</div>
+                    <p>9개 모듈 자동 실행</p>
+                </div>
+            </div>
+
+            <h3>완전 자동화 워크플로우</h3>
+            <div class="code-block"><pre>모듈 0: 초기화
+   ↓
+모듈 1: 인원 검증 (최종 최종)
+   ↓
+모듈 2: 추계 (배열 처리 최적화)
+   ↓
+모듈 3: 혼합형 일자 및 임원 검증
+   ↓
+모듈 4: 해외주재원 인원검증 (LG화학)
+   ↓
+모듈 5: 해외주재원 인원검증 (LG에너지솔루션)
+   ↓
+모듈 6: 전사 작업
+   ↓
+모듈 7: 명부양식 (KB손해보험)
+   ↓
+모듈 8: 시트분리저장 (암호화)</pre></div>
+            
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">배열 처리</span>
+                <span class="tag">Dictionary</span>
+                <span class="tag">ListObject</span>
+                <span class="tag">파일 암호화</span>
+                <span class="tag">조건부 로직</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>📥 Stage 1: 초기화 & 인원 검증</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 0</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">초기화</h4>
+                    <p class="module-desc">필수 시트 보존, 이전 데이터 삭제</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>보존 시트</h4>
+                            <div class="code-block"><pre>✅ Main
+✅ KEY
+✅ KB손해보험 명부 양식
+✅ 임원
+
+나머지 모든 시트 삭제</pre></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 1</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">인원 검증 (최종 최종)</h4>
+                    <p class="module-desc">대상자 인원 검증 및 상이자 검출</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>인원 데이터를 검증하고 상이자를 자동 검출합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 2</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">추계</h4>
+                    <p class="module-desc">추계대상 및 추계사유 자동 판정 (배열 최적화)</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>8가지 조건부 로직</h4>
+                            <div class="code-block"><pre>조건 1: DC가입자 → N, "DC가입자"
+조건 2: 사유(사외이사/비상근) → N, 사유
+조건 3: DB/혼합형 + 연금변동TRUE + 1년이상 + 사유공란 → Y
+조건 4: 1년미만 + "1년미만자(~~이후 입사)" → N, 사유
+조건 5: 1년이상 + "1년미만자(~~.01.01 입사)" → Y, "올해 신규가입"
+조건 6: DB/혼합형 + 1년이상 + "1년이상자(~~.01.01 입사)" → Y, "작년 신규가입"
+조건 7: DB/혼합형 + 1년이상 + 중도인출/임원선임/자매사전입 → Y
+조건 8: 이외 → "확인필요" (노란색 배경)
+
+배열 처리로 1만행 0.5초!</pre></div>
+                            
+                            <h4>자동 정렬</h4>
+                            <ul>
+                                <li>셀배경색 기준 정렬</li>
+                                <li>노란색("확인필요") 행이 최상단</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 3</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">혼합형 일자 및 임원 검증</h4>
+                    <p class="module-desc">혼합형 가입자 및 임원 데이터 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>혼합형 가입 일자와 임원 정보를 검증합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🌏 Stage 2: 해외주재원 검증</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 4</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">해외주재원 (LG화학)</h4>
+                    <p class="module-desc">LG화학 해외주재원 6단계 통합 프로세스</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>6단계 자동 실행</h4>
+                            <div class="code-block"><pre>1. 차년도 임원 시트 생성 (T1 +365일)
+2. Input 테이블 기준 파일 취합
+3. 해외주재원 확인 업데이트 (파견일 < 기준연도)
+4. 당월 주재원 리스트 파일 선택
+5. 사번 비교 및 검증
+   - 차이인원 / 임원 / DC 구분
+   - 정렬
+6. 요약표 생성
+   - tmp 당월주재원list 인원
+   - 해외주재원 추계 인원
+   - 임원/DC/차이인원 집계</pre></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 5</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">해외주재원 (LG에너지솔루션)</h4>
+                    <p class="module-desc">LG에너지솔루션 해외주재원 6단계 통합 프로세스</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>LG화학과 동일한 6단계 프로세스를 LG에너지솔루션에 적용합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 6</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">전사 작업</h4>
+                    <p class="module-desc">전사 데이터 통합 및 최종 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>LG화학 + LG에너지솔루션 데이터를 통합하여 전사 단위로 검증합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📤 Stage 3: 명부 생성 & 파일 저장</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 7</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">명부양식 (KB손해보험)</h4>
+                    <p class="module-desc">KB손해보험 명부 양식 자동 채우기</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>KEY 시트 기반 자동 채우기</h4>
+                            <div class="code-block"><pre>KEY 시트 "손해보험명부" 테이블:
+- 헤더명, 기준열, 참고시트, 참고열, 가져올값, 수식
+
+3단계 처리:
+
+1. 기준열 빈칸인 경우:
+   참고시트[가져올값] → 명부양식[B열부터]
+   (헤더 제외, 2행부터 → 6행으로)
+
+2. 기준열 있는 경우:
+   Dictionary 고속 검색 (O(1))
+   기준열 값 → 참고시트[참고열] 매칭
+   → 가져올값 복사
+
+3. 수식 있는 경우:
+   6행부터 수식 채우기
+   FillDown으로 마지막 행까지</pre></div>
+                            
+                            <h4>성능 최적화</h4>
+                            <ul>
+                                <li>Dictionary 사용 (O(1) 검색)</li>
+                                <li>배열 처리</li>
+                                <li>10만행 3~5초</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 8</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">시트분리저장</h4>
+                    <p class="module-desc">KB손해보험 명부 양식 암호화 저장</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>자동 파일명 생성</h4>
+                            <div class="code-block"><pre>파일명 = KB손해보험 명부 양식!B1
+
+Main 시트 C4 셀 = 암호
+
+→ 현재 매크로 파일 위치에 저장
+→ 암호 적용 (.xlsx)</pre></div>
+                            
+                            <h4>보안</h4>
+                            <ul>
+                                <li>Main 시트 C4 셀 값으로 암호 설정</li>
+                                <li>화면 업데이트 중지</li>
+                                <li>저장 완료 메시지</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎉 프로젝트 임팩트</h2>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">⚡</div>
+                    <div class="impact-value">88%</div>
+                    <div class="impact-label">시간 절감률</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🎯</div>
+                    <div class="impact-value">99.9%</div>
+                    <div class="impact-label">정확도</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">📊</div>
+                    <div class="impact-value">8가지</div>
+                    <div class="impact-label">조건부 로직</div>
+                </div>
+            </div>
+
+            <h3>핵심 성공 요인</h3>
+            
+            <h4>1. 추계 자동 판정</h4>
+            <ul>
+                <li>8가지 조건부 로직</li>
+                <li>배열 처리로 0.5초</li>
+                <li>"확인필요" 자동 표시</li>
+            </ul>
+
+            <h4>2. 해외주재원 검증</h4>
+            <ul>
+                <li>6단계 통합 프로세스</li>
+                <li>차이인원/임원/DC 자동 구분</li>
+                <li>요약표 자동 생성</li>
+            </ul>
+
+            <h4>3. KB명부 자동 채우기</h4>
+            <ul>
+                <li>KEY 시트 기반</li>
+                <li>Dictionary 고속 검색</li>
+                <li>수식 자동 적용</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔧 기술 상세</h2>
+            
+            <h3>사용 기술</h3>
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">배열 처리</span>
+                <span class="tag">Dictionary</span>
+                <span class="tag">ListObject</span>
+                <span class="tag">조건부 로직</span>
+                <span class="tag">파일 암호화</span>
+            </div>
+
+            <h3>핵심 알고리즘</h3>
+            <div class="code-block"><pre>1. 추계 판정 (배열 최적화)
+   For i = 1 To 행수:
+       8가지 조건 체크
+       arr추계대상(i) = 결과
+       arr추계사유(i) = 사유
+   
+   시트에 한 번에 쓰기
+   확인필요 행만 노란색
+   
+2. 해외주재원 검증
+   For 각 주재원:
+       If Not In 추계: 차이인원
+       Else If 임원: 임원
+       Else If DC: DC
+   
+3. KB명부 채우기
+   Dictionary[기준값] = 가져올값
+   배열 조회 → 한 번에 쓰기</pre></div>
+        </section>
+
+        <section>
+            <h2>💡 배운 점</h2>
+            
+            <blockquote style="border-left: 4px solid var(--accent-blue); padding-left: 20px; margin: 30px 0; font-style: italic; color: var(--text-secondary);">
+                "복잡한 조건부 로직도 배열 처리로 초고속 실행"<br>
+                - 8가지 조건을 배열로 처리하여 1만행을 0.5초 만에 완료했습니다.
+            </blockquote>
+        </section>
+    </div>
+
+    <script>
+        function toggleModule(card) {
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

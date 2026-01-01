@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선복(福) - 복지포인트 관리 자동화 - HR Automation Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --font-main: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --primary-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --accent-green: #10b981;
+            --accent-green-dark: #059669;
+            --accent-green-light: #34d399;
+            --accent-purple: #a78bfa;
+            --accent-purple-dark: #8b5cf6;
+            --accent-purple-light: #c4b5fd;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --border-color: rgba(167, 139, 250, 0.2);
+            --glow-green: rgba(16, 185, 129, 0.4);
+            --glow-purple: rgba(167, 139, 250, 0.4);
+            --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .stat-number, .comparison-value, .impact-value {
+            font-family: var(--font-main) !important;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, var(--accent-green) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, var(--accent-purple) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: float 30s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 80px) scale(1.15); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 40px 0 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: var(--accent-green-light);
+            transform: translateX(-5px);
+        }
+
+        header {
+            padding: 40px 0 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 15px;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(167, 139, 250, 0.2));
+            color: var(--accent-green-light);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .stats-hero {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--glow-green);
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--accent-green-light);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+        }
+
+        h3.green {
+            color: var(--accent-green-light);
+        }
+
+        h3.purple {
+            color: var(--accent-purple-light);
+        }
+
+        h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .problem-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .problem-box ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .problem-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .problem-box li::before {
+            content: '📉';
+            position: absolute;
+            left: 0;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card.before {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-card.after {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card.before .comparison-title {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-title {
+            color: var(--accent-green);
+        }
+
+        .comparison-value {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .comparison-card.before .comparison-value {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-value {
+            color: var(--accent-green);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 60px 0 40px;
+        }
+
+        .section-divider .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .section-divider .label {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .section-divider .label.green {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-green-light);
+        }
+
+        .section-divider .label.purple {
+            background: rgba(167, 139, 250, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            color: var(--accent-purple-light);
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-card.green:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 10px 30px var(--glow-green);
+        }
+
+        .module-card.purple:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px var(--glow-purple);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary-bg);
+        }
+
+        .module-number.green {
+            background: var(--accent-green);
+        }
+
+        .module-number.purple {
+            background: var(--accent-purple);
+        }
+
+        .module-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .module-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .module-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .module-card.active .module-details {
+            max-height: 5000px;
+        }
+
+        .module-details-content {
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .expand-icon.green {
+            color: var(--accent-green-light);
+        }
+
+        .expand-icon.purple {
+            color: var(--accent-purple-light);
+        }
+
+        .module-card.active .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            color: var(--text-secondary);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .impact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .impact-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .impact-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-green-light);
+            margin-bottom: 10px;
+        }
+
+        .impact-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 42px; }
+            h2 { font-size: 32px; }
+            h3 { font-size: 24px; }
+            .stats-hero { grid-template-columns: 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .impact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-button">
+            ← Back to Projects
+        </a>
+
+        <header>
+            <span class="project-tag">Welfare Point • Management</span>
+            <h1>선복(福) - 복지포인트 관리</h1>
+            <p class="subtitle">수시부여와 퇴직정산을 통합 관리하는 복지포인트 자동화 시스템</p>
+            
+            <div class="stats-hero">
+                <div class="stat-box">
+                    <div class="stat-number">8분</div>
+                    <div class="stat-label">평균 소요 시간</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">10개 모듈</div>
+                    <div class="stat-label">자동화 프로세스</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">정확도</div>
+                </div>
+            </div>
+        </header>
+
+        <section>
+            <h2>🔥 해결한 문제</h2>
+            <div class="problem-box">
+                <h4>복지포인트 관리, 이중 업무 부담</h4>
+                <ul>
+                    <li>수시부여: 입사자/복직자/FSE 부임자 포인트 지급</li>
+                    <li>퇴직정산: 퇴직자 미사용 포인트 회수</li>
+                    <li>신한카드/복지몰 각각 다른 업로드 형식</li>
+                    <li>ERP 과표/공제 수동 검증</li>
+                    <li>인원별 포인트 합계 검증</li>
+                </ul>
+            </div>
+            
+            <p><strong>결과:</strong> 매월 2시간 소모, 높은 에러 위험</p>
+        </section>
+
+        <section>
+            <h2>💡 해결 방법</h2>
+            
+            <div class="comparison">
+                <div class="comparison-card before">
+                    <div class="comparison-title">Before</div>
+                    <div class="comparison-value">2시간</div>
+                    <p>수동 파일 생성, 검증</p>
+                </div>
+                <div class="comparison-card after">
+                    <div class="comparison-title">After</div>
+                    <div class="comparison-value">8분</div>
+                    <p>10개 모듈 자동 실행</p>
+                </div>
+            </div>
+
+            <h3 class="green">완전 자동화 워크플로우</h3>
+            <div class="code-block"><pre>🟢 수시부여 (6개 모듈)
+├─ 모듈 0: 초기화
+├─ 모듈 1: 신한카드 업로드
+├─ 모듈 2: 입사자 포인트
+├─ 모듈 3: 복직자 포인트
+├─ 모듈 4: FSE 부임
+└─ 모듈 5: 포인트 검증
+
+🟣 퇴직정산 (4개 모듈)
+├─ 모듈 0: 초기화
+├─ 모듈 1: 복지몰업로드
+├─ 모듈 2: ERP 업로드
+├─ 모듈 3: 퇴직정산 가공
+└─ 모듈 4: 퇴직정산 검증</pre></div>
+            
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">다중 파일 통합</span>
+                <span class="tag">Dictionary 검색</span>
+                <span class="tag">ListObject</span>
+                <span class="tag">조건부 로직</span>
+                <span class="tag">데이터 검증</span>
+            </div>
+        </section>
+
+        <!-- 수시부여 섹션 -->
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="label green">🟢 수시부여</div>
+            <div class="line"></div>
+        </div>
+
+        <section>
+            <h2>🟢 수시부여 모듈</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 0</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">초기화</h4>
+                    <p class="module-desc">9개 시트 보존, 데이터 삭제</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>보존 시트 (9개)</h4>
+                            <div class="code-block"><pre>✅ To-be
+✅ 기준
+✅ 입사
+✅ 복직자
+✅ 신한카드양식
+✅ 업로드양식
+✅ 포인트양식
+✅ 미차감양식
+✅ 복직차감양식
+
+나머지 모든 시트 삭제</pre></div>
+                            
+                            <h4>데이터 삭제 (수식 보존)</h4>
+                            <ul>
+                                <li>입사, 신한카드양식: 2행부터 삭제</li>
+                                <li>복직자: 3행 값만 삭제, 4행부터 행 삭제</li>
+                                <li>업로드양식, 포인트양식, 미차감양식, 복직차감양식: 3행부터 삭제</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 1</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">신한카드 업로드</h4>
+                    <p class="module-desc">신한카드 파일 → 양식 매핑 + 가공</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>자동 매핑</h4>
+                            <div class="code-block"><pre>KEY 시트 "헤더명" 테이블 기반:
+- 대상헤더명 ↔ 가져올헤더명
+- 고정값 자동 입력
+
+필수입력값: 입사 → D, 퇴직 → U
+법정생년월일+성별: 7자리만
+휴대전화번호: - 제거, 첫자리 0 확인
+입사일자/퇴직일자: YYYYMMDD 형식</pre></div>
+                            
+                            <h4>임원구분 자동 판정</h4>
+                            <ul>
+                                <li>직위 → 임원 테이블 검색</li>
+                                <li>임원제외사번 체크</li>
+                                <li>Y/N 자동 설정</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 2</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">입사자 포인트</h4>
+                    <p class="module-desc">입사자 포인트 계산</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>입사일 기준 포인트를 자동 계산합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 3</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">복직자 포인트</h4>
+                    <p class="module-desc">복직자 포인트 계산</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>복직일 기준 포인트를 자동 계산합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 4</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">FSE 부임</h4>
+                    <p class="module-desc">FSE 부임자 처리</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>3단계 자동 처리</h4>
+                            <div class="code-block"><pre>1. 부임 vs 부임2 비교
+   부임2에 없는 사번 → "부임" 표시
+
+2. 부임 vs 귀임 비교
+   - Reason = "FSE_Proceeding" → "신규부임"
+   - 그 외 → "확인필요"
+
+3. 서식 자동 적용
+   - LG스마트체 Regular, 크기 9
+   - 가운데 맞춤, 행높이 12
+   - 첫 행 고정</pre></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card green" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number green">모듈 5</span>
+                        <span class="expand-icon green">▼</span>
+                    </div>
+                    <h4 class="module-title">포인트 검증</h4>
+                    <p class="module-desc">사번 기준 매칭 + 합계 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>자동 검증</h4>
+                            <div class="code-block"><pre>입사 시트:
+- 사번으로 기본포인트 조회
+- ERP 열에 총지급포인트 입력
+- 검증: 기본포인트 = ERP?
+
+총합계 검증:
+총지급포인트 = 입사기본 + 복직지급
+
+→ 일치: True
+→ 불일치: False + 차이 표시</pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 퇴직정산 섹션 -->
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="label purple">🟣 퇴직정산</div>
+            <div class="line"></div>
+        </div>
+
+        <section>
+            <h2>🟣 퇴직정산 모듈</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card purple" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number purple">모듈 0</span>
+                        <span class="expand-icon purple">▼</span>
+                    </div>
+                    <h4 class="module-title">초기화</h4>
+                    <p class="module-desc">8개 시트 보존, 데이터 삭제</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>보존 시트 (8개)</h4>
+                            <div class="code-block"><pre>✅ To-be
+✅ 기준
+✅ 복지몰업로드
+✅ ERP업로드
+✅ 무급휴직
+✅ 퇴직정산
+✅ 26년차감
+✅ 결과메일
+
+나머지 모든 시트 삭제</pre></div>
+                            
+                            <h4>데이터 삭제 (수식 보존)</h4>
+                            <ul>
+                                <li>ERP업로드: 2행부터 삭제</li>
+                                <li>복지몰업로드, 무급휴직: 3행부터 삭제</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card purple" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number purple">모듈 1</span>
+                        <span class="expand-icon purple">▼</span>
+                    </div>
+                    <h4 class="module-title">복지몰업로드</h4>
+                    <p class="module-desc">정산일자 공란 사번 추출 + 고정값</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>자동 처리</h4>
+                            <div class="code-block"><pre>퇴직정산 시트에서:
+- 정산일자 = 공란인 사번 추출
+→ 복지몰업로드 시트로 복사
+
+고정값 자동 입력:
+- siteID: "LGD"
+- comEmail: "lgdisplay@lgdisplay.com"
+- employmentNo: "284"</pre></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card purple" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number purple">모듈 2</span>
+                        <span class="expand-icon purple">▼</span>
+                    </div>
+                    <h4 class="module-title">ERP 업로드</h4>
+                    <p class="module-desc">ERP 업로드 파일 생성</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>ERP 시스템 업로드용 파일을 생성합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card purple" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number purple">모듈 3</span>
+                        <span class="expand-icon purple">▼</span>
+                    </div>
+                    <h4 class="module-title">퇴직정산 가공</h4>
+                    <p class="module-desc">퇴직정산 데이터 가공</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <p>퇴직정산 데이터를 가공하여 최종 형식으로 변환합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card purple" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number purple">모듈 4</span>
+                        <span class="expand-icon purple">▼</span>
+                    </div>
+                    <h4 class="module-title">퇴직정산 검증</h4>
+                    <p class="module-desc">시스템 과표/공제 매칭 및 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>자동 검증 (정산일자 공란인 경우만)</h4>
+                            <div class="code-block"><pre>결과메일 시트에서 매칭:
+- 과표추가 → 시스템과표
+- 기타공제 → 시스템공제
+
+과표검증:
+최종과표 = 시스템과표? → True/False
+
+공제검증:
+급여공제 = 시스템공제? → True/False</pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎉 프로젝트 임팩트</h2>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">⚡</div>
+                    <div class="impact-value">93%</div>
+                    <div class="impact-label">시간 절감률</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🎯</div>
+                    <div class="impact-value">99.9%</div>
+                    <div class="impact-label">정확도</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">📊</div>
+                    <div class="impact-value">10개</div>
+                    <div class="impact-label">모듈 통합</div>
+                </div>
+            </div>
+
+            <h3 class="green">핵심 성공 요인</h3>
+            
+            <h4>1. 이중 업무 통합 자동화</h4>
+            <ul>
+                <li>수시부여: 입사/복직/FSE 부임 포인트 지급</li>
+                <li>퇴직정산: 퇴직자 포인트 회수</li>
+                <li>하나의 시스템으로 통합 관리</li>
+            </ul>
+
+            <h4>2. 다중 플랫폼 업로드</h4>
+            <ul>
+                <li>신한카드 업로드 자동 생성</li>
+                <li>복지몰 업로드 자동 생성</li>
+                <li>ERP 업로드 자동 생성</li>
+            </ul>
+
+            <h4>3. 자동 검증 시스템</h4>
+            <ul>
+                <li>포인트 합계 자동 검증</li>
+                <li>과표/공제 자동 검증</li>
+                <li>True/False 즉시 표시</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔧 기술 상세</h2>
+            
+            <h3>사용 기술</h3>
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">FileDialog</span>
+                <span class="tag">Dictionary</span>
+                <span class="tag">ListObject</span>
+                <span class="tag">조건부 로직</span>
+                <span class="tag">데이터 검증</span>
+            </div>
+
+            <h3>핵심 알고리즘</h3>
+            <div class="code-block"><pre>1. 신한카드 업로드
+   KEY 시트 헤더명 테이블 기반 매핑
+   고정값 자동 입력
+   임원구분 자동 판정
+   
+2. FSE 부임 검증
+   부임 vs 부임2 차집합
+   부임 vs 귀임 교차 검증
+   Reason 기준 판정
+   
+3. 포인트 검증
+   For 각 사번:
+       기본포인트 ↔ ERP 매칭
+       검증 = (기본 = ERP)
+   
+   총합계 = 총지급 - (입사기본 + 복직지급)
+   
+4. 퇴직정산 검증
+   For 정산일자 공란:
+       과표추가 → 시스템과표
+       기타공제 → 시스템공제
+       
+       과표검증 = (최종과표 = 시스템과표)
+       공제검증 = (급여공제 = 시스템공제)</pre></div>
+        </section>
+
+        <section>
+            <h2>💡 배운 점</h2>
+            
+            <blockquote style="border-left: 4px solid var(--accent-green); padding-left: 20px; margin: 30px 0; font-style: italic; color: var(--text-secondary);">
+                "복잡한 이중 업무도 하나의 시스템으로 통합 자동화"<br>
+                - 수시부여와 퇴직정산을 10개 모듈로 완전히 자동화하여 2시간 업무를 8분으로 단축했습니다.
+            </blockquote>
+        </section>
+    </div>
+
+    <script>
+        function toggleModule(card) {
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

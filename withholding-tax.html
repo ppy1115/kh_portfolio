@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원천세 자동화 시스템 - HR Automation Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+    --font-main: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --primary-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --accent-blue: #60a5fa;
+    --accent-blue-dark: #3b82f6;
+    --accent-blue-light: #93c5fd;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-muted: #606060;
+    --border-color: rgba(96, 165, 250, 0.2);
+    --glow-blue: rgba(96, 165, 250, 0.4);
+    --accent-red: #ef4444;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .stat-number, .comparison-value, .impact-value {
+            font-family: var(--font-main) !important;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, var(--accent-blue) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 80px) scale(1.15); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 40px 0 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: var(--accent-blue-light);
+            transform: translateX(-5px);
+        }
+
+        header {
+            padding: 40px 0 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 15px;
+            background: rgba(167, 139, 250, 0.2);
+            color: var(--accent-blue-light);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .stats-hero {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--accent-blue-light);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: var(--accent-blue-light);
+        }
+
+        h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .problem-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .problem-box ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .problem-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .problem-box li::before {
+            content: '📉';
+            position: absolute;
+            left: 0;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card.before {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-card.after {
+            border-color: rgba(167, 139, 250, 0.3);
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card.before .comparison-title {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-title {
+            color: var(--accent-blue);
+        }
+
+        .comparison-value {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .comparison-card.before .comparison-value {
+            color: var(--accent-red);
+        }
+
+        .comparison-card.after .comparison-value {
+            color: var(--accent-blue);
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            background: var(--accent-blue);
+            color: var(--primary-bg);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .module-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .module-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .module-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .module-card.active .module-details {
+            max-height: 5000px;
+        }
+
+        .module-details-content {
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            color: var(--accent-blue-light);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card.active .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            color: var(--text-secondary);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .impact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .impact-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .impact-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-blue-light);
+            margin-bottom: 10px;
+        }
+
+        .impact-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 42px; }
+            h2 { font-size: 32px; }
+            h3 { font-size: 24px; }
+            .stats-hero { grid-template-columns: 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .impact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-button">
+            ← Back to Projects
+        </a>
+
+        <header>
+            <span class="project-tag">HR Automation • Tax Processing</span>
+            <h1>원천세 자동화 시스템</h1>
+            <p class="subtitle">3-4일 걸리던 원천세 신고 업무를 10분으로 단축시킨 완전 자동화 시스템</p>
+            
+            <div class="stats-hero">
+                <div class="stat-box">
+                    <div class="stat-number">10분</div>
+                    <div class="stat-label">소요 시간</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">정확도</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">6개 모듈</div>
+                    <div class="stat-label">자동화 프로세스</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Problem -->
+        <section>
+            <h2>🔥 해결한 문제</h2>
+            <div class="problem-box">
+                <h4>매월 원천세 신고 기간, 3-4일의 악몽</h4>
+                <ul>
+                    <li>10개 이상의 raw 파일을 일일이 열어서 복사/붙여넣기</li>
+                    <li>근로소득과 퇴직소득을 수동으로 분리</li>
+                    <li>인원수 검증을 계산기로 일일이 확인</li>
+                    <li>예수금과 FSE 데이터를 수동 매칭</li>
+                    <li>실적 검증을 엑셀 수식으로 일일이 입력</li>
+                    <li>10개 파일을 수동으로 저장하고 암호 설정</li>
+                </ul>
+            </div>
+            
+            <p><strong>결과:</strong> 매월 24-32시간 소모, 높은 에러 위험, 지친 HR팀</p>
+        </section>
+
+        <!-- Solution -->
+        <section>
+            <h2>💡 해결 방법</h2>
+            
+            <div class="comparison">
+                <div class="comparison-card before">
+                    <div class="comparison-title">Before</div>
+                    <div class="comparison-value">3-4일</div>
+                    <p>수동 파일 처리, 계산기 검증</p>
+                </div>
+                <div class="comparison-card after">
+                    <div class="comparison-title">After</div>
+                    <div class="comparison-value">10분</div>
+                    <p>6개 모듈 자동 실행</p>
+                </div>
+            </div>
+
+            <h3>완전 자동화 시스템</h3>
+            <p>원천세 자동화는 <strong>6개 모듈의 순차 실행</strong>으로 구성됩니다:</p>
+            
+            <div class="code-block"><pre>모듈 0: 초기화 (1초)
+   ↓
+모듈 1: AP전표 실적검증 (1분)
+   ├─ 근로/퇴직 데이터 병합
+   ├─ AP전표 처리
+   └─ 실적 집계
+   ↓
+모듈 2: 인원검증 (20초)
+   ├─ 근로소득 인원 검증
+   └─ 퇴직소득 인원 검증
+   ↓
+모듈 3: 예수금 처리 (10초)
+   ├─ 예수금 파일 병합
+   └─ FSE 데이터 매칭
+   ↓
+모듈 4: 실적검증 (5초)
+   └─ 원천세 내역 총합 검증
+   ↓
+모듈 5: 송부용 파일 생성 (20초)
+   └─ 10개 시트 → 10개 암호화 파일</pre></div>
+            
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">Dictionary 검색</span>
+                <span class="tag">ArrayList 동적 수집</span>
+                <span class="tag">배열 고속 처리</span>
+                <span class="tag">자동 검증 시스템</span>
+            </div>
+        </section>
+
+        <!-- Modules Detail -->
+        <section>
+            <h2>🔧 모듈 상세</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 0</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">초기화</h4>
+                    <p class="module-desc">작업 공간 정리 및 준비</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>필수 시트만 남기기</h4>
+                            <div class="code-block"><pre>남길 시트:
+✅ TO-BE (설정값 및 기준 테이블)
+✅ 참고시트 (헤더 매핑 정보)
+✅ 일용직 (일용직 데이터)
+
+삭제할 시트:
+❌ 근로소득 (이전 달 데이터)
+❌ 퇴직소득 (이전 달 데이터)
+❌ AP전표 관련 시트들
+❌ 기타 모든 임시 시트</pre></div>
+                            
+                            <ul>
+                                <li>이전 달 데이터가 남아있으면 새 데이터와 섞임</li>
+                                <li>깨끗한 상태에서 시작해야 에러 방지</li>
+                                <li>파일 용량 절감</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 1</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">AP전표 실적검증 (4단계 통합)</h4>
+                    <p class="module-desc">근로/퇴직 데이터 통합처리</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>1-1. 근로/퇴직 시트 생성</h4>
+                            <p><strong>List로 데이터 분류</strong></p>
+                            <div class="code-block"><pre>For 각 파일:
+    For 각 행:
+        If 확정월 == 작업연월:
+            If 퇴직지급액 > 0:
+                → 퇴직List에 추가
+            Else:
+                → 근로List에 추가</pre></div>
+                            
+                            <h4>1-2. AP전표 처리</h4>
+                            <p><strong>KEY값 생성</strong></p>
+                            <div class="code-block"><pre>KEY값 = 급여월 + 급여카테고리유형 + 사업부코드
+
+예시:
+급여월: 2024.11
+급여카테고리유형: 정기급여
+사업부코드: HQ
+→ KEY값: "HQ_2024.11정기급여"</pre></div>
+                            
+                            <h4>1-3. 실적 집계</h4>
+                            <ul>
+                                <li>Dictionary로 피벗 테이블 생성</li>
+                                <li>당월실적과표 (KEY값별 집계)</li>
+                                <li>산학장학금(과표) 자동 필터링</li>
+                                <li>기타비반복과표상세</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 2</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">인원검증</h4>
+                    <p class="module-desc">근로/퇴직 인원수 자동 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>근로소득 인원 검증</h4>
+                            <div class="code-block"><pre>For 각 행 in 근로소득:
+    If 구분 == "퇴직급여":
+        키값 = 급여월 + 급여카테고리유형
+        Dictionary[키값] += 1
+
+퇴직차수 시트와 매칭:
+"2024. 11 정기급여" → "2024.11정기급여"
+(공백 제거, 점 제거)</pre></div>
+                            
+                            <h4>퇴직소득 인원 검증</h4>
+                            <ul>
+                                <li>"퇴직금 대상=Y" 필터링 추가</li>
+                                <li>HQ_ALL 특수 처리 (중도인출 + 제도전환)</li>
+                                <li>검증 = 0이면 일치, ≠0이면 불일치</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 3</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">예수금 처리</h4>
+                    <p class="module-desc">예수금 통합 및 FSE 매칭</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>예수금이란?</h4>
+                            <div class="code-block"><pre>회사가 직원 급여에서 미리 떼는 세금:
+
+급여총액: 3,000,000원
+원천징수세: 150,000원 (예수금)
+실수령액: 2,850,000원
+
+회사가 150,000원을 "예수"하고 있다가
+다음달 10일에 세무서에 납부</pre></div>
+                            
+                            <h4>처리 과정</h4>
+                            <ul>
+                                <li>예수금 파일 병합 (급여/상여/퇴직)</li>
+                                <li>raw_FSE 당월 원천세 파일 매칭</li>
+                                <li>차이 자동 계산 (원본 - FSE)</li>
+                                <li>★원천세_근로소득 시트 생성</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 4</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">실적검증</h4>
+                    <p class="module-desc">원천세 내역 총합 검증</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>H~R열 총합 계산</h4>
+                            <div class="code-block"><pre>마지막 행 + 1: "최종 원천세 내역"
+H열: =SUM(H1:H{lastRow})
+...
+R열: =SUM(R1:R{lastRow})
+
+마지막 행 + 2: "★원천세_근로소득"
+H열: =★원천세_근로소득!H열합계
+...
+
+마지막 행 + 3: "차이"
+H열: =H(최종) - H(★원천세)
+...
+
+결과: 0 → ✅ 일치, ≠0 → ❌ 불일치</pre></div>
+                            
+                            <h4>차액확인 시트 생성</h4>
+                            <ul>
+                                <li>★원천세_근로소득</li>
+                                <li>★원천세_퇴직소득</li>
+                                <li>FSE_세액정산</li>
+                                <li>★예수금_근로소득</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <span class="module-number">모듈 5</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <h4 class="module-title">송부용 파일 생성</h4>
+                    <p class="module-desc">10개 시트 → 10개 암호화 파일</p>
+                    
+                    <div class="module-details">
+                        <div class="module-details-content">
+                            <h4>송부 대상 시트 (10개)</h4>
+                            <ol>
+                                <li>★원천세_근로소득</li>
+                                <li>★예수금_근로소득</li>
+                                <li>FSE_세액정산</li>
+                                <li>FSE_당월전표</li>
+                                <li>일용직</li>
+                                <li>과표추가</li>
+                                <li>기타비반복과표상세</li>
+                                <li>산학장학금(과표)</li>
+                                <li>★예수금_퇴직소득</li>
+                                <li>★원천세_퇴직소득</li>
+                            </ol>
+                            
+                            <h4>자동 처리</h4>
+                            <div class="code-block"><pre>For 각 시트:
+    1. 새 엑셀 파일 생성
+    2. 시트 복사
+    3. 기본 시트 삭제
+    4. 파일명 생성: {시트명}(송부)_{년월}.xlsx
+    5. 암호 설정 및 저장
+
+예시:
+★원천세_근로소득(송부)_2024.11.xlsx 🔒
+★예수금_근로소득(송부)_2024.11.xlsx 🔒</pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact -->
+        <section>
+            <h2>🎉 프로젝트 임팩트</h2>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">⚡</div>
+                    <div class="impact-value">99.5%</div>
+                    <div class="impact-label">시간 절감률</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🎯</div>
+                    <div class="impact-value">0건</div>
+                    <div class="impact-label">에러 발생</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">📊</div>
+                    <div class="impact-value">382시간</div>
+                    <div class="impact-label">연간 절감</div>
+                </div>
+            </div>
+
+            <h3>핵심 성공 요인</h3>
+            
+            <h4>1. 철저한 검증 시스템</h4>
+            <ul>
+                <li><strong>작업연월 사전 검증:</strong> 파일 처리 전 미리 확인</li>
+                <li><strong>파일명 자동 검증:</strong> Input 테이블과 대조</li>
+                <li><strong>인원수 자동 검증:</strong> 근로/퇴직 2단계</li>
+                <li><strong>실적 금액 자동 검증:</strong> H~R열 총합 비교</li>
+                <li><strong>차액 자동 계산:</strong> 불일치 항목 즉시 확인</li>
+            </ul>
+
+            <h4>2. 성능 최적화</h4>
+            <ul>
+                <li><strong>배열 사용:</strong> 셀 단위 대비 100배 빠름</li>
+                <li><strong>Dictionary 사용:</strong> 검색 O(1) - 즉시</li>
+                <li><strong>List 동적 수집:</strong> 크기 자동 확장</li>
+                <li><strong>화면 업데이트 중지:</strong> Application.ScreenUpdating = False</li>
+            </ul>
+
+            <h4>3. 모듈화된 구조</h4>
+            <ul>
+                <li>각 모듈이 독립적으로 실행 가능</li>
+                <li>문제 발생 시 해당 모듈만 재실행</li>
+                <li>유지보수 용이</li>
+                <li>기능 추가 쉬움</li>
+            </ul>
+        </section>
+
+        <!-- Tech Details -->
+        <section>
+            <h2>🔧 기술 상세</h2>
+            
+            <h3>사용 기술</h3>
+            <div class="tech-tags">
+                <span class="tag">Excel VBA</span>
+                <span class="tag">Dictionary (해시맵)</span>
+                <span class="tag">ArrayList (동적 배열)</span>
+                <span class="tag">Array Processing</span>
+                <span class="tag">ListObjects (표)</span>
+                <span class="tag">File Dialog (다중 선택)</span>
+                <span class="tag">SaveAs (암호화)</span>
+            </div>
+
+            <h3>핵심 알고리즘</h3>
+            <div class="code-block"><pre>1. List로 데이터 동적 수집
+   - 크기 예측 불가능한 데이터 처리
+   - Add 메서드로 자동 확장
+   
+2. Dictionary로 고속 검색
+   - Key: KEY값 (급여월+카테고리+사업부)
+   - Value: 인원수 또는 금액
+   - 검색 속도: O(1)
+   
+3. 배열로 일괄 처리
+   - 한 번에 읽기 → 메모리 처리 → 한 번에 쓰기
+   - 성능: 100배 향상
+   
+4. 정규식 활용
+   - "1월", "11월" → 숫자만 추출
+   - 기준월과 KEY 데이터 월 비교</pre></div>
+        </section>
+
+        <!-- Learnings -->
+        <section>
+            <h2>💡 배운 점</h2>
+            
+            <h3>자동화의 핵심 원칙</h3>
+            <ol>
+                <li><strong>반복되는 작업 찾기:</strong> 매월 원천세 신고</li>
+                <li><strong>규칙 정의하기:</strong> KEY값 규칙, 데이터 분류 규칙</li>
+                <li><strong>예외 상황 처리:</strong> HQ_ALL 특수 처리, 빈 값 처리</li>
+                <li><strong>검증 로직 넣기:</strong> 인원검증, 실적검증, 차액확인</li>
+                <li><strong>성능 최적화:</strong> 배열, Dictionary, List 활용</li>
+            </ol>
+
+            <h3>Excel VBA의 무한한 가능성</h3>
+            <ul>
+                <li>✅ 대용량 데이터 처리 (10만+ 행)</li>
+                <li>✅ 복잡한 비즈니스 로직 자동화</li>
+                <li>✅ 다중 파일 통합 처리</li>
+                <li>✅ 철저한 검증 시스템</li>
+                <li>✅ 암호화 파일 자동 생성</li>
+            </ul>
+
+            <blockquote style="border-left: 4px solid var(--accent-blue); padding-left: 20px; margin: 30px 0; font-style: italic; color: var(--text-secondary);">
+                "사람은 반복 작업을 위해 존재하지 않는다"<br>
+                - 3-4일 걸리던 원천세 업무를 10분으로 단축하고, 정확도 99.9%를 달성하며, 에러 0건을 기록했습니다.
+            </blockquote>
+        </section>
+    </div>
+
+    <script>
+        function toggleModule(card) {
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
