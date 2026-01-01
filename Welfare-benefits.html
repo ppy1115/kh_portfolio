@@ -552,7 +552,7 @@
                 <ul>
                     <li>수시부여: 입사자/복직자/FSE 부임자 포인트 지급</li>
                     <li>퇴직정산: 퇴직자 미사용 포인트 회수</li>
-                    <li>신한카드/복지몰 각각 다른 업로드 형식</li>
+                    <li>카드/복지몰 각각 다른 업로드 형식</li>
                     <li>ERP 과표/공제 수동 검증</li>
                     <li>인원별 포인트 합계 검증</li>
                 </ul>
@@ -580,7 +580,7 @@
             <h3 class="green">완전 자동화 워크플로우</h3>
             <div class="code-block"><pre>🟢 수시부여 (6개 모듈)
 ├─ 모듈 0: 초기화
-├─ 모듈 1: 신한카드 업로드
+├─ 모듈 1: 카드 업로드
 ├─ 모듈 2: 입사자 포인트
 ├─ 모듈 3: 복직자 포인트
 ├─ 모듈 4: FSE 부임
@@ -625,21 +625,13 @@
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>보존 시트 (9개)</h4>
-                            <div class="code-block"><pre>✅ To-be
-✅ 기준
-✅ 입사
-✅ 복직자
-✅ 신한카드양식
-✅ 업로드양식
-✅ 포인트양식
-✅ 미차감양식
-✅ 복직차감양식
+                            <div class="code-block"><pre>✅ 원하는 보존 시트
 
 나머지 모든 시트 삭제</pre></div>
                             
                             <h4>데이터 삭제 (수식 보존)</h4>
                             <ul>
-                                <li>입사, 신한카드양식: 2행부터 삭제</li>
+                                <li>입사, 양식: 2행부터 삭제</li>
                                 <li>복직자: 3행 값만 삭제, 4행부터 행 삭제</li>
                                 <li>업로드양식, 포인트양식, 미차감양식, 복직차감양식: 3행부터 삭제</li>
                             </ul>
@@ -652,8 +644,8 @@
                         <span class="module-number green">모듈 1</span>
                         <span class="expand-icon green">▼</span>
                     </div>
-                    <h4 class="module-title">신한카드 업로드</h4>
-                    <p class="module-desc">신한카드 파일 → 양식 매핑 + 가공</p>
+                    <h4 class="module-title">카드 업로드</h4>
+                    <p class="module-desc">카드 파일 → 양식 매핑 + 가공</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -712,8 +704,8 @@
                         <span class="module-number green">모듈 4</span>
                         <span class="expand-icon green">▼</span>
                     </div>
-                    <h4 class="module-title">FSE 부임</h4>
-                    <p class="module-desc">FSE 부임자 처리</p>
+                    <h4 class="module-title">부임</h4>
+                    <p class="module-desc">부임자 처리</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -722,7 +714,7 @@
    부임2에 없는 사번 → "부임" 표시
 
 2. 부임 vs 귀임 비교
-   - Reason = "FSE_Proceeding" → "신규부임"
+   - Reason = "Proceeding" → "부임"
    - 그 외 → "확인필요"
 
 3. 서식 자동 적용
@@ -782,14 +774,7 @@
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>보존 시트 (8개)</h4>
-                            <div class="code-block"><pre>✅ To-be
-✅ 기준
-✅ 복지몰업로드
-✅ ERP업로드
-✅ 무급휴직
-✅ 퇴직정산
-✅ 26년차감
-✅ 결과메일
+                            <div class="code-block"><pre>✅ 원하는 보존 시트
 
 나머지 모든 시트 삭제</pre></div>
                             
@@ -818,9 +803,9 @@
 → 복지몰업로드 시트로 복사
 
 고정값 자동 입력:
-- siteID: "LGD"
-- comEmail: "lgdisplay@lgdisplay.com"
-- employmentNo: "284"</pre></div>
+- siteID
+- comEmail
+- employmentNo</pre></div>
                         </div>
                     </div>
                 </div>
@@ -913,7 +898,7 @@
 
             <h4>2. 다중 플랫폼 업로드</h4>
             <ul>
-                <li>신한카드 업로드 자동 생성</li>
+                <li>카드 업로드 자동 생성</li>
                 <li>복지몰 업로드 자동 생성</li>
                 <li>ERP 업로드 자동 생성</li>
             </ul>
@@ -940,12 +925,12 @@
             </div>
 
             <h3>핵심 알고리즘</h3>
-            <div class="code-block"><pre>1. 신한카드 업로드
+            <div class="code-block"><pre>1. 카드 업로드
    KEY 시트 헤더명 테이블 기반 매핑
    고정값 자동 입력
    임원구분 자동 판정
    
-2. FSE 부임 검증
+2. 부임 검증
    부임 vs 부임2 차집합
    부임 vs 귀임 교차 검증
    Reason 기준 판정

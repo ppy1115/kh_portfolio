@@ -571,11 +571,11 @@
                         <div class="module-details-content">
                             <h4>자동 생성 검증열 (26개)</h4>
                             <ul>
-                                <li><strong>vs 전월:</strong> 전월 데이터와 비교 (8개 검증)</li>
-                                <li><strong>vs 당월급여:</strong> payroll 데이터와 대조</li>
-                                <li><strong>vs 상여 200%:</strong> 상여금 계산 검증</li>
-                                <li><strong>vs 적치 검증:</strong> 적립금 보상 확인</li>
-                                <li><strong>vs 퇴직금 계산:</strong> DC/DB/EXEC별 계산 검증</li>
+                                <li><strong>전월:</strong> 전월 데이터와 비교 (8개 검증)</li>
+                                <li><strong>당월급여:</strong> payroll 데이터와 대조</li>
+                                <li><strong>상여 200%:</strong> 상여금 계산 검증</li>
+                                <li><strong>적치 검증:</strong> 적립금 보상 확인</li>
+                                <li><strong>퇴직금 계산:</strong> DC/DB/EXEC별 계산 검증</li>
                                 <li><strong>그룹VS입사자:</strong> 그룹사 입사일 vs 회사 입사일</li>
                                 <li><strong>입사VS기산시작일:</strong> 입사일 vs 기산일 일치 여부</li>
                             </ul>
@@ -632,15 +632,14 @@
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>DC형 (확정기여형)</h4>
-                            <div class="code-block"><pre>퇴직금 = SUBTOTAL(9, 3개월 평균임금) - 기지급액</pre></div>
+                            
                             
                             <h4>DB형 (확정급여형)</h4>
-                            <div class="code-block"><pre>퇴직금 = ROUNDUP(
-    MAX(3개월평균, 기준급여) / 365 × 재직일수
-, 0) - 기지급액</pre></div>
+                            
+
                             
                             <h4>EXEC형 (임원)</h4>
-                            <div class="code-block"><pre>DB형과 동일한 계산 로직 적용</pre></div>
+                            
                             
                             <p><strong>자동 계산:</strong> 제도 유형에 따라 자동으로 다른 수식 적용!</p>
                         </div>

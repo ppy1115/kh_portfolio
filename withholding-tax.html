@@ -477,7 +477,7 @@
                     <li>10개 이상의 raw 파일을 일일이 열어서 복사/붙여넣기</li>
                     <li>근로소득과 퇴직소득을 수동으로 분리</li>
                     <li>인원수 검증을 계산기로 일일이 확인</li>
-                    <li>예수금과 FSE 데이터를 수동 매칭</li>
+                    <li>예수금과  데이터를 수동 매칭</li>
                     <li>실적 검증을 엑셀 수식으로 일일이 입력</li>
                     <li>10개 파일을 수동으로 저장하고 암호 설정</li>
                 </ul>
@@ -508,9 +508,9 @@
             
             <div class="code-block"><pre>모듈 0: 초기화 (1초)
    ↓
-모듈 1: AP전표 실적검증 (1분)
+모듈 1: 전표 실적검증 (1분)
    ├─ 근로/퇴직 데이터 병합
-   ├─ AP전표 처리
+   ├─ 전표 처리
    └─ 실적 집계
    ↓
 모듈 2: 인원검증 (20초)
@@ -519,7 +519,7 @@
    ↓
 모듈 3: 예수금 처리 (10초)
    ├─ 예수금 파일 병합
-   └─ FSE 데이터 매칭
+   └─  데이터 매칭
    ↓
 모듈 4: 실적검증 (5초)
    └─ 원천세 내역 총합 검증
@@ -560,7 +560,7 @@
 삭제할 시트:
 ❌ 근로소득 (이전 달 데이터)
 ❌ 퇴직소득 (이전 달 데이터)
-❌ AP전표 관련 시트들
+❌ 전표 관련 시트들
 ❌ 기타 모든 임시 시트</pre></div>
                             
                             <ul>
@@ -577,7 +577,7 @@
                         <span class="module-number">모듈 1</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">AP전표 실적검증 (4단계 통합)</h4>
+                    <h4 class="module-title">전표 실적검증 (4단계 통합)</h4>
                     <p class="module-desc">근로/퇴직 데이터 통합처리</p>
                     
                     <div class="module-details">
@@ -592,15 +592,15 @@
             Else:
                 → 근로List에 추가</pre></div>
                             
-                            <h4>1-2. AP전표 처리</h4>
+                            <h4>1-2. 전표 처리</h4>
                             <p><strong>KEY값 생성</strong></p>
                             <div class="code-block"><pre>KEY값 = 급여월 + 급여카테고리유형 + 사업부코드
 
 예시:
 급여월: 2024.11
 급여카테고리유형: 정기급여
-사업부코드: HQ
-→ KEY값: "HQ_2024.11정기급여"</pre></div>
+
+→ KEY값: "2024.11정기급여"</pre></div>
                             
                             <h4>1-3. 실적 집계</h4>
                             <ul>
@@ -636,7 +636,7 @@
                             <h4>퇴직소득 인원 검증</h4>
                             <ul>
                                 <li>"퇴직금 대상=Y" 필터링 추가</li>
-                                <li>HQ_ALL 특수 처리 (중도인출 + 제도전환)</li>
+                                <li>특수 처리 (중도인출 + 제도전환)</li>
                                 <li>검증 = 0이면 일치, ≠0이면 불일치</li>
                             </ul>
                         </div>
@@ -649,7 +649,7 @@
                         <span class="expand-icon">▼</span>
                     </div>
                     <h4 class="module-title">예수금 처리</h4>
-                    <p class="module-desc">예수금 통합 및 FSE 매칭</p>
+                    <p class="module-desc">예수금 통합 및 매칭</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -666,8 +666,8 @@
                             <h4>처리 과정</h4>
                             <ul>
                                 <li>예수금 파일 병합 (급여/상여/퇴직)</li>
-                                <li>raw_FSE 당월 원천세 파일 매칭</li>
-                                <li>차이 자동 계산 (원본 - FSE)</li>
+                                <li>raw 당월 원천세 파일 매칭</li>
+                                <li>차이 자동 계산 (원본)</li>
                                 <li>★원천세_근로소득 시트 생성</li>
                             </ul>
                         </div>
@@ -704,7 +704,7 @@ H열: =H(최종) - H(★원천세)
                             <ul>
                                 <li>★원천세_근로소득</li>
                                 <li>★원천세_퇴직소득</li>
-                                <li>FSE_세액정산</li>
+                                <li>세액정산</li>
                                 <li>★예수금_근로소득</li>
                             </ul>
                         </div>
@@ -723,16 +723,16 @@ H열: =H(최종) - H(★원천세)
                         <div class="module-details-content">
                             <h4>송부 대상 시트 (10개)</h4>
                             <ol>
-                                <li>★원천세_근로소득</li>
-                                <li>★예수금_근로소득</li>
-                                <li>FSE_세액정산</li>
-                                <li>FSE_당월전표</li>
+                                <li>근로소득</li>
+                                <li>근로소득</li>
+                                <li>세액정산</li>
+                                <li>당월전표</li>
                                 <li>일용직</li>
                                 <li>과표추가</li>
                                 <li>기타비반복과표상세</li>
                                 <li>산학장학금(과표)</li>
-                                <li>★예수금_퇴직소득</li>
-                                <li>★원천세_퇴직소득</li>
+                                <li>예_퇴직소득</li>
+                                <li>원_퇴직소득</li>
                             </ol>
                             
                             <h4>자동 처리</h4>
@@ -844,7 +844,7 @@ H열: =H(최종) - H(★원천세)
             <ol>
                 <li><strong>반복되는 작업 찾기:</strong> 매월 원천세 신고</li>
                 <li><strong>규칙 정의하기:</strong> KEY값 규칙, 데이터 분류 규칙</li>
-                <li><strong>예외 상황 처리:</strong> HQ_ALL 특수 처리, 빈 값 처리</li>
+                <li><strong>예외 상황 처리:</strong> 특수 처리, 빈 값 처리</li>
                 <li><strong>검증 로직 넣기:</strong> 인원검증, 실적검증, 차액확인</li>
                 <li><strong>성능 최적화:</strong> 배열, Dictionary, List 활용</li>
             </ol>

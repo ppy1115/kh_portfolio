@@ -451,7 +451,7 @@
         <header>
             <span class="project-tag">DB Projection • Automation</span>
             <h1>DB추계 작업</h1>
-            <p class="subtitle">KB손해보험 DB명부 자동 생성 및 해외주재원 검증하는 9개 모듈 시스템</p>
+            <p class="subtitle">명부 자동 생성 및 해외주재원 검증하는 9개 모듈 시스템</p>
             
             <div class="stats-hero">
                 <div class="stat-box">
@@ -479,12 +479,12 @@
                     <li>혼합형 일자 및 임원 검증</li>
                     <li>해외주재원 인원 검증 (2단계)</li>
                     <li>전사 작업 통합</li>
-                    <li>KB손해보험 명부 양식 자동 채우기</li>
+                    
                     <li>암호화 파일 생성</li>
                 </ul>
             </div>
             
-            <p><strong>결과:</strong> 매월 1시간 소모, 복잡한 검증 로직</p>
+            <p><strong>결과:</strong> 매월 4시간 소모, 복잡한 검증 로직</p>
         </section>
 
         <section>
@@ -512,13 +512,13 @@
    ↓
 모듈 3: 혼합형 일자 및 임원 검증
    ↓
-모듈 4: 해외주재원 인원검증 (LG화학)
+모듈 4: 해외주재원 인원검증 
    ↓
-모듈 5: 해외주재원 인원검증 (LG에너지솔루션)
+모듈 5: 해외주재원 인원검증 
    ↓
 모듈 6: 전사 작업
    ↓
-모듈 7: 명부양식 (KB손해보험)
+모듈 7: 명부양식 
    ↓
 모듈 8: 시트분리저장 (암호화)</pre></div>
             
@@ -549,7 +549,7 @@
                             <h4>보존 시트</h4>
                             <div class="code-block"><pre>✅ Main
 ✅ KEY
-✅ KB손해보험 명부 양식
+✅ 명부 양식
 ✅ 임원
 
 나머지 모든 시트 삭제</pre></div>
@@ -629,8 +629,8 @@
                         <span class="module-number">모듈 4</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">해외주재원 (LG화학)</h4>
-                    <p class="module-desc">LG화학 해외주재원 6단계 통합 프로세스</p>
+                    <h4 class="module-title">해외주재원 </h4>
+                    <p class="module-desc">해외주재원 6단계 통합 프로세스</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -655,12 +655,12 @@
                         <span class="module-number">모듈 5</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">해외주재원 (LG에너지솔루션)</h4>
-                    <p class="module-desc">LG에너지솔루션 해외주재원 6단계 통합 프로세스</p>
+                    <h4 class="module-title">해외주재원</h4>
+                    <p class="module-desc">해외주재원 6단계 통합 프로세스</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
-                            <p>LG화학과 동일한 6단계 프로세스를 LG에너지솔루션에 적용합니다.</p>
+                            <p>동일한 6단계 프로세스를 적용합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -675,7 +675,7 @@
                     
                     <div class="module-details">
                         <div class="module-details-content">
-                            <p>LG화학 + LG에너지솔루션 데이터를 통합하여 전사 단위로 검증합니다.</p>
+                            <p>데이터를 통합하여 전사 단위로 검증합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -691,8 +691,8 @@
                         <span class="module-number">모듈 7</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">명부양식 (KB손해보험)</h4>
-                    <p class="module-desc">KB손해보험 명부 양식 자동 채우기</p>
+                    <h4 class="module-title">명부양식</h4>
+                    <p class="module-desc">명부 양식 자동 채우기</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -731,12 +731,12 @@
                         <span class="expand-icon">▼</span>
                     </div>
                     <h4 class="module-title">시트분리저장</h4>
-                    <p class="module-desc">KB손해보험 명부 양식 암호화 저장</p>
+                    <p class="module-desc">명부 양식 암호화 저장</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>자동 파일명 생성</h4>
-                            <div class="code-block"><pre>파일명 = KB손해보험 명부 양식!B1
+                            <div class="code-block"><pre>파일명 = 명부 양식!B1
 
 Main 시트 C4 셀 = 암호
 
@@ -792,7 +792,7 @@ Main 시트 C4 셀 = 암호
                 <li>요약표 자동 생성</li>
             </ul>
 
-            <h4>3. KB명부 자동 채우기</h4>
+            <h4>3. 명부 자동 채우기</h4>
             <ul>
                 <li>KEY 시트 기반</li>
                 <li>Dictionary 고속 검색</li>
@@ -829,7 +829,7 @@ Main 시트 C4 셀 = 암호
        Else If 임원: 임원
        Else If DC: DC
    
-3. KB명부 채우기
+3. 명부 채우기
    Dictionary[기준값] = 가져올값
    배열 조회 → 한 번에 쓰기</pre></div>
         </section>

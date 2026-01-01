@@ -553,20 +553,13 @@ Stage 3: 최종 처리
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>보존 시트 (15개)</h4>
-                            <div class="code-block"><pre>✅ Main, KEY, 기준, 연간 캘린더
-✅ 징계(누적), 지사 급여실적(누적)
-✅ 당월 대상자, FSE 급여계산, 급여검증
-✅ 지도직, 간이세액표, TEQ 검증
-✅ 자사 송금(국내+해외)
-✅ 지사 세액정산, 증감내역</pre></div>
+                            <div class="code-block"><pre>✅ 원하는 시트 보존
+</pre></div>
                             
                             <h4>시트별 정리 작업</h4>
                             <ul>
-                                <li><strong>당월 대상자:</strong> "전월 대상자"로 이름 변경, "당월 변동여부" 열 삭제, I열 기준 틀 고정</li>
-                                <li><strong>지도직:</strong> A~근무일수 열, ★업로드파일 '비고' 열 데이터 삭제</li>
-                                <li><strong>자사 송금:</strong> 6~10행 값 삭제, 12행~註행 삭제, 특정 범위 초기화</li>
-                                <li><strong>증감내역:</strong> C3~E열 데이터를 F3에 값 붙여넣기</li>
-                                <li><strong>FSE/급여검증/TEQ/지사세액정산:</strong> 데이터 행 삭제, 특정 행 값만 삭제</li>
+                                <li><strong></strong>각 시트별로 작업 및 처리해야되는 부분 자동화</li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -615,7 +608,7 @@ Stage 3: 최종 처리
                             <ul>
                                 <li>필수 필드 검증</li>
                                 <li>사번 기준 정렬</li>
-                                <li>서식 자동 적용 (LG스마트체, 행 높이)</li>
+                              
                             </ul>
                         </div>
                     </div>
@@ -633,8 +626,8 @@ Stage 3: 최종 처리
                         <div class="module-details-content">
                             <h4>3단계 검증 프로세스</h4>
                             <ol>
-                                <li><strong>열 필터링:</strong> KEY 시트 "급여대상헤더" 테이블 기반 필요 열만 남김</li>
-                                <li><strong>당월 데이터 복사:</strong> "당월 대상자"에서 지정 열 복사</li>
+                                <li><strong>열 필터링:</strong> KEY 시트 테이블 기반 필요 열만 남김</li>
+                                <li><strong>당월 데이터 복사:</strong> "당월"에서 지정 열 복사</li>
                                 <li><strong>비교 열 삽입:</strong> 전월 vs 당월 자동 비교 수식 생성</li>
                             </ol>
                             
@@ -647,7 +640,7 @@ vs열 = 전월열 = 당월열
                             
                             <h4>서식 적용</h4>
                             <ul>
-                                <li>글꼴: LG스마트체 Regular, 크기 9</li>
+                                
                                 <li>O1:R1 배경색: RGB(226, 239, 218)</li>
                                 <li>전체 가운데 정렬</li>
                                 <li>틀 고정: 2행</li>
@@ -668,27 +661,27 @@ vs열 = 전월열 = 당월열
                         <span class="module-number">모듈 4</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">지도직 검증 (FSE 재계산)</h4>
+                    <h4 class="module-title">검증(재계산)</h4>
                     <p class="module-desc">지도직 사원 추출 및 시간외수당 자동 계산</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>동적 수당 수식 적용</h4>
-                            <div class="code-block"><pre>KEY 시트 "지도직정보" 표의 "수당" 열 참조
+                            <div class="code-block"><pre>KEY 시트 "정보" 표의 "수당" 열 참조
 → 동적으로 수당 항목 찾아 수식 적용
 
 시간외수당 수식:
-=ROUND(단부제통상임금/226*1.5*고정OT,-3)
+=ROUND(임금/226*1.5*고정OT,-3)
 
 각 수당 수식:
-=ROUNDUP(급여정보시트수당*20/12,0)</pre></div>
+=ROUNDUP(수당*20/12,0)</pre></div>
                             
                             <h4>근무일수 계산</h4>
                             <ul>
-                                <li>Main 시트 "기산일" 테이블 참조</li>
+                                <li>Main 시트 "일자" 테이블 참조</li>
                                 <li>임원 vs 임원 외 구분</li>
-                                <li>실부임일자/FSE 종료일자 고려</li>
-                                <li>★업로드파일 '비고' 자동 생성</li>
+                                <li>일자 종료일자 고려</li>
+                                <li>업로드파일 '비고' 자동 생성</li>
                             </ul>
                         </div>
                     </div>
@@ -712,10 +705,10 @@ vs열 = 전월열 = 당월열
                             
                             <h4>자동 계산</h4>
                             <ul>
-                                <li><strong>최종 특근일수:</strong> 특근일수 - IF(대체휴일="Y",1,0)</li>
-                                <li><strong>통상임금:</strong> VLOOKUP으로 급여정보에서 가져오기</li>
-                                <li><strong>특근수당:</strong> ROUND(통상임금/226*8*1.5*최종특근일수,0)</li>
-                                <li><strong>비고:</strong> "YYYY-MM-DD 특근 Xhr" 형식 자동 생성</li>
+                                <li><strong>최종 특근일수:</strong> 특근일수 수식적용</li>
+                                <li><strong>통상임금:</strong> 통상임금 수식적용</li>
+                                <li><strong>특근수당:</strong> 특근수당 수식적용</li>
+                                <li><strong>비고:</strong> 비고 형식 자동 생성</li>
                             </ul>
                         </div>
                     </div>
@@ -733,20 +726,20 @@ vs열 = 전월열 = 당월열
                         <div class="module-details-content">
                             <h4>데이터 통합</h4>
                             <div class="code-block"><pre>지도직:
-- 급여항목코드: Main!B9
-- 세부항목코드: Main!B10
+- 급여항목코드: Main
+- 세부항목코드: Main
 - 금액: O열, 비고: P열
 
 특근비:
-- 급여항목코드: Main!B10
-- 세부항목코드: Main!C10
+- 급여항목코드: Main
+- 세부항목코드: Main
 - 금액: K열, 비고: L열</pre></div>
                             
                             <h4>파일 저장</h4>
                             <ul>
-                                <li>파일명: "해외급여지급공제관리_Upload_YYYY.MM.DD_수당.xlsx"</li>
+                                <li>파일명: "지정된 양식에 맞게 파일명.xlsx"</li>
                                 <li>금액이 0인 행 자동 삭제</li>
-                                <li>시작일자/종료일자 자동 입력 (Main!C4 기준)</li>
+                                <li>시작일자/종료일자 자동 입력 (Main 기준)</li>
                                 <li>사용자 지정 경로로 저장</li>
                             </ul>
                         </div>
@@ -773,8 +766,8 @@ vs열 = 전월열 = 당월열
                         <span class="module-number">모듈 7-1</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">법정 과표</h4>
-                    <p class="module-desc">법정 과표공제 시트 생성 및 파일 저장</p>
+                    <h4 class="module-title">과표</h4>
+                    <p class="module-desc">과표 시트 생성 및 파일 저장</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
@@ -790,7 +783,7 @@ vs열 = 전월열 = 당월열
                             
                             <h4>파일 저장</h4>
                             <ul>
-                                <li>파일명: "YYYY.MM FSE 급여_법정 과표공제.xlsx"</li>
+                                <li>파일명: "정해진 파일명에 맞게 생성.xlsx"</li>
                                 <li>날짜 형식: YYYY-MM-DD</li>
                                 <li>열 너비 자동 조정</li>
                             </ul>
@@ -803,28 +796,28 @@ vs열 = 전월열 = 당월열
                         <span class="module-number">모듈 8</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">지사 현금</h4>
-                    <p class="module-desc">지사 현금지급 대상자 추출 및 파일 생성</p>
+                    <h4 class="module-title">현금</h4>
+                    <p class="module-desc">현금지급 대상자 추출 및 파일 생성</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>조건부 데이터 추출</h4>
                             <div class="code-block"><pre>조건1: 장기근속 관련
-- 소속: KEY 시트 "소속" 표의 "지사" 열에 존재
-- 급여항목명: "복리후생과표추가"
+- 소속: "소속" 표의 "지사" 열에 존재
+- 급여항목명: "과표추가"
 - 세부항목: "장기근속" or "장기근속상"
 
-조건2: 선택적복리후생
+조건2: 복리후생
 - 소속: 지사
-- 급여항목명: "복리후생과표추가"
-- 세부항목: "선택적복리후생"
-- 금액: Main!B16 값과 일치</pre></div>
+- 급여항목명: "과표추가"
+- 세부항목: "복리후생"
+- 금액: Main 값과 일치</pre></div>
                             
                             <h4>파일 저장</h4>
                             <ul>
-                                <li>파일명: "해외급여지급공제관리_Upload_YYYY.MM.dd_지사 현금지급.xlsx"</li>
-                                <li>시작/종료일자: Main!C4 기준</li>
-                                <li>7월이 아닌데 선택적복리후생 발생 시 경고</li>
+                                <li>파일명: "정해진 파일명에 맞게 지정.xlsx"</li>
+                                <li>시작/종료일자: Main기준</li>
+                                <li>7월이 아닌데 선복 발생 시 경고</li>
                             </ul>
                         </div>
                     </div>
@@ -835,12 +828,12 @@ vs열 = 전월열 = 당월열
                         <span class="module-number">모듈 9-1</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">법정 과표공제 + FSE 급여</h4>
-                    <p class="module-desc">과표공제 계산 및 FSE 급여 시트 생성</p>
+                    <h4 class="module-title">과표공제 + 급여</h4>
+                    <p class="module-desc">과표공제 계산 및 급여 시트 생성</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
-                            <p>법정 과표공제 항목을 계산하고 FSE 급여 시트를 생성합니다.</p>
+                            <p>법정 과표공제 항목을 계산하고 급여 시트를 생성합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -858,12 +851,12 @@ vs열 = 전월열 = 당월열
                         <span class="expand-icon">▼</span>
                     </div>
                     <h4 class="module-title">반영항목 merge</h4>
-                    <p class="module-desc">KEY 시트 "급여반영항목" 기반 데이터 통합</p>
+                    <p class="module-desc">KEY 시트 "급여항목" 기반 데이터 통합</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>동적 데이터 병합</h4>
-                            <div class="code-block"><pre>급여반영항목 표 각 행:
+                            <div class="code-block"><pre>급여항목 표 각 행:
 1열: 시트명
 2~N열: 엑셀 열 참조 or 고정 텍스트
 
@@ -876,7 +869,6 @@ For 각 행:
                             <h4>서식 적용</h4>
                             <ul>
                                 <li>전체 테두리</li>
-                                <li>글꼴: LG스마트체 Regular, 크기 9</li>
                                 <li>가운데 정렬</li>
                                 <li>"금액" 열: 회계 형식</li>
                             </ul>
@@ -889,12 +881,12 @@ For 각 행:
                         <span class="module-number">모듈 11</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">FSE 급여계산</h4>
-                    <p class="module-desc">FSE 급여실적 기반 최종 급여 계산</p>
+                    <h4 class="module-title">급여계산</h4>
+                    <p class="module-desc">급여실적 기반 최종 급여 계산</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
-                            <p>FSE 급여실적 시트의 데이터를 기반으로 최종 급여를 계산합니다.</p>
+                            <p>급여실적 시트의 데이터를 기반으로 최종 급여를 계산합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -904,20 +896,20 @@ For 각 행:
                         <span class="module-number">모듈 12</span>
                         <span class="expand-icon">▼</span>
                     </div>
-                    <h4 class="module-title">급여검증 시트, TEQ 검증</h4>
+                    <h4 class="module-title">급여검증 시트, 검증</h4>
                     <p class="module-desc">최종 데이터 검증 (2단계)</p>
                     
                     <div class="module-details">
                         <div class="module-details-content">
                             <h4>급여검증 시트</h4>
-                            <div class="code-block"><pre>FSE 급여실적 전체 복사
+                            <div class="code-block"><pre>급여실적 전체 복사
 → 급여검증 시트에 붙여넣기
 
 L열부터 회계 형식 적용
-글꼴: LG스마트체2.0 Regular, 크기 10</pre></div>
+</pre></div>
                             
                             <h4>TEQ 검증 시트</h4>
-                            <div class="code-block"><pre>KEY 시트 "TEQ검증" 표 기반:
+                            <div class="code-block"><pre>KEY 시트 "검증" 표 기반:
 1열: 대상 헤더
 2열: 원본 시트명
 3열: 원본 열 헤더
