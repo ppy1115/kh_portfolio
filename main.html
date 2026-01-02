@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKH - Digital Transformation Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #151515;
+            --card-bg: #1a1a1a;
+            --accent-purple: #a78bfa;
+            --accent-purple-dark: #8b5cf6;
+            --accent-purple-light: #c4b5fd;
+            --accent-blue: #60a5fa;
+            --accent-green: #34d399;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --border-color: rgba(167, 139, 250, 0.2);
+            --glow-purple: rgba(167, 139, 250, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 배경 장식 */
+        .bg-decoration {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none; opacity: 0.3;
+        }
+        .bg-decoration::before {
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 1000px; height: 1000px;
+            background: radial-gradient(circle, var(--accent-purple) 0%, transparent 60%);
+            border-radius: 50%; filter: blur(120px);
+            animation: float 25s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 80px) scale(1.15); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 40px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 10;
+        }
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px; font-weight: 600;
+            color: var(--accent-purple-light); letter-spacing: 1px;
+        }
+
+        /* SECTION 1: Intro / Name */
+        .intro-section {
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .my-role {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-purple); font-size: 14px; letter-spacing: 4px;
+            margin-bottom: 20px; animation: fadeInUp 1s ease-out both;
+        }
+
+        .my-name {
+            font-size: 120px; font-weight: 900; line-height: 1.2;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #fff 30%, var(--text-secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .my-name .dot { color: var(--accent-purple); -webkit-text-fill-color: var(--accent-purple); }
+
+        .intro-summary {
+            max-width: 600px; margin: 0 auto 50px;
+            font-size: 20px; color: var(--text-secondary); line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        .intro-summary strong { color: #fff; font-weight: 700; }
+
+        /* Impact Ticker (Mini) */
+        .impact-container {
+            display: inline-flex; gap: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px 40px; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            margin-bottom: 40px;
+        }
+        .impact-box { text-align: center; }
+        .impact-num {
+            display: block; font-size: 32px; font-weight: 700;
+            color: var(--accent-purple-light); font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 5px;
+        }
+        .impact-txt {
+            font-size: 11px; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .divider { width: 1px; background: rgba(255,255,255,0.1); }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            position: absolute; bottom: 40px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            color: var(--text-muted); animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* SECTION 2: Experience Log */
+        .experience-section {
+            padding: 100px 0 150px;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center; margin-bottom: 80px;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 54px; font-weight: 700; margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Timeline Styling */
+        .timeline-container {
+            position: relative; max-width: 800px; margin: 0 auto; padding-left: 50px;
+        }
+        .timeline-container::before {
+            content: ''; position: absolute; top: 0; left: 15px; width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent-purple), transparent);
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+        .timeline-item { position: relative; margin-bottom: 60px; }
+        
+        .timeline-marker {
+            position: absolute; top: 0; left: -41px;
+            width: 14px; height: 14px; background: var(--primary-bg);
+            border: 2px solid var(--accent-purple); border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple); z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-marker {
+            background: var(--accent-purple); box-shadow: 0 0 20px var(--accent-purple);
+        }
+
+        .timeline-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 30px; transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-content {
+            transform: translateX(10px); border-color: var(--accent-purple);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .timeline-header-row {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+        }
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent-purple-light);
+        }
+        .status-badge {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            padding: 4px 8px; border-radius: 4px; font-weight: 700;
+        }
+        .status-badge.running {
+            background: rgba(52, 211, 153, 0.2); color: var(--accent-green);
+            border: 1px solid rgba(52, 211, 153, 0.3); animation: blink 2s infinite;
+        }
+        .status-badge.completed {
+            background: rgba(255, 255, 255, 0.1); color: var(--text-muted);
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .timeline-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; }
+        .timeline-role { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 15px; }
+        .timeline-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+        .timeline-tech-list {
+            display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: 15px;
+        }
+        .timeline-tech-list li {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            padding: 4px 10px; background: rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; color: var(--accent-purple-light);
+        }
+
+        /* Portfolio Button Area */
+        .cta-container {
+            text-align: center; margin-top: 80px;
+        }
+        .btn-portfolio-large {
+            background: transparent;
+            color: var(--accent-purple-light);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px; padding: 25px 60px;
+            border: 1px solid var(--accent-purple); border-radius: 50px;
+            cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 3px;
+            position: relative; overflow: hidden;
+        }
+        .btn-portfolio-large:hover {
+            background: var(--accent-purple); color: #000;
+            box-shadow: 0 0 40px var(--glow-purple);
+            transform: translateY(-5px); font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .my-name { font-size: 60px; }
+            .intro-summary { font-size: 16px; padding: 0 20px; }
+            .impact-container { gap: 30px; padding: 15px; flex-wrap: wrap; justify-content: center;}
+            .timeline-container { padding-left: 30px; }
+            .timeline-container::before { left: 0; }
+            .timeline-marker { left: -36px; }
+            .btn-portfolio-large { padding: 20px 40px; font-size: 14px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <nav>
+        <div class="logo">LKH.STUDIO</div>
+    </nav>
+
+    <section class="intro-section">
+        <span class="my-role"></span>
+        <h1 class="my-name">이경현<span class="dot"></span></h1>
+        
+        <div class="intro-summary">
+            <p>
+                <strong>Digital Transformation</strong>을 통해<br>
+                비효율적인 업무 프로세스를 <strong>0(Zero)</strong>으로 만듭니다.
+            </p>
+        </div>
+
+        <div class="impact-container">
+            <div class="impact-box">
+                <span class="impact-num" data-target="15400">0</span>
+                <span class="impact-txt">Hours Saved</span>
+            </div>
+            <div class="divider"></div>
+            <div class="impact-box">
+                <span class="impact-num" data-target="99.9">0</span>
+                <span class="impact-txt">% Accuracy</span>
+            </div>
+            <div class="divider"></div>
+            <div class="impact-box">
+                <span class="impact-num" data-target="45">0</span>
+                <span class="impact-txt">Processes</span>
+            </div>
+        </div>
+
+        <div class="scroll-hint">SCROLL FOR HISTORY ↓</div>
+    </section>
+
+    <section class="experience-section container reveal">
+        <div class="section-header">
+            <h2 class="section-title">Experience Log</h2>
+            <p style="color:var(--text-secondary);">
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2025.06 - PRESENT</span>
+                        <span class="status-badge running">RUNNING</span>
+                    </div>
+                    <h3 class="timeline-title">LG Biztechon</h3>
+                    <span class="timeline-role">Payroll & Automation Specialist</span>
+                    <p class="timeline-desc">급여/퇴직금 정산 100% 자동화 구축. 월 마감 소요 시간 5일 → 1일 단축.</p>
+                    <ul class="timeline-tech-list">
+                        <li>VBA</li><li>Large Scale Data</li><li>Payroll</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2022.12 - 2025.05</span>
+                        <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">(주) 그린피플</h3>
+                    <span class="timeline-role">Process Innovation Manager</span>
+                    <p class="timeline-desc">사내 수작업 프로세스 진단 및 툴 도입. 휴먼 에러율 0% 달성.</p>
+                    <ul class="timeline-tech-list">
+                        <li>Process Design</li><li>Excel VBA</li><li>Python</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2021.07 - 2022.03</span>
+                        <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">(주) 쿠메푸드</h3>
+                    <span class="timeline-role">E-commerce Operation</span>
+                    <p class="timeline-desc">주문 수집 및 발주. 고객 CS관리</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2019.10 - 2019.12 </span>
+                        <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">연세세브란스 체크업</h3>
+                    <span class="timeline-role">Customer Service & Admin</span>
+                    <p class="timeline-desc">고객 1:1 응대.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2014.11 - 2016.11</span> <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">KIM & CHANG</h3>
+                    <span class="timeline-role">General Administration Team</span> <p class="timeline-desc">
+                        내/외부 서류 관리 및 다량 내용증명 관리
+                    </p>
+                </div>
+            </div>
+
+            <div class="cta-container">
+                <button class="btn-portfolio-large" onclick="location.href='index.html'">
+                    VIEW PORTFOLIO & PROJECTS →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Number Counter Animation
+        const animateImpactNumbers = () => {
+            const counters = document.querySelectorAll('.impact-num');
+            const speed = 50; 
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/[^0-9.]/g, ''); 
+                    const inc = target / speed;
+                    if (count < target) {
+                        if(target % 1 !== 0) counter.innerText = (count + inc).toFixed(1);
+                        else counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 30);
+                    } else {
+                        if(target % 1 !== 0) counter.innerText = target + "%";
+                        else counter.innerText = target.toLocaleString() + "+"; 
+                    }
+                };
+                updateCount();
+            });
+        };
+        setTimeout(animateImpactNumbers, 800);
+
+        // Parallax
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const decoration = document.querySelector('.bg-decoration');
+            if(decoration) decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>
