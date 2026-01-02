@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Transformation Project - LKH Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>LKH - Digital Transformation Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #0a0a0a;
@@ -15,7 +15,6 @@
             --accent-purple-light: #c4b5fd;
             --accent-blue: #60a5fa;
             --accent-green: #34d399;
-            --accent-orange: #fb923c;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --text-muted: #606060;
@@ -23,11 +22,7 @@
             --glow-purple: rgba(167, 139, 250, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
@@ -37,65 +32,19 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.15;
-            background-image: 
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 100px 100px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(100px, 100px); }
-        }
-
+        /* 배경 장식 */
         .bg-decoration {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.3;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none; opacity: 0.3;
         }
-
         .bg-decoration::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 1000px;
-            height: 1000px;
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 1000px; height: 1000px;
             background: radial-gradient(circle, var(--accent-purple) 0%, transparent 60%);
-            border-radius: 50%;
-            filter: blur(120px);
+            border-radius: 50%; filter: blur(120px);
             animation: float 25s ease-in-out infinite;
         }
-
-        .bg-decoration::after {
-            content: '';
-            position: absolute;
-            bottom: -40%;
-            left: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--accent-blue) 0%, transparent 60%);
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: float 20s ease-in-out infinite reverse;
-        }
-
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(80px, 80px) scale(1.15); }
@@ -103,946 +52,376 @@
 
         /* Container */
         .container {
-            max-width: 1600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 60px;
+            padding: 0 40px;
             position: relative;
             z-index: 1;
         }
 
         /* Navigation */
         nav {
-            padding: 40px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            animation: fadeInDown 1s ease-out;
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 40px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 10;
         }
-
         .logo {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent-purple-light);
-            letter-spacing: 1px;
+            font-size: 18px; font-weight: 600;
+            color: var(--accent-purple-light); letter-spacing: 1px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.3s ease;
+        /* SECTION 1: Intro / Name */
+        .intro-section {
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
             position: relative;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-purple);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-        }
-
-        .hero-tag {
-            display: inline-block;
+        .my-role {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            letter-spacing: 3px;
-            color: var(--accent-purple-light);
-            text-transform: uppercase;
-            padding: 10px 25px;
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.8s ease-out 0.2s both;
+            color: var(--accent-purple); font-size: 14px; letter-spacing: 4px;
+            margin-bottom: 20px; animation: fadeInUp 1s ease-out both;
         }
 
-        h1 {
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 94px;
-            font-weight: 900;
-            line-height: 1.4;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple-light), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .my-name {
+            font-size: 120px; font-weight: 900; line-height: 1.2;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #fff 30%, var(--text-secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .my-name .dot { color: var(--accent-purple); -webkit-text-fill-color: var(--accent-purple); }
+
+        .intro-summary {
+            max-width: 600px; margin: 0 auto 50px;
+            font-size: 20px; color: var(--text-secondary); line-height: 1.6;
             animation: fadeInUp 1s ease-out 0.4s both;
         }
+        .intro-summary strong { color: #fff; font-weight: 700; }
 
-        .hero-subtitle {
-            font-size: 28px;
-            color: var(--text-secondary);
-            font-weight: 300;
-            margin-bottom: 60px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
+        /* Impact Ticker (Mini) */
         .impact-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-top: 60px; /* 위쪽 여백 */
-    padding: 30px 50px;
-    background: rgba(26, 26, 26, 0.6); /* 반투명 배경 */
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    backdrop-filter: blur(10px); /* 블러 효과 */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    animation: fadeInUp 1s ease-out 0.8s both; /* 등장 애니메이션 */
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
+            display: inline-flex; gap: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px 40px; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            margin-bottom: 40px;
+        }
+        .impact-box { text-align: center; }
+        .impact-num {
+            display: block; font-size: 32px; font-weight: 700;
+            color: var(--accent-purple-light); font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 5px;
+        }
+        .impact-txt {
+            font-size: 11px; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .divider { width: 1px; background: rgba(255,255,255,0.1); }
 
-.impact-item {
-    text-align: center;
-    position: relative;
-}
+        /* Scroll Hint */
+        .scroll-hint {
+            position: absolute; bottom: 40px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            color: var(--text-muted); animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
 
-.impact-number {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 42px;
-    font-weight: 700;
-    color: var(--accent-purple);
-    margin-bottom: 5px;
-    text-shadow: 0 0 20px rgba(167, 139, 250, 0.3); /* 네온 효과 */
-}
+        /* SECTION 2: Experience Log */
+        .experience-section {
+            padding: 100px 0 150px;
+            position: relative;
+        }
 
-.impact-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-}
-
-.impact-divider {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, transparent, var(--border-color), transparent);
-}
-
-/* 모바일 대응 */
-@media (max-width: 768px) {
-    .impact-container {
-        flex-direction: column;
-        gap: 30px;
-        padding: 30px;
-        margin-top: 40px;
-        width: 100%;
-    }
-    
-    .impact-divider {
-        width: 50%;
-        height: 1px;
-        background: linear-gradient(to right, transparent, var(--border-color), transparent);
-    }
-    
-    .impact-number { font-size: 36px; }
-}
-
-        /* Section Header */
         .section-header {
-            margin: 100px 0 60px;
+            text-align: center; margin-bottom: 80px;
         }
-
-        .section-title-main {
+        .section-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 64px;
-            font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 54px; font-weight: 700; margin-bottom: 20px;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-purple-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .section-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            max-width: 800px;
+        /* Timeline Styling */
+        .timeline-container {
+            position: relative; max-width: 800px; margin: 0 auto; padding-left: 50px;
+        }
+        .timeline-container::before {
+            content: ''; position: absolute; top: 0; left: 15px; width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent-purple), transparent);
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+        .timeline-item { position: relative; margin-bottom: 60px; }
+        
+        .timeline-marker {
+            position: absolute; top: 0; left: -41px;
+            width: 14px; height: 14px; background: var(--primary-bg);
+            border: 2px solid var(--accent-purple); border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple); z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-marker {
+            background: var(--accent-purple); box-shadow: 0 0 20px var(--accent-purple);
         }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin: 60px 0;
+        .timeline-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 30px; transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-content {
+            transform: translateX(10px); border-color: var(--accent-purple);
+            background: rgba(26, 26, 26, 0.8);
         }
 
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.5s ease;
-            cursor: pointer;
-            position: relative;
-            padding: 40px 50px;
+        .timeline-header-row {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+        }
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent-purple-light);
+        }
+        .status-badge {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            padding: 4px 8px; border-radius: 4px; font-weight: 700;
+        }
+        .status-badge.running {
+            background: rgba(52, 211, 153, 0.2); color: var(--accent-green);
+            border: 1px solid rgba(52, 211, 153, 0.3); animation: blink 2s infinite;
+        }
+        .status-badge.completed {
+            background: rgba(255, 255, 255, 0.1); color: var(--text-muted);
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .timeline-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; }
+        .timeline-role { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 15px; }
+        .timeline-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+        .timeline-tech-list {
+            display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: 15px;
+        }
+        .timeline-tech-list li {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            padding: 4px 10px; background: rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; color: var(--accent-purple-light);
         }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 40%, var(--accent-purple) 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        /* Portfolio Button Area */
+        .cta-container {
+            text-align: center; margin-top: 80px;
         }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-purple);
-            box-shadow: 0 15px 40px var(--glow-purple);
-        }
-
-        .project-card:hover::before {
-            opacity: 0.1;
-        }
-
-        /* Content */
-        .project-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .project-category {
-            display: inline-block;
+        .btn-portfolio-large {
+            background: transparent;
+            color: var(--accent-purple-light);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 6px 15px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            font-weight: 500;
+            font-size: 18px; padding: 25px 60px;
+            border: 1px solid var(--accent-purple); border-radius: 50px;
+            cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 3px;
+            position: relative; overflow: hidden;
         }
-
-        .project-card.hr .project-category {
-            background: rgba(167, 139, 250, 0.2);
-            color: var(--accent-purple-light);
-            border: 1px solid rgba(167, 139, 250, 0.3);
-        }
-
-        .project-card.data .project-category {
-            background: rgba(96, 165, 250, 0.2);
-            color: var(--accent-blue);
-            border: 1px solid rgba(96, 165, 250, 0.3);
-        }
-
-        .project-card.ops .project-category {
-            background: rgba(52, 211, 153, 0.2);
-            color: var(--accent-green);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-        }
-
-        .project-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        .project-subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .project-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            color: var(--text-secondary);
-        }
-
-        .project-card:hover .tag {
-            border-color: var(--accent-purple);
-            color: var(--accent-purple-light);
-        }
-
-
-
-        /* Footer */
-        footer {
-            padding: 80px 0 40px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent-purple-light);
-            margin-bottom: 20px;
-        }
-
-        .footer-desc {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .footer-section h4 {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-purple-light);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 14px;
+        .btn-portfolio-large:hover {
+            background: var(--accent-purple); color: #000;
+            box-shadow: 0 0 40px var(--glow-purple);
+            transform: translateY(-5px); font-weight: 700;
         }
 
         /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .my-name { font-size: 60px; }
+            .intro-summary { font-size: 16px; padding: 0 20px; }
+            .impact-container { gap: 30px; padding: 15px; flex-wrap: wrap; justify-content: center;}
+            .timeline-container { padding-left: 30px; }
+            .timeline-container::before { left: 0; }
+            .timeline-marker { left: -36px; }
+            .btn-portfolio-large { padding: 20px 40px; font-size: 14px; width: 100%; }
         }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 수정된 부분만 표시 */
-
-/* Responsive */
-@media (max-width: 1024px) {
-    h1 { font-size: 52px; }  /* 변경: 56px → 72px */
-    .footer-content { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 768px) {
-    .container { padding: 0 30px; }
-    h1 { font-size: 44px; }  /* 변경: 48px → 64px */
-    .hero-subtitle { font-size: 220x; }  /* 변경: 20px → 22px */
-    .hero { padding: 80px 0 60px; }  /* 신규 추가 */
-    .section-title-main { font-size: 38px; }  /* 신규 추가 */
-    .project-title { font-size: 28px; }  /* 신규 추가 */
-    .footer-content { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-}
     </style>
 </head>
 <body>
-    
     <div class="bg-decoration"></div>
 
-    <div class="container">
-        <!-- Navigation -->
-        <nav>
-            <div class="logo">LKH.STUDIO</div>
-            <ul class="nav-links">
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+    <nav>
+        <div class="logo">LKH.STUDIO</div>
+    </nav>
 
-        <!-- Hero Section -->
-        <section class="hero">
-    <div class="hero-tag">LKH_Portfolio</div>
-    <h1>Digital Transformation</h1>
-    <p class="hero-subtitle">
-        반복 작업의 지옥에서 벗어나, 진짜 중요한 일에 집중하기 위한 여정.<br>
-        수십 개의 자동화 시스템으로 업무 환경을 완전히 재설계했습니다.
-    </p>
-
-    <div class="impact-container reveal">
-        <div class="impact-item">
-            <span class="impact-number" data-target="15400">0</span>
-            <span class="impact-label">Hours Saved</span>
-        </div>
-        <div class="impact-divider"></div>
-        <div class="impact-item">
-            <span class="impact-number" data-target="99.9">0</span>
-            <span class="impact-label">% Accuracy</span>
-        </div>
-        <div class="impact-divider"></div>
-        <div class="impact-item">
-            <span class="impact-number" data-target="45">0</span>
-            <span class="impact-label">Processes Automated</span>
-        </div>
-    </div>
-    
-    
-    </section>
-
-        <!-- Section Header -->
-        <div class="section-header reveal">
-            <h2 class="section-title-main">All Projects</h2>
-            <p class="section-subtitle">
-                수십 개의 자동화 프로젝트로 업무 프로세스를 완전히 재설계했습니다. 
-                각 프로젝트는 반복 작업을 제거하고, 실수를 방지하며, 사람이 진짜 중요한 일에 집중할 수 있도록 돕습니다.
+    <section class="intro-section">
+        <span class="my-role"></span>
+        <h1 class="my-name">이경현<span class="dot"></span></h1>
+        
+        <div class="intro-summary">
+            <p>
+                <strong>Digital Transformation</strong>을 통해<br>
+                비효율적인 업무 프로세스를 <strong>0(Zero)</strong>으로 만듭니다.
             </p>
         </div>
-        
-        
-        
 
-        <!-- Projects Grid -->
-        <div class="projects-grid reveal" id="projects">
-            <!-- Project 1: 먼쓸리 -->
-            <div class="project-card hr">
-                <div class="project-content">
-                    <span class="project-category">HR Automation</span>
-                    <h2 class="project-title">먼쓸리(Monthly)</h2>
-                    <p class="project-subtitle">HR 월간 보고서 자동화 시스템</p>
-                    <p class="project-description">
-                        매월 1-2주씩 반복되던 지옥 같은 보고서 작업을 3분으로 단축시킨 완전 자동화 시스템. 
-                        9개의 모듈이 순차적으로 실행되며 인원 현황부터 급여, 복리후생, 퇴직금까지 모든 HR 데이터를 자동으로 집계하고 보고서를 생성합니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Excel VBA</span>
-                        <span class="tag">Pivot Tables</span>
-                        <span class="tag">Data Automation</span>
-                        <span class="tag">Workflow Design</span>
+        <div class="impact-container">
+            <div class="impact-box">
+                <span class="impact-num" data-target="15400">0</span>
+                <span class="impact-txt">Hours Saved</span>
+            </div>
+            <div class="divider"></div>
+            <div class="impact-box">
+                <span class="impact-num" data-target="99.9">0</span>
+                <span class="impact-txt">% Accuracy</span>
+            </div>
+            <div class="divider"></div>
+            <div class="impact-box">
+                <span class="impact-num" data-target="45">0</span>
+                <span class="impact-txt">Processes</span>
+            </div>
+        </div>
+
+        <div class="scroll-hint">SCROLL FOR HISTORY ↓</div>
+    </section>
+
+    <section class="experience-section container reveal">
+        <div class="section-header">
+            <h2 class="section-title">Experience Log</h2>
+            <p style="color:var(--text-secondary);">
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2025.06 - PRESENT</span>
+                        <span class="status-badge running">RUNNING</span>
                     </div>
+                    <h3 class="timeline-title">LG Biztechon</h3>
+                    <span class="timeline-role">Payroll & Automation Specialist</span>
+                    <p class="timeline-desc">급여/퇴직금 정산 100% 자동화 구축. 월 마감 소요 시간 5일 → 1일 단축.</p>
+                    <ul class="timeline-tech-list">
+                        <li>VBA</li><li>Large Scale Data</li><li>Payroll</li>
+                    </ul>
                 </div>
             </div>
 
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2022.12 - 2025.05</span>
+                        <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">(주) 그린피플</h3>
+                    <span class="timeline-role">Process Innovation Manager</span>
+                    <p class="timeline-desc">사내 수작업 프로세스 진단 및 툴 도입. 휴먼 에러율 0% 달성.</p>
+                    <ul class="timeline-tech-list">
+                        <li>Process Design</li><li>Excel VBA</li><li>Python</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2021.07 - 2022.03</span>
+                        <span class="status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="timeline-title">(주) 쿠메푸드</h3>
+                    <span class="timeline-role">E-commerce Operation</span>
+                    <p class="timeline-desc">주문 수집 및 발주. 고객 CS관리</p>
+                </div>
+            </div>
             
-
-            <!-- Project 2: 퇴직급여충당금 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Financial Automation</span>
-                    <h2 class="project-title">퇴직급여충당금</h2>
-                    <p class="project-subtitle">퇴직급여충당부채 자동 계산 시스템</p>
-                    <p class="project-description">
-                        회계 기준에 따른 퇴직급여충당금을 자동으로 계산하고 검증하는 시스템. 
-                        복잡한 회계 법규를 정확히 반영하여 재무제표 작성 시간을 대폭 단축했습니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Excel VBA</span>
-                        <span class="tag">Accounting</span>
-                        <span class="tag">K-IFRS</span>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2019.10 - 2019.12 </span>
+                        <span class="status-badge completed">COMPLETED</span>
                     </div>
+                    <h3 class="timeline-title">연세세브란스 체크업</h3>
+                    <span class="timeline-role">Customer Service & Admin</span>
+                    <p class="timeline-desc">고객 1:1 응대.</p>
                 </div>
             </div>
 
-            <!-- Project 3: 임원레포트 -->
-            <div class="project-card ops" onclick="window.location.href='executive-report.html'">
-                <div class="project-content">
-                    <span class="project-category">Executive Reporting</span>
-                    <h2 class="project-title">임원레포트</h2>
-                    <p class="project-subtitle">경영진 의사결정 지원 대시보드</p>
-                    <p class="project-description">
-                        임원진이 필요로 하는 핵심 지표를 실시간으로 수집하고 시각화하여 
-                        전략적 의사결정을 지원하는 자동화 리포팅 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Dashboard</span>
-                        <span class="tag">Data Visualization</span>
-                        <span class="tag">Executive Summary</span>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header-row">
+                        <span class="timeline-date">2014.11 - 2016.11</span> <span class="status-badge completed">COMPLETED</span>
                     </div>
+                    <h3 class="timeline-title">KIM & CHANG</h3>
+                    <span class="timeline-role">General Administration Team</span> <p class="timeline-desc">
+                        내/외부 서류 관리 및 다량 내용증명 관리
+                    </p>
                 </div>
             </div>
 
-            <!-- Project 4: 원천세 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Tax Automation</span>
-                    <h2 class="project-title">원천세</h2>
-                    <p class="project-subtitle">원천징수 세액 자동 계산 및 신고</p>
-                    <p class="project-description">
-                        직원별 소득세, 지방소득세를 자동으로 계산하고 신고 서류를 생성하는 시스템. 
-                        세법 개정에 따른 업데이트를 즉시 반영하여 컴플라이언스를 보장합니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Tax Calculation</span>
-                        <span class="tag">Compliance</span>
-                        <span class="tag">Auto-filing</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 5: 급여작업 -->
-            <div class="project-card hr">
-                <div class="project-content">
-                    <span class="project-category">Payroll Automation</span>
-                    <h2 class="project-title">급여작업</h2>
-                    <p class="project-subtitle">월간 급여 계산 및 명세서 자동 생성</p>
-                    <p class="project-description">
-                        500명 이상 직원의 급여를 자동으로 계산하고, 급여명세서를 생성하며, 
-                        은행 이체 파일까지 한 번에 처리하는 통합 급여 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Payroll</span>
-                        <span class="tag">Bulk Processing</span>
-                        <span class="tag">Bank Integration</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6: 퇴직금(DC,DB) 적립 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Retirement Planning</span>
-                    <h2 class="project-title">퇴직금(DC,DB) 적립</h2>
-                    <p class="project-subtitle">DC·DB형 퇴직연금 적립금 자동 관리</p>
-                    <p class="project-description">
-                        확정기여형(DC)과 확정급여형(DB) 퇴직연금의 적립금을 자동으로 계산하고 
-                        금융기관 송금 데이터를 생성하는 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Retirement Fund</span>
-                        <span class="tag">DC/DB Type</span>
-                        <span class="tag">Financial Integration</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 7: 근태 사우검증 -->
-            <div class="project-card ops">
-                <div class="project-content">
-                    <span class="project-category">Time & Attendance</span>
-                    <h2 class="project-title">근태 사후검증</h2>
-                    <p class="project-subtitle">근태 데이터 자동 검증 시스템</p>
-                    <p class="project-description">
-                        출퇴근 기록의 오류를 자동으로 감지하고, 직원별 근무시간을 검증하여 
-                        급여 계산의 정확성을 보장하는 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Attendance</span>
-                        <span class="tag">Data Validation</span>
-                        <span class="tag">Error Detection</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 8: 단기파견인원 급여 -->
-            <div class="project-card hr">
-                <div class="project-content">
-                    <span class="project-category">Special Payroll</span>
-                    <h2 class="project-title">단기파견인원 급여</h2>
-                    <p class="project-subtitle">파견 근로자 급여 자동 처리</p>
-                    <p class="project-description">
-                        단기 파견 근로자의 복잡한 급여 체계를 자동으로 계산하고, 
-                        파견처별 정산 자료를 생성하는 특수 급여 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Dispatched Workers</span>
-                        <span class="tag">Complex Calculation</span>
-                        <span class="tag">Multi-site</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 9: 퇴직연금자산 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Asset Management</span>
-                    <h2 class="project-title">퇴직연금자산</h2>
-                    <p class="project-subtitle">퇴직연금 자산 현황 통합 관리</p>
-                    <p class="project-description">
-                        여러 금융기관에 분산된 퇴직연금 자산을 통합 관리하고, 
-                        운용 현황을 실시간으로 모니터링하는 자산관리 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Asset Management</span>
-                        <span class="tag">Financial Integration</span>
-                        <span class="tag">Real-time Monitoring</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 10: 비과세 식대 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Tax Optimization</span>
-                    <h2 class="project-title">비과세 식대</h2>
-                    <p class="project-subtitle">비과세 식대 자동 계산 및 적용</p>
-                    <p class="project-description">
-                        직원별 근무 일수에 따른 비과세 식대를 자동으로 계산하고, 
-                        세법 한도를 검증하여 최적의 세금 혜택을 제공합니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Tax-free Benefits</span>
-                        <span class="tag">Auto-calculation</span>
-                        <span class="tag">Compliance</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 11: DB명부 작업 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Database Management</span>
-                    <h2 class="project-title">DB명부 작업</h2>
-                    <p class="project-subtitle">확정급여형 가입자 명부 자동 생성</p>
-                    <p class="project-description">
-                        DB형 퇴직연금 가입자 명부를 자동으로 생성하고 업데이트하여 
-                        금융기관 제출 서류를 효율적으로 관리합니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">DB Type</span>
-                        <span class="tag">Member List</span>
-                        <span class="tag">Auto-generation</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 12: DB추계 작업 -->
-            <div class="project-card data">
-                <div class="project-content">
-                    <span class="project-category">Actuarial Calculation</span>
-                    <h2 class="project-title">DB추계 작업</h2>
-                    <p class="project-subtitle">DB형 퇴직연금 추계액 자동 산정</p>
-                    <p class="project-description">
-                        확정급여형 퇴직연금의 미래 급여 추계액을 자동으로 계산하고, 
-                        보험수리적 가정을 반영한 부채를 산정합니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Actuarial Science</span>
-                        <span class="tag">DB Projection</span>
-                        <span class="tag">Liability Calculation</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 13: 은행총괄표 -->
-            <div class="project-card ops">
-                <div class="project-content">
-                    <span class="project-category">Financial Reporting</span>
-                    <h2 class="project-title">은행총괄표</h2>
-                    <p class="project-subtitle">은행 송금 내역 통합 관리 시스템</p>
-                    <p class="project-description">
-                        급여, 퇴직금, 복리후생 등 모든 은행 송금 내역을 통합하여 
-                        총괄표를 자동으로 생성하고 검증하는 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Bank Transfer</span>
-                        <span class="tag">Consolidated Report</span>
-                        <span class="tag">Auto-verification</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 14: 선복(수시부여,퇴직정산) -->
-            <div class="project-card hr">
-                <div class="project-content">
-                    <span class="project-category">Benefit Management</span>
-                    <h2 class="project-title">선복(수시부여,퇴직정산)</h2>
-                    <p class="project-subtitle">선택적 복리후생 운영 자동화</p>
-                    <p class="project-description">
-                        선택적 복리후생 포인트의 수시 부여, 사용 내역 관리, 퇴직 시 정산을 
-                        자동으로 처리하는 통합 복지 관리 시스템입니다.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Flexible Benefits</span>
-                        <span class="tag">Point Management</span>
-                        <span class="tag">Auto-settlement</span>
-                    </div>
-                </div>
+            <div class="cta-container">
+                <button class="btn-portfolio-large" onclick="location.href='portfolio.html'">
+                    VIEW PORTFOLIO & PROJECTS →
+                </button>
             </div>
         </div>
-
-        
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <div class="footer-brand">LKH.STUDIO</div>
-                    <p class="footer-desc">
-                        Digital Transformation을 통해 반복 작업을 자동화하고,<br>
-                        사람이 진짜 중요한 일에 집중할 수 있도록 돕습니다.
-                    </p>
-                </div>
-                <div class="footer-section">
-                    <h4>Projects</h4>
-                    <ul class="footer-links">
-                        <li><a href="#hr">HR Automation</a></li>
-                        <li><a href="#data">Data Processing</a></li>
-                        <li><a href="#ops">Operations</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>About</h4>
-                    <ul class="footer-links">
-                        <li><a href="#story">My Story</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <ul class="footer-links">
-                        <li><a href="mailto:contact@lkh.studio">Email</a></li>
-                        <li><a href="#github">GitHub</a></li>
-                        <li><a href="#linkedin">LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 LKH.STUDIO. All rights reserved. | Designed & Developed with ♥</p>
-            </div>
-        </div>
-    </footer>
+    </section>
 
     <script>
-        // Scroll reveal animation
+        // Scroll Reveal
         const revealElements = document.querySelectorAll('.reveal');
-        
         const revealOnScroll = () => {
             revealElements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
+                if (elementTop < window.innerHeight - 100) {
                     element.classList.add('active');
                 }
             });
         };
-        
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
 
-        // Project card click - navigate to detail page
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const title = card.querySelector('.project-title').textContent;
-        
-        if (title.includes('먼쓸리')) {
-    window.location.href = 'monthly.html';
-} else if (title.includes('원천세')) {
-    window.location.href = 'withholding-tax.html';
-} else if (title.includes('퇴직급여충당금')) {
-    window.location.href = 'retirement-reserve.html';
-} else if (title.includes('임원레포트')) {
-    window.location.href = 'Executive-Report.html';
-} else if (title.includes('급여작업')) {
-    window.location.href = 'payroll.html';
-} else if (title.includes('퇴직금(DC,DB) 적립')) {
-    window.location.href = 'Retirement-fund.html';
-} else if (title.includes('근태 사후검증')) {
-    window.location.href = 'Attendance verification.HTML';
-} else if (title.includes('단기파견인원 급여')) {
-    window.location.href = 'Short-term-dispatch.html';
-} else if (title.includes('퇴직연금자산')) {
-    window.location.href = 'retirement-assets.html';
-} else if (title.includes('비과세 식대')) {
-    window.location.href = 'Tax-free.html';
-} else if (title.includes('DB명부 작업')) {
-    window.location.href = 'Db-roster.html';
-} else if (title.includes('DB추계 작업')) {
-    window.location.href = 'Db-projection.html';
-} else if (title.includes('선복(수시부여,퇴직정산)')) {
-    window.location.href = 'Welfare-benefits.html';
-} else if (title.includes('은행총괄표')) {
-    window.location.href = 'Bank-summary.html';
-
-
-} else {
-    alert('준비 중입니다.');
-}
-    });
-});
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // Number Counter Animation
+        const animateImpactNumbers = () => {
+            const counters = document.querySelectorAll('.impact-num');
+            const speed = 50; 
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/[^0-9.]/g, ''); 
+                    const inc = target / speed;
+                    if (count < target) {
+                        if(target % 1 !== 0) counter.innerText = (count + inc).toFixed(1);
+                        else counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 30);
+                    } else {
+                        if(target % 1 !== 0) counter.innerText = target + "%";
+                        else counter.innerText = target.toLocaleString() + "+"; 
+                    }
+                };
+                updateCount();
             });
-        });
+        };
+        setTimeout(animateImpactNumbers, 800);
 
-        // Parallax effect
+        // Parallax
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const decoration = document.querySelector('.bg-decoration');
-            decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
+            if(decoration) decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
         });
-
-        // Add entrance animation to project cards
-        projectCards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            setTimeout(() => {
-                card.style.transition = 'all 0.6s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 100 * index);
-        });
-      // Impact Ticker Animation
-    const animateImpactNumbers = () => {
-        const counters = document.querySelectorAll('.impact-number');
-        const speed = 50; // 속도 조절 (낮을수록 느림, 높을수록 빠름)
-
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText.replace(/[^0-9.]/g, ''); // 숫자만 추출
-                
-                // 증가량 계산 (목표치에 따라 다르게 설정)
-                const inc = target / speed;
-
-                if (count < target) {
-                    // 소수점 처리 (99.9% 같은 경우)
-                    if(target % 1 !== 0) {
-                        counter.innerText = (count + inc).toFixed(1);
-                    } else {
-                        counter.innerText = Math.ceil(count + inc);
-                    }
-                    setTimeout(updateCount, 30);
-                } else {
-                    // 완료 시 포맷팅
-                    if(target % 1 !== 0) {
-                        counter.innerText = target + "%";
-                    } else {
-                        // 천단위 콤마 등 필요한 경우 추가 가능. 여기선 + 붙임
-                        counter.innerText = target.toLocaleString() + "+"; 
-                    }
-                }
-            };
-            updateCount();
-        });
-    };
-
-    // 화면에 보일 때 애니메이션 시작
-    let impactAnimated = false;
-    window.addEventListener('scroll', () => {
-        const impactSection = document.querySelector('.impact-container');
-        if(impactSection && !impactAnimated) {
-            const sectionTop = impactSection.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-            
-            // 화면 하단에서 100px 정도 올라왔을 때 실행
-            if(sectionTop < windowHeight - 100) {
-                animateImpactNumbers();
-                impactAnimated = true;
-            }
-        }
-    });
-
-    // 페이지 로드 시 이미 보이는 경우를 위해 한번 실행 체크
-    setTimeout(() => {
-        const impactSection = document.querySelector('.impact-container');
-        if(impactSection && !impactAnimated) {
-            const sectionTop = impactSection.getBoundingClientRect().top;
-            if(sectionTop < window.innerHeight) {
-                animateImpactNumbers();
-                impactAnimated = true;
-            }
-        }
-    }, 1000);
-
-
     </script>
 </body>
 </html>
