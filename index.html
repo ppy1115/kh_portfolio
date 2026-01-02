@@ -244,32 +244,31 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* Mobile Responsive */
-        /* Mobile Responsive (index.html) */
+       /* Mobile Responsive (index.html) */
         @media (max-width: 768px) {
-            
+
             /* [중요] 부모 컨테이너의 양옆 여백을 줄여서 전체 공간 확보 */
             .container { padding: 0 20px; }
 
             .my-name { font-size: 60px; }
             .intro-summary { font-size: 16px; padding: 0 20px; }
-            
-            /* ▼▼▼ 통계 박스 수정 (겹침 해결 & 넓게 확장) ▼▼▼ */
+
+            /* ▼▼▼ 통계 박스 수정 (두 번째 이미지처럼 넓게) ▼▼▼ */
             .impact-container {
                 display: flex;
                 flex-direction: row;
-                flex-wrap: nowrap;
-                gap: 0;
+                flex-wrap: nowrap; /* 줄 바꿈 방지 */
                 
-                /* 안쪽 여백을 조금 줄여서 글자 공간을 더 확보 */
-                padding: 15px 0;
-                margin-top: 30px;
-                
-                /* ★ 수정: 화면에 꽉 차게 다시 변경 (여백 제거) */
+                /* ★ 수정: 너비를 화면에 맞게 설정 */
                 width: 100%;
-                margin-left: 0;
-                margin-right: 0;
+                max-width: 100%; /* 혹시 모를 상위 요소의 제한 방지 */
+                margin: 30px auto 0; /* 상단 여백 및 가운데 정렬 */
                 
-                justify-content: space-evenly;
+                /* 안쪽 여백과 간격을 조절하여 내용물을 넓게 배치 */
+                padding: 20px 10px;
+                gap: 10px;
+
+                justify-content: space-between; /* 요소들 사이 간격 균등하게 */
                 align-items: center;
                 background: rgba(255, 255, 255, 0.03);
                 border-radius: 20px;
@@ -277,42 +276,45 @@
             }
 
             .impact-box {
-                flex: 1;
-                min-width: 0;
+                flex: 1 1 auto; /* 유연하게 늘어나고 줄어듦 */
+                min-width: 0; /* 내용물이 넘쳐도 박스가 줄어들도록 허용 */
                 text-align: center;
+                padding: 0 5px; /* 박스 내부 좌우 여백 */
             }
 
             .impact-num {
-                /* ★ 수정: 글자가 겹치지 않도록 크기를 20px -> 17px로 안전하게 축소 */
-                font-size: 17px; 
-                margin-bottom: 2px;
+                /* ★ 수정: 글자가 겹치지 않도록 적절한 크기 유지 */
+                font-size: 18px;
+                margin-bottom: 5px;
                 font-weight: 700;
+                white-space: nowrap; /* 숫자 줄바꿈 방지 */
             }
 
             .impact-txt {
                 font-size: 9px;
-                letter-spacing: 0;
-                white-space: nowrap;
+                letter-spacing: 0.5px;
+                white-space: nowrap; /* 텍스트 줄바꿈 방지 */
                 opacity: 0.8;
             }
 
             .divider {
+                flex: 0 0 auto; /* 크기 고정 */
                 width: 1px;
-                height: 25px; /* 높이 살짝 조절 */
+                height: 30px; /* 구분선 높이 조절 */
                 background: rgba(255, 255, 255, 0.1);
                 margin: 0;
             }
             /* ▲▲▲ 여기까지 ▲▲▲ */
 
             /* 나머지 타임라인/버튼 코드는 그대로 유지 */
-            .timeline-container { 
-                padding-left: 50px; 
-                padding-right: 20px; 
+            .timeline-container {
+                padding-left: 50px;
+                padding-right: 20px;
             }
             .timeline-container::before { left: 15px; }
             .timeline-marker { left: -41px; }
 
-            .btn-portfolio-large { 
+            .btn-portfolio-large {
                 padding: 20px 10px;
                 font-size: 13px;
                 letter-spacing: 1px;
