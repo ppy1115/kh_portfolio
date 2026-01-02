@@ -428,6 +428,7 @@
             color: var(--text-secondary);
         }
 
+        /* Mobile Responsive (Executive-Report.html의 style 태그 맨 아래쪽) */
         @media (max-width: 768px) {
             h1 { font-size: 42px; }
             h2 { font-size: 32px; }
@@ -436,6 +437,27 @@
             .stat-number { font-size: 28px; }
             .comparison { grid-template-columns: 1fr; }
             .impact-grid { grid-template-columns: 1fr; }
+
+            /* ▼▼▼ 여기부터 추가/수정된 내용 ▼▼▼ */
+            
+            /* Before/After 카드 내부 텍스트 최적화 */
+            .comparison-card h3 {
+                font-size: 32px;        /* 글자 크기 줄임 */
+                white-space: nowrap;    /* ★ 줄바꿈 금지 */
+                letter-spacing: -1px;   /* 자간 좁힘 */
+            }
+
+            .comparison-value {
+                font-size: 40px;        /* 숫자/텍스트 크기 모바일 최적화 (기존 56px -> 40px) */
+                white-space: nowrap;    /* "수동 필터링", "클릭 한 번" 줄바꿈 방지 */
+            }
+
+            /* 카드 패딩 조절 */
+            .comparison-card {
+                padding: 30px 20px;     /* 내부 여백 줄여서 글자 공간 확보 */
+            }
+
+            /* ▲▲▲ 여기까지 ▲▲▲ */
         }
     </style>
 </head>

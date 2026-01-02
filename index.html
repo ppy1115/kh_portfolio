@@ -248,12 +248,22 @@
             .my-name { font-size: 60px; }
             .intro-summary { font-size: 16px; padding: 0 20px; }
             
-            .impact-container { 
-                gap: 5px; 
-                padding: 15px 0; 
-                flex-wrap: nowrap; 
+            .impact-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 0;
+                padding: 20px 0;
+                
+                /* [수정] 너비를 100%에서 auto로 바꾸고, 양옆 여백(20px)을 줍니다 */
+                width: auto;
+                margin: 30px 20px; 
+                
                 justify-content: space-evenly;
-                width: 100%;
+                align-items: center;
+                
+                /* 박스가 깨지지 않도록 설정 */
+                box-sizing: border-box; 
             }
             .impact-num { font-size: 20px; } 
             .impact-txt { font-size: 9px; letter-spacing: 0; }
