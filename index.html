@@ -247,11 +247,34 @@
         @media (max-width: 768px) {
             .my-name { font-size: 60px; }
             .intro-summary { font-size: 16px; padding: 0 20px; }
-            .impact-container { gap: 30px; padding: 15px; flex-wrap: wrap; justify-content: center;}
-            .timeline-container { padding-left: 30px; }
-            .timeline-container::before { left: 0; }
-            .timeline-marker { left: -36px; }
-            .btn-portfolio-large { padding: 20px 40px; font-size: 14px; width: 100%; }
+            
+            .impact-container { 
+                gap: 5px; 
+                padding: 15px 0; 
+                flex-wrap: nowrap; 
+                justify-content: space-evenly;
+                width: 100%;
+            }
+            .impact-num { font-size: 20px; } 
+            .impact-txt { font-size: 9px; letter-spacing: 0; }
+            .divider { margin: 0 2px; }
+
+            /* ▼▼▼ 여기를 수정했습니다 ▼▼▼ */
+            .timeline-container { 
+                padding-left: 50px; /* 왼쪽 여백을 넉넉히 확보 (30px -> 50px) */
+                padding-right: 20px; /* 오른쪽 여백도 추가해서 답답하지 않게 */
+            }
+            .timeline-container::before { left: 15px; } /* 선 위치 유지 */
+            .timeline-marker { left: -41px; } /* 마커 위치 유지 */
+            /* ▲▲▲ 여기까지 ▲▲▲ */
+
+            .btn-portfolio-large { 
+    padding: 20px 10px;   /* 좌우 여백을 줄여서 글자 공간 확보 */
+    font-size: 13px;      /* 글자 크기를 살짝 줄임 */
+    letter-spacing: 1px;  /* ★핵심: 자간을 3px -> 1px로 줄임 */
+    width: 100%;          /* 버튼 너비 꽉 채움 */
+    white-space: nowrap;  /* 강제로 한 줄에 표시 (줄바꿈 금지) */
+}
         }
     </style>
 </head>
@@ -263,8 +286,8 @@
     </nav>
 
     <section class="intro-section">
-        <span class="my-role"></span>
-        <h1 class="my-name">이경현<span class="dot"></span></h1>
+        <span class="my-role">PAYROLL & AUTOMATION SPECIALIST</span>
+        <h1 class="my-name">이경현<span class="dot">.</span></h1>
         
         <div class="intro-summary">
             <p>
@@ -296,7 +319,7 @@
     <section class="experience-section container reveal">
         <div class="section-header">
             <h2 class="section-title">Experience Log</h2>
-            <p style="color:var(--text-secondary);">
+            <p style="color:var(--text-secondary);">시스템을 업그레이드해온 여정</p>
         </div>
 
         <div class="timeline-container">
@@ -362,7 +385,8 @@
                 <div class="timeline-marker"></div>
                 <div class="timeline-content">
                     <div class="timeline-header-row">
-                        <span class="timeline-date">2014.11 - 2016.11</span> <span class="status-badge completed">COMPLETED</span>
+                        <span class="timeline-date">2014.11 - 2016.11</span>
+                        <span class="status-badge completed">COMPLETED</span>
                     </div>
                     <h3 class="timeline-title">KIM & CHANG 법률사무소</h3>
                     <span class="timeline-role">General Administration Team</span> <p class="timeline-desc">
