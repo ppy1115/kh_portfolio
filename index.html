@@ -253,21 +253,20 @@
             .my-name { font-size: 60px; }
             .intro-summary { font-size: 16px; padding: 0 20px; }
 
-            /* ▼▼▼ 통계 박스 수정 (벽에서 띄우기) ▼▼▼ */
+            /* ▼▼▼ 통계 박스 수정 (넓지만 벽과는 띄우기) ▼▼▼ */
             .impact-container {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: nowrap;
                 
-                /* ★ 핵심 수정: 너비를 100%에서 auto로 변경하고, 양옆 여백 추가 */
-                width: auto; 
-                margin: 30px 10px 0 10px; /* 상단 30px, 좌우 10px 여백을 강제로 줌 */
+                /* ★ 핵심 수정: 화면 꽉 차게(100%) 하되, 양옆 10px씩(총 20px) 뺌 */
+                width: calc(100% - 20px); 
+                margin: 30px auto 0; /* 상단 30px, 좌우는 자동(가운데 정렬) */
                 
-                /* 안쪽 여백 */
-                padding: 20px 5px; 
-                gap: 5px;
+                padding: 20px 0; /* 안쪽 여백 */
+                gap: 0; /* 요소 간격 제거 (justify-content로 조절) */
 
-                justify-content: space-evenly; /* 내용물 간격 균등 분배 */
+                justify-content: space-evenly; /* 내용물 균등 분배 */
                 align-items: center;
                 background: rgba(255, 255, 255, 0.03);
                 border-radius: 20px;
