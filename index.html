@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Digital Transformation Specialist 이경현의 포트폴리오. 업무 자동화 및 급여 시스템 구축 전문가.">
+    <meta property="og:title" content="LKH - Payroll & Automation Specialist">
+    <meta property="og:description" content="비효율적인 업무 프로세스를 0(Zero)으로 만듭니다.">
+    <meta property="og:type" content="website">
+
     <title>LKH - Digital Transformation Specialist</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-bg: #0a0a0a;
@@ -24,6 +34,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html {
+            scroll-behavior: smooth; /* 부드러운 스크롤 이동 */
+        }
+
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background: var(--primary-bg);
@@ -37,6 +51,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none; opacity: 0.3;
+            transition: opacity 0.3s;
         }
         .bg-decoration::before {
             content: ''; position: absolute; top: -50%; right: -20%;
@@ -88,7 +103,9 @@
         }
 
         .my-name {
-            font-size: 120px; font-weight: 900; line-height: 1.2;
+            /* clamp 함수로 반응형 폰트 사이즈 적용 */
+            font-size: clamp(50px, 10vw, 120px);
+            font-weight: 900; line-height: 1.2;
             margin-bottom: 40px;
             background: linear-gradient(135deg, #fff 30%, var(--text-secondary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -125,12 +142,18 @@
         }
         .divider { width: 1px; background: rgba(255,255,255,0.1); }
 
-        /* Scroll Hint */
+        /* Scroll Hint (Clickable) */
         .scroll-hint {
             position: absolute; bottom: 40px;
             font-family: 'JetBrains Mono', monospace; font-size: 12px;
-            color: var(--text-muted); animation: bounce 2s infinite;
+            color: var(--text-muted); 
+            animation: bounce 2s infinite;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
         }
+        .scroll-hint:hover { color: var(--accent-purple); }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
             40% {transform: translateY(-10px);}
@@ -213,6 +236,13 @@
             font-family: 'JetBrains Mono', monospace; font-size: 11px;
             padding: 4px 10px; background: rgba(167, 139, 250, 0.1);
             border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; color: var(--accent-purple-light);
+            transition: all 0.3s;
+        }
+        /* 주요 스킬 강조 */
+        .timeline-tech-list li.highlight {
+            color: var(--accent-green);
+            border-color: rgba(52, 211, 153, 0.3);
+            background: rgba(52, 211, 153, 0.05);
         }
 
         /* Portfolio Button Area */
@@ -244,78 +274,36 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* Mobile Responsive */
-       /* Mobile Responsive (index.html) */
         @media (max-width: 768px) {
-
-            /* [중요] 전체 컨테이너 여백 유지 */
             .container { padding: 0 20px; }
+            .bg-decoration { opacity: 0.15; } /* 모바일에서 배경 흐리게 */
 
-            .my-name { font-size: 60px; }
             .intro-summary { font-size: 16px; padding: 0 20px; }
 
-            /* ▼▼▼ 통계 박스 수정 (넓지만 벽과는 띄우기) ▼▼▼ */
+            /* 통계 박스 최적화 */
             .impact-container {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                
-                /* ★ 핵심 수정: 화면 꽉 차게(100%) 하되, 양옆 10px씩(총 20px) 뺌 */
+                display: flex; flex-direction: row; flex-wrap: nowrap;
                 width: calc(100% - 20px); 
-                margin: 30px auto 0; /* 상단 30px, 좌우는 자동(가운데 정렬) */
-                
-                padding: 20px 0; /* 안쪽 여백 */
-                gap: 0; /* 요소 간격 제거 (justify-content로 조절) */
-
-                justify-content: space-evenly; /* 내용물 균등 분배 */
-                align-items: center;
+                margin: 30px auto 0;
+                padding: 20px 0; gap: 0;
+                justify-content: space-evenly; align-items: center;
                 background: rgba(255, 255, 255, 0.03);
                 border-radius: 20px;
                 border: 1px solid rgba(255, 255, 255, 0.05);
             }
 
-            .impact-box {
-                flex: 1; /* 공간 균등 차지 */
-                min-width: 0;
-                text-align: center;
-            }
+            .impact-box { flex: 1; min-width: 0; text-align: center; }
+            .impact-num { font-size: 17px; margin-bottom: 5px; font-weight: 700; white-space: nowrap; }
+            .impact-txt { font-size: 9px; letter-spacing: 0; white-space: nowrap; opacity: 0.8; }
+            .divider { width: 1px; height: 25px; background: rgba(255, 255, 255, 0.1); margin: 0; }
 
-            .impact-num {
-                /* 공간이 좁아졌으므로 폰트 크기 최적화 */
-                font-size: 17px; 
-                margin-bottom: 5px;
-                font-weight: 700;
-                white-space: nowrap;
-            }
-
-            .impact-txt {
-                font-size: 9px;
-                letter-spacing: 0;
-                white-space: nowrap;
-                opacity: 0.8;
-            }
-
-            .divider {
-                width: 1px;
-                height: 25px;
-                background: rgba(255, 255, 255, 0.1);
-                margin: 0;
-            }
-            /* ▲▲▲ 여기까지 ▲▲▲ */
-
-            /* 나머지 타임라인/버튼 코드는 그대로 유지 */
-            .timeline-container {
-                padding-left: 50px;
-                padding-right: 20px;
-            }
+            .timeline-container { padding-left: 50px; padding-right: 20px; }
             .timeline-container::before { left: 15px; }
             .timeline-marker { left: -41px; }
 
             .btn-portfolio-large {
-                padding: 20px 10px;
-                font-size: 13px;
-                letter-spacing: 1px;
-                width: 100%;
-                white-space: nowrap;
+                padding: 20px 10px; font-size: 13px; letter-spacing: 1px;
+                width: 100%; white-space: nowrap;
             }
         }
     </style>
@@ -340,25 +328,25 @@
 
         <div class="impact-container">
             <div class="impact-box">
-                <span class="impact-num" data-target="15400">0</span>
+                <span class="impact-num" data-target="15400" data-suffix="+">0</span>
                 <span class="impact-txt">Hours Saved</span>
             </div>
             <div class="divider"></div>
             <div class="impact-box">
-                <span class="impact-num" data-target="99.9">0</span>
-                <span class="impact-txt">% Accuracy</span>
+                <span class="impact-num" data-target="99.9" data-suffix="%">0</span>
+                <span class="impact-txt">Accuracy</span>
             </div>
             <div class="divider"></div>
             <div class="impact-box">
-                <span class="impact-num" data-target="45">0</span>
+                <span class="impact-num" data-target="45" data-suffix="+">0</span>
                 <span class="impact-txt">Processes</span>
             </div>
         </div>
 
-        <div class="scroll-hint">SCROLL FOR HISTORY ↓</div>
+        <a href="#experience" class="scroll-hint">SCROLL FOR HISTORY ↓</a>
     </section>
 
-    <section class="experience-section container reveal">
+    <section id="experience" class="experience-section container reveal">
         <div class="section-header">
             <h2 class="section-title">Experience Log</h2>
             <p style="color:var(--text-secondary);">시스템을 업그레이드해온 여정</p>
@@ -376,7 +364,9 @@
                     <span class="timeline-role">Payroll & Automation Specialist</span>
                     <p class="timeline-desc">급여/퇴직금 정산 100% 자동화 구축. 월 마감 소요 시간 5일 → 1일 단축.</p>
                     <ul class="timeline-tech-list">
-                        <li>VBA</li><li>Large Scale Data</li><li>Payroll</li>
+                        <li class="highlight">VBA</li>
+                        <li>Large Scale Data</li>
+                        <li class="highlight">Payroll</li>
                     </ul>
                 </div>
             </div>
@@ -392,7 +382,9 @@
                     <span class="timeline-role">Process Innovation Manager</span>
                     <p class="timeline-desc">사내 수작업 프로세스 진단 및 툴 도입. 휴먼 에러율 0% 달성.</p>
                     <ul class="timeline-tech-list">
-                        <li>Process Design</li><li>Excel VBA</li><li>Python</li>
+                        <li>Process Design</li>
+                        <li class="highlight">Excel VBA</li>
+                        <li class="highlight">Python</li>
                     </ul>
                 </div>
             </div>
@@ -419,7 +411,7 @@
                     </div>
                     <h3 class="timeline-title">연세세브란스 체크업</h3>
                     <span class="timeline-role">Customer Service & Admin</span>
-                    <p class="timeline-desc">고객 1:1 응대.</p>
+                    <p class="timeline-desc">고객 1:1 응대 및 관리.</p>
                 </div>
             </div>
 
@@ -446,47 +438,74 @@
     </section>
 
     <script>
-        // Scroll Reveal
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                if (elementTop < window.innerHeight - 100) {
-                    element.classList.add('active');
-                }
-            });
-        };
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Scroll Reveal (스크롤 시 요소 등장 애니메이션)
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
 
-        // Number Counter Animation
-        const animateImpactNumbers = () => {
-            const counters = document.querySelectorAll('.impact-num');
-            const speed = 50; 
-            counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText.replace(/[^0-9.]/g, ''); 
-                    const inc = target / speed;
-                    if (count < target) {
-                        if(target % 1 !== 0) counter.innerText = (count + inc).toFixed(1);
-                        else counter.innerText = Math.ceil(count + inc);
-                        setTimeout(updateCount, 30);
-                    } else {
-                        if(target % 1 !== 0) counter.innerText = target + "%";
-                        else counter.innerText = target.toLocaleString() + "+"; 
+                revealElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        element.classList.add('active');
                     }
-                };
-                updateCount();
-            });
-        };
-        setTimeout(animateImpactNumbers, 800);
+                });
+            };
 
-        // Parallax
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // 초기 로드 시 실행
+
+            // 2. Number Counter Animation (부드러운 카운팅 최적화)
+            const counters = document.querySelectorAll('.impact-num');
+            let hasAnimated = false; // 한 번만 실행되도록 플래그 설정
+
+            const animateImpactNumbers = () => {
+                if(hasAnimated) return;
+                hasAnimated = true;
+
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    const duration = 2000; // 2초
+                    let startTime = null;
+
+                    const step = (timestamp) => {
+                        if (!startTime) startTime = timestamp;
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
+                        
+                        // Ease-out 효과
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const currentNum = target * easeOut;
+
+                        if (target % 1 !== 0) {
+                            counter.innerText = currentNum.toFixed(1) + suffix;
+                        } else {
+                            counter.innerText = Math.floor(currentNum).toLocaleString() + suffix;
+                        }
+
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            // 최종값 보정
+                            counter.innerText = (target % 1 !== 0 ? target : target.toLocaleString()) + suffix;
+                        }
+                    };
+
+                    window.requestAnimationFrame(step);
+                });
+            };
+            
+            // 0.8초 후 애니메이션 시작
+            setTimeout(animateImpactNumbers, 800);
+
+            // 3. Parallax Effect (배경 움직임)
             const decoration = document.querySelector('.bg-decoration');
-            if(decoration) decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                if(decoration) decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
         });
     </script>
 </body>

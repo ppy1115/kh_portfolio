@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>근태사후검증 자동화 시스템 - HR Automation Portfolio</title>
-    <meta name="description" content="Excel VBA를 활용한 HR 급여/근태 완전 자동화 프로젝트. 소요시간 98% 단축, 상이자 검출률 100%.">
-    <meta property="og:title" content="근태사후검증 자동화 시스템 Portfolio">
-    <meta property="og:description" content="3분 만에 끝나는 급여/근태 완전 자동화. Excel VBA 프로젝트 상세 분석.">
-    <meta property="og:type" content="website">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
@@ -48,7 +43,6 @@
             font-family: var(--font-main) !important;
         }
 
-        /* 배경 애니메이션 */
         .bg-decoration {
             position: fixed;
             top: 0;
@@ -296,10 +290,8 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px;
-            cursor: pointer; /* UX 개선: 클릭 가능 표시 */
+            cursor: pointer;
             transition: all 0.3s ease;
-            user-select: none; /* UX 개선: 텍스트 드래그 방지 */
-            -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
         }
 
         .module-card:hover {
@@ -438,22 +430,13 @@
             color: var(--text-secondary);
         }
 
-        /* 모바일 반응형 개선 */
         @media (max-width: 768px) {
             h1 { font-size: 42px; }
             h2 { font-size: 32px; }
             h3 { font-size: 24px; }
-            
             .stats-hero { grid-template-columns: 1fr; }
-            
-            /* 모바일에서 숫자가 너무 커서 깨지는 현상 방지 */
-            .stat-number { font-size: 32px; } 
-            
             .comparison { grid-template-columns: 1fr; }
-            .comparison-value { font-size: 40px; }
-            
             .impact-grid { grid-template-columns: 1fr; }
-            .module-title { font-size: 20px; }
         }
     </style>
 </head>
@@ -486,6 +469,7 @@
             </div>
         </header>
 
+        <!-- Problem -->
         <section>
             <h2>🔥 해결한 문제</h2>
             <div class="problem-box">
@@ -503,6 +487,7 @@
             <p><strong>결과:</strong> 매월 반나절 소모, 높은 실수 위험, 상이자 누락 가능성</p>
         </section>
 
+        <!-- Solution -->
         <section>
             <h2>💡 해결 방법</h2>
             
@@ -547,6 +532,7 @@ Stage 3: 최종 처리
             </div>
         </section>
 
+        <!-- Stage 1 -->
         <section>
             <h2>📥 Stage 1: 초기화 & 데이터 수집</h2>
             
@@ -628,6 +614,7 @@ Stage 3: 최종 처리
             </div>
         </section>
 
+        <!-- Stage 2 -->
         <section>
             <h2>🔍 Stage 2: 상이자 검증 (핵심)</h2>
             
@@ -760,6 +747,7 @@ I열~P열 (9~16번째 열) 중:
             </div>
         </section>
 
+        <!-- Stage 3 -->
         <section>
             <h2>✅ Stage 3: 최종 처리</h2>
             
@@ -796,6 +784,7 @@ I열~P열 (9~16번째 열) 중:
             </div>
         </section>
 
+        <!-- Impact -->
         <section>
             <h2>🎉 프로젝트 임팩트</h2>
             
@@ -844,6 +833,7 @@ I열~P열 (9~16번째 열) 중:
             </ul>
         </section>
 
+        <!-- Tech Details -->
         <section>
             <h2>🔧 기술 상세</h2>
             
@@ -888,6 +878,7 @@ I열~P열 (9~16번째 열) 중:
    → O(1) 검색 속도</pre></div>
         </section>
 
+        <!-- Learnings -->
         <section>
             <h2>💡 배운 점</h2>
             
