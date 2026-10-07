@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>입금보고서 매칭 - HR Automation Portfolio</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#000000;
+    --yellow:#FFE600;
+    --paper:#F4F2EC;
+    --white:#FFFFFF;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    --mono:"SF Mono",ui-monospace,Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    padding:64px 24px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:680px;margin:0 auto;}
+
+  /* 헤더 */
+  .badge{
+    display:inline-block;
+    background:var(--ink);color:var(--white);
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.2em;
+    padding:7px 14px;
+    transform:rotate(-1.5deg);
+  }
+  h1{
+    margin-top:28px;
+    font-size:46px;font-weight:900;
+    line-height:1.25;letter-spacing:-.02em;
+    word-break:keep-all;
+  }
+  h1 mark{
+    background:var(--yellow);
+    padding:0 8px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .lead{
+    margin-top:20px;
+    font-size:16px;font-weight:600;
+    word-break:keep-all;
+  }
+
+  /* 메타 티켓 */
+  .meta{
+    margin-top:36px;
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .meta div{padding:14px 18px;}
+  .meta div + div{border-left:3px solid var(--ink);}
+  .meta dt{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .meta dd{font-size:14.5px;font-weight:800;margin-top:2px;}
+
+  /* 단계 카드 */
+  .steps{margin-top:64px;display:grid;gap:36px;}
+  .card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:28px 30px 32px;
+  }
+  .card .head{
+    display:flex;align-items:center;gap:16px;
+    margin-bottom:12px;
+  }
+  .card .n{
+    flex:none;
+    width:44px;height:44px;
+    background:var(--yellow);
+    border:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:900;
+  }
+  .card h3{
+    font-size:18px;font-weight:900;letter-spacing:-.01em;
+    line-height:1.4;word-break:keep-all;
+  }
+  .card .desc{font-size:14.5px;font-weight:500;word-break:keep-all;}
+  .card .desc b{font-weight:800;background:var(--yellow);padding:0 4px;}
+
+  .card .path{
+    display:inline-block;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:12.5px;font-weight:700;
+    background:var(--ink);color:var(--white);
+    padding:6px 12px;
+  }
+
+  figure{margin-top:18px;}
+  figure .frame{border:3px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}
+
+  /* 푸터 스탬프 */
+  footer{
+    margin-top:64px;
+    text-align:center;
+  }
+  footer .stamp{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.24em;
+    border:3px solid var(--ink);
+    padding:10px 22px;
+    transform:rotate(1.2deg);
+    background:var(--yellow);
+    box-shadow:5px 5px 0 var(--ink);
+  }
+
+  @media (max-width:600px){
+    body{padding:40px 16px 72px;}
+    h1{font-size:33px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:3px solid var(--ink);}
+    .card{padding:22px 20px 26px;box-shadow:6px 6px 0 var(--ink);}
+  }
+
+  /* 포트폴리오 확장 */
+  .back{
+    display:inline-block;margin-bottom:28px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;
+    color:var(--ink);text-decoration:none;
+    border:3px solid var(--ink);background:var(--white);
+    padding:6px 12px;box-shadow:5px 5px 0 var(--ink);
+  }
+  .back:hover{background:var(--yellow);}
+  .meta dd{line-height:1.5;word-break:keep-all;}
+  .section-label{
+    margin-top:64px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;
+  }
+  .section-label + .steps{margin-top:20px;}
+  .results{
+    margin-top:20px;background:var(--white);
+    border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  }
+  .results .row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 20px;align-items:center;}
+  .results .row + .row{border-top:3px solid var(--ink);}
+  .results .k{font-size:14.5px;font-weight:700;word-break:keep-all;}
+  .results .v{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;}
+  .results .v b{background:var(--yellow);padding:0 4px;}
+  .note{margin-top:14px;font-size:12.5px;font-weight:500;}
+  .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tags span{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--ink);color:var(--white);padding:5px 10px;}
+  @media (max-width:600px){
+    .results{box-shadow:6px 6px 0 var(--ink);}
+    .results .row{grid-template-columns:1fr;gap:2px;}
+    .results .v{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header>
+    <a class="back" href="portfolio.html">&larr; ALL PROJECTS</a><br>
+    <span class="badge">PROJECT / FINANCE RPA</span>
+    <h1>하루 7시간 대조를<br><mark>15분</mark>으로</h1>
+    <p class="lead">ERP 입금보고서와 쇼핑몰 주문을 이름과 금액으로 1:1 매칭하고, 거래처코드에 사업자번호를 넣습니다. 저장은 사람이 확인한 뒤 누릅니다.</p>
+    <dl class="meta">
+      <div><dt>Before</dt><dd>건당 매칭 3분 + 입력 1분, 하루 100건</dd></div>
+      <div><dt>After</dt><dd>두 사이트 자동 조작 + 1:1 자동 매칭</dd></div>
+      <div><dt>Type</dt><dd>Ops / Finance</dd></div>
+    </dl>
+    <div class="tags"><span>Python</span><span>Playwright</span><span>CustomTkinter</span><span>PyInstaller</span></div>
+  </header>
+
+  <p class="section-label">HOW IT WORKS / 작동 단계</p>
+  <div class="steps">
+    <div class="card">
+      <div class="head">
+        <div class="n">1</div>
+        <h3>실행·설정</h3>
+      </div>
+      <p class="desc">실행 파일을 열고 기준일과 페이지당 건수를 고릅니다. 필요한 브라우저는 처음 실행할 때 자동으로 설치됩니다.</p>
+      <span class="path">입금보고서자동화.exe &gt; 설정</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">2</div>
+        <h3>쇼핑몰 주문 수집</h3>
+      </div>
+      <p class="desc">결제일 <b>±2일</b> 범위의 주문을 페이지마다 돌며 주문자, 결제금액, 사업자번호를 읽습니다.</p>
+      <span class="path">Cafe24 에이전트 &gt; 주문 수집</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">3</div>
+        <h3>입금보고서 작성</h3>
+      </div>
+      <p class="desc">ERP에서 입금 건을 검색해 보고서를 만듭니다. 회계 반영 버튼이 보이면 <b>즉시 멈춥니다</b>.</p>
+      <span class="path">ERP 에이전트 &gt; 입금보고서</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">4</div>
+        <h3>자동 매칭</h3>
+      </div>
+      <p class="desc">이름은 부분 일치, 금액은 정확히 일치하는 건끼리 1:1로 묶고 중복 매칭을 막습니다.</p>
+      <span class="path">매칭 엔진 &gt; 이름+금액</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">5</div>
+        <h3>입력·확인</h3>
+      </div>
+      <p class="desc">매칭된 행에 사업자번호를 넣습니다. 매칭되지 않은 행은 별도 탭에서 고친 뒤 다시 매칭합니다.</p>
+      <span class="path">GUI &gt; 매칭결과 / 미매칭</span>
+    </div>
+  </div>
+
+  <p class="section-label">RESULTS / 성과</p>
+  <div class="results">
+    <div class="row"><span class="k">건당 입력</span><span class="v">1분 &rarr; 1.5초</span></div>
+    <div class="row"><span class="k">하루 총 소요 (100건)</span><span class="v">약 7시간 &rarr; <b>약 15분</b></span></div>
+    <div class="row"><span class="k">입력 오류율</span><span class="v">5% &rarr; 0%</span></div>
+  </div>
+  <p class="note">수치는 작업 문서에 적힌 &#x27;하루 100건&#x27; 기준 추정치입니다.</p>
+
+  <footer>
+    <span class="stamp">MATCHED / NOT TYPED</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>판매데이터 파이프라인 - HR Automation Portfolio</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#000000;
+    --yellow:#FFE600;
+    --paper:#F4F2EC;
+    --white:#FFFFFF;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    --mono:"SF Mono",ui-monospace,Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    padding:64px 24px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:680px;margin:0 auto;}
+
+  /* 헤더 */
+  .badge{
+    display:inline-block;
+    background:var(--ink);color:var(--white);
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.2em;
+    padding:7px 14px;
+    transform:rotate(-1.5deg);
+  }
+  h1{
+    margin-top:28px;
+    font-size:46px;font-weight:900;
+    line-height:1.25;letter-spacing:-.02em;
+    word-break:keep-all;
+  }
+  h1 mark{
+    background:var(--yellow);
+    padding:0 8px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .lead{
+    margin-top:20px;
+    font-size:16px;font-weight:600;
+    word-break:keep-all;
+  }
+
+  /* 메타 티켓 */
+  .meta{
+    margin-top:36px;
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .meta div{padding:14px 18px;}
+  .meta div + div{border-left:3px solid var(--ink);}
+  .meta dt{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .meta dd{font-size:14.5px;font-weight:800;margin-top:2px;}
+
+  /* 단계 카드 */
+  .steps{margin-top:64px;display:grid;gap:36px;}
+  .card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:28px 30px 32px;
+  }
+  .card .head{
+    display:flex;align-items:center;gap:16px;
+    margin-bottom:12px;
+  }
+  .card .n{
+    flex:none;
+    width:44px;height:44px;
+    background:var(--yellow);
+    border:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:900;
+  }
+  .card h3{
+    font-size:18px;font-weight:900;letter-spacing:-.01em;
+    line-height:1.4;word-break:keep-all;
+  }
+  .card .desc{font-size:14.5px;font-weight:500;word-break:keep-all;}
+  .card .desc b{font-weight:800;background:var(--yellow);padding:0 4px;}
+
+  .card .path{
+    display:inline-block;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:12.5px;font-weight:700;
+    background:var(--ink);color:var(--white);
+    padding:6px 12px;
+  }
+
+  figure{margin-top:18px;}
+  figure .frame{border:3px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}
+
+  /* 푸터 스탬프 */
+  footer{
+    margin-top:64px;
+    text-align:center;
+  }
+  footer .stamp{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.24em;
+    border:3px solid var(--ink);
+    padding:10px 22px;
+    transform:rotate(1.2deg);
+    background:var(--yellow);
+    box-shadow:5px 5px 0 var(--ink);
+  }
+
+  @media (max-width:600px){
+    body{padding:40px 16px 72px;}
+    h1{font-size:33px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:3px solid var(--ink);}
+    .card{padding:22px 20px 26px;box-shadow:6px 6px 0 var(--ink);}
+  }
+
+  /* 포트폴리오 확장 */
+  .back{
+    display:inline-block;margin-bottom:28px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;
+    color:var(--ink);text-decoration:none;
+    border:3px solid var(--ink);background:var(--white);
+    padding:6px 12px;box-shadow:5px 5px 0 var(--ink);
+  }
+  .back:hover{background:var(--yellow);}
+  .meta dd{line-height:1.5;word-break:keep-all;}
+  .section-label{
+    margin-top:64px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;
+  }
+  .section-label + .steps{margin-top:20px;}
+  .results{
+    margin-top:20px;background:var(--white);
+    border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  }
+  .results .row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 20px;align-items:center;}
+  .results .row + .row{border-top:3px solid var(--ink);}
+  .results .k{font-size:14.5px;font-weight:700;word-break:keep-all;}
+  .results .v{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;}
+  .results .v b{background:var(--yellow);padding:0 4px;}
+  .note{margin-top:14px;font-size:12.5px;font-weight:500;}
+  .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tags span{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--ink);color:var(--white);padding:5px 10px;}
+  @media (max-width:600px){
+    .results{box-shadow:6px 6px 0 var(--ink);}
+    .results .row{grid-template-columns:1fr;gap:2px;}
+    .results .v{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header>
+    <a class="back" href="portfolio.html">&larr; ALL PROJECTS</a><br>
+    <span class="badge">PROJECT / DATA PIPELINE</span>
+    <h1>판매 데이터가<br><mark>매일 알아서</mark> 쌓입니다</h1>
+    <p class="lead">POS 원본 가공은 단계별 매크로가, 판매현황 수집과 적재는 서버가 맡습니다. 결과는 웹 대시보드 4개 탭에서 확인합니다.</p>
+    <dl class="meta">
+      <div><dt>Before</dt><dd>병합 해제·검증·분류 수작업, 요약본 엑셀을 USB에 보관</dd></div>
+      <div><dt>After</dt><dd>매일 14:00 자동 수집 → DB → 대시보드</dd></div>
+      <div><dt>Type</dt><dd>Data / Sales</dd></div>
+    </dl>
+    <div class="tags"><span>Excel VBA</span><span>Python</span><span>Playwright</span><span>PowerShell</span><span>PostgreSQL</span><span>Docker</span><span>Metabase</span></div>
+  </header>
+
+  <p class="section-label">HOW IT WORKS / 작동 단계</p>
+  <div class="steps">
+    <div class="card">
+      <div class="head">
+        <div class="n">1</div>
+        <h3>병합 해제·빈셀 채우기</h3>
+      </div>
+      <p class="desc">POS 원본의 병합 셀을 풀고 빈 칸을 채운 뒤 작업 시트에 붙입니다. 검증 수식도 함께 들어갑니다.</p>
+      <span class="path">영업관리 &gt; Step1</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">2</div>
+        <h3>금액 검증</h3>
+      </div>
+      <p class="desc">피벗을 새로 고쳐 금액이 맞지 않는 영수증을 찾고, 검증 열이 <b>모두 0일 때만</b> 다음 단계로 넘깁니다.</p>
+      <span class="path">영업관리 &gt; Step2 / Step2_3</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">3</div>
+        <h3>가공·업로드 양식</h3>
+      </div>
+      <p class="desc">A/S, 자가사용, 직원가, 프로모션을 나눠 처리하고 ERP 판매입력 양식으로 정렬합니다.</p>
+      <span class="path">영업관리 &gt; Step3 / Step4</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">4</div>
+        <h3>일일 자동 수집</h3>
+      </div>
+      <p class="desc">서버가 매일 14:00에 ERP 판매현황을 내려받습니다. 빠진 날은 <b>최근 45일 안에서 자동 보충</b>합니다.</p>
+      <span class="path">데이터서버 &gt; 예약작업</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">5</div>
+        <h3>DB 적재</h3>
+      </div>
+      <p class="desc">15분마다 CSV를 DB에 넣습니다. 같은 파일을 다시 넣어도 중복이 생기지 않습니다.</p>
+      <span class="path">데이터서버 &gt; PostgreSQL</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">6</div>
+        <h3>대시보드</h3>
+      </div>
+      <p class="desc">전체 판매현황, 제품×판매처, 일별 판매, 채널별 4개 탭으로 보여 줍니다. 매핑 엑셀을 바꾸면 바로 반영됩니다.</p>
+      <span class="path">대시보드 &gt; 4개 탭</span>
+    </div>
+  </div>
+
+  <p class="section-label">RESULTS / 성과</p>
+  <div class="results">
+    <div class="row"><span class="k">원본 가공 (10만 행)</span><span class="v"><b>약 2~3초</b></span></div>
+    <div class="row"><span class="k">관리 데이터</span><span class="v">요약 2.2만 행 &rarr; 상세 65만 행</span></div>
+    <div class="row"><span class="k">운영 방식</span><span class="v">무인 · 재부팅 자동 복구</span></div>
+  </div>
+
+  <footer>
+    <span class="stamp">EVERY DAY AT 14:00</span>
+  </footer>
+
+</div>
+</body>
+</html>

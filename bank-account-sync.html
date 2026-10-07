@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>법인계좌 자동조회 - HR Automation Portfolio</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#000000;
+    --yellow:#FFE600;
+    --paper:#F4F2EC;
+    --white:#FFFFFF;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    --mono:"SF Mono",ui-monospace,Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    padding:64px 24px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:680px;margin:0 auto;}
+
+  /* 헤더 */
+  .badge{
+    display:inline-block;
+    background:var(--ink);color:var(--white);
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.2em;
+    padding:7px 14px;
+    transform:rotate(-1.5deg);
+  }
+  h1{
+    margin-top:28px;
+    font-size:46px;font-weight:900;
+    line-height:1.25;letter-spacing:-.02em;
+    word-break:keep-all;
+  }
+  h1 mark{
+    background:var(--yellow);
+    padding:0 8px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .lead{
+    margin-top:20px;
+    font-size:16px;font-weight:600;
+    word-break:keep-all;
+  }
+
+  /* 메타 티켓 */
+  .meta{
+    margin-top:36px;
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .meta div{padding:14px 18px;}
+  .meta div + div{border-left:3px solid var(--ink);}
+  .meta dt{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .meta dd{font-size:14.5px;font-weight:800;margin-top:2px;}
+
+  /* 단계 카드 */
+  .steps{margin-top:64px;display:grid;gap:36px;}
+  .card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:28px 30px 32px;
+  }
+  .card .head{
+    display:flex;align-items:center;gap:16px;
+    margin-bottom:12px;
+  }
+  .card .n{
+    flex:none;
+    width:44px;height:44px;
+    background:var(--yellow);
+    border:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:900;
+  }
+  .card h3{
+    font-size:18px;font-weight:900;letter-spacing:-.01em;
+    line-height:1.4;word-break:keep-all;
+  }
+  .card .desc{font-size:14.5px;font-weight:500;word-break:keep-all;}
+  .card .desc b{font-weight:800;background:var(--yellow);padding:0 4px;}
+
+  .card .path{
+    display:inline-block;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:12.5px;font-weight:700;
+    background:var(--ink);color:var(--white);
+    padding:6px 12px;
+  }
+
+  figure{margin-top:18px;}
+  figure .frame{border:3px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}
+
+  /* 푸터 스탬프 */
+  footer{
+    margin-top:64px;
+    text-align:center;
+  }
+  footer .stamp{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.24em;
+    border:3px solid var(--ink);
+    padding:10px 22px;
+    transform:rotate(1.2deg);
+    background:var(--yellow);
+    box-shadow:5px 5px 0 var(--ink);
+  }
+
+  @media (max-width:600px){
+    body{padding:40px 16px 72px;}
+    h1{font-size:33px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:3px solid var(--ink);}
+    .card{padding:22px 20px 26px;box-shadow:6px 6px 0 var(--ink);}
+  }
+
+  /* 포트폴리오 확장 */
+  .back{
+    display:inline-block;margin-bottom:28px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;
+    color:var(--ink);text-decoration:none;
+    border:3px solid var(--ink);background:var(--white);
+    padding:6px 12px;box-shadow:5px 5px 0 var(--ink);
+  }
+  .back:hover{background:var(--yellow);}
+  .meta dd{line-height:1.5;word-break:keep-all;}
+  .section-label{
+    margin-top:64px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;
+  }
+  .section-label + .steps{margin-top:20px;}
+  .results{
+    margin-top:20px;background:var(--white);
+    border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  }
+  .results .row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 20px;align-items:center;}
+  .results .row + .row{border-top:3px solid var(--ink);}
+  .results .k{font-size:14.5px;font-weight:700;word-break:keep-all;}
+  .results .v{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;}
+  .results .v b{background:var(--yellow);padding:0 4px;}
+  .note{margin-top:14px;font-size:12.5px;font-weight:500;}
+  .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tags span{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--ink);color:var(--white);padding:5px 10px;}
+  @media (max-width:600px){
+    .results{box-shadow:6px 6px 0 var(--ink);}
+    .results .row{grid-template-columns:1fr;gap:2px;}
+    .results .v{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header>
+    <a class="back" href="portfolio.html">&larr; ALL PROJECTS</a><br>
+    <span class="badge">PROJECT / FINANCE SYSTEM</span>
+    <h1>법인계좌 거래내역이<br><mark>5분마다</mark> 들어옵니다</h1>
+    <p class="lead">은행 API 중계 서비스로 거래내역을 모아 DB에 쌓고, 화면은 DB만 읽습니다. 인증키는 서버 밖으로 나가지 않습니다.</p>
+    <dl class="meta">
+      <div><dt>Before</dt><dd>계좌마다 은행 사이트·앱에 들어가 확인</dd></div>
+      <div><dt>After</dt><dd>5분 주기 수집 + 사내 웹 조회</dd></div>
+      <div><dt>Type</dt><dd>Ops / Finance</dd></div>
+    </dl>
+    <div class="tags"><span>Node.js</span><span>TypeScript</span><span>SOAP API</span><span>PostgreSQL</span><span>Docker</span></div>
+  </header>
+
+  <p class="section-label">HOW IT WORKS / 작동 단계</p>
+  <div class="steps">
+    <div class="card">
+      <div class="head">
+        <div class="n">1</div>
+        <h3>정기 수집</h3>
+      </div>
+      <p class="desc">5분마다 최근 3일을 겹쳐 조회합니다. 부팅 직후와 매일 새벽에는 <b>최근 7일을 다시 보정</b>합니다.</p>
+      <span class="path">수집기 &gt; 5분 스케줄러</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">2</div>
+        <h3>에러 판정</h3>
+      </div>
+      <p class="desc">실패를 예외 대신 응답 속 음수 코드로 돌려주는 API 특성에 맞춰, 세 가지 실패 형태를 한 함수에서 잡습니다.</p>
+      <span class="path">API 클라이언트 &gt; errors</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">3</div>
+        <h3>중복 없는 적재</h3>
+      </div>
+      <p class="desc">거래 고유키에 UNIQUE를 걸어 같은 기간을 여러 번 받아도 <b>중복이 0건</b>입니다.</p>
+      <span class="path">DB &gt; transactions</span>
+    </div>
+    <div class="card">
+      <div class="head">
+        <div class="n">4</div>
+        <h3>내부 API·화면</h3>
+      </div>
+      <p class="desc">계좌번호는 뒤 4자리만 남겨 보여 줍니다. 필터, 페이징, CSV 내보내기, 수동 새로고침을 제공합니다.</p>
+      <span class="path">내부 API &gt; 대시보드</span>
+    </div>
+  </div>
+
+  <p class="section-label">RESULTS / 성과</p>
+  <div class="results">
+    <div class="row"><span class="k">운영 계좌</span><span class="v">4개</span></div>
+    <div class="row"><span class="k">반복 수집 시 중복</span><span class="v"><b>0건</b></span></div>
+    <div class="row"><span class="k">자동 테스트</span><span class="v">153개 통과</span></div>
+  </div>
+  <p class="note">진행 중인 프로젝트입니다. 알림과 사용자 인증 기능을 추가하고 있습니다.</p>
+
+  <footer>
+    <span class="stamp">SYNC EVERY 5 MIN</span>
+  </footer>
+
+</div>
+</body>
+</html>

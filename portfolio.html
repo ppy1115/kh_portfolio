@@ -697,7 +697,7 @@
             </div>
 
             <!-- Project 3: 임원레포트 -->
-            <div class="project-card ops" onclick="window.location.href='executive-report.html'">
+            <div class="project-card ops" onclick="window.location.href='Executive-Report.html'">
                 <div class="project-content">
                     <span class="project-category">Executive Reporting</span>
                     <h2 class="project-title">임원레포트</h2>
@@ -911,6 +911,191 @@
                     </div>
                 </div>
             </div>
+            <!-- Project 15: 급여변동내역서 -->
+            <div class="project-card hr" data-href="payroll-change.html">
+                <div class="project-content">
+                    <span class="project-category">Payroll Automation</span>
+                    <h2 class="project-title">급여변동내역서</h2>
+                    <p class="project-subtitle">연장근무부터 사대보험까지 7단계 급여 정산 파이프라인</p>
+                    <p class="project-description">
+                        여러 법인의 급여변동내역서를 손으로 쓰던 작업을 VBA 7개 모듈로 자동화했습니다. 연장·야간 분리, 일할계산, 퇴직정산 보험료 재계산, 사대보험 반영을 순서대로 처리합니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Excel VBA</span>
+                        <span class="tag">Selenium Basic</span>
+                        <span class="tag">WinHTTP</span>
+                        <span class="tag">RegExp</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 16: 4대보험 정산 -->
+            <div class="project-card hr" data-href="social-insurance.html">
+                <div class="project-content">
+                    <span class="project-category">Insurance Automation</span>
+                    <h2 class="project-title">4대보험 정산</h2>
+                    <p class="project-subtitle">고지내역 다운로드부터 부서별 정산 취합까지</p>
+                    <p class="project-description">
+                        법인마다 인증서로 로그인해 고지내역을 받고 정산 파일에 옮기던 작업을 자동화했습니다. Python이 다운로드와 폴더 분류를, VBA가 보험별 금액 취합을 맡습니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Selenium 4</span>
+                        <span class="tag">Chrome CDP</span>
+                        <span class="tag">openpyxl</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 17: 휴가봇 -->
+            <div class="project-card hr" data-href="vacation-bot.html">
+                <div class="project-content">
+                    <span class="project-category">HR RPA</span>
+                    <h2 class="project-title">휴가봇</h2>
+                    <p class="project-subtitle">하이웍스 휴가 현황을 보고용 문구로 자동 변환</p>
+                    <p class="project-description">
+                        매일 아침 캘린더를 열어 휴가자를 확인하고 공지 문구를 쓰던 일을 자동화했습니다. 휴가자 명단과 유형을 모아 문구와 캡처를 만들고, 클립보드에 바로 복사합니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Selenium</span>
+                        <span class="tag">CustomTkinter</span>
+                        <span class="tag">Pillow</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 18: 지각 관리 -->
+            <div class="project-card hr" data-href="late-management.html">
+                <div class="project-content">
+                    <span class="project-category">Attendance Automation</span>
+                    <h2 class="project-title">지각 관리</h2>
+                    <p class="project-subtitle">지각 집계와 공제·경위서·징계 판정 엔진</p>
+                    <p class="project-description">
+                        흩어진 근태 파일을 지각 통계로 묶는 집계 도구와, 지각 한 건을 입력하면 급여 공제·경위서·징계까지 판정하는 규정 엔진을 만들었습니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Excel VBA</span>
+                        <span class="tag">Dictionary</span>
+                        <span class="tag">DateDiff</span>
+                        <span class="tag">InputBox</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 19: 판매데이터 파이프라인 -->
+            <div class="project-card data" data-href="sales-pipeline.html">
+                <div class="project-content">
+                    <span class="project-category">Data Pipeline</span>
+                    <h2 class="project-title">판매데이터 파이프라인</h2>
+                    <p class="project-subtitle">POS 가공부터 ERP 자동수집·대시보드까지</p>
+                    <p class="project-description">
+                        병합 셀 투성이 POS 원본을 ERP 업로드 양식으로 바꾸는 VBA와, 매일 ERP 판매현황을 수집해 DB와 대시보드에 올리는 데이터 서버를 만들었습니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Excel VBA</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Playwright</span>
+                        <span class="tag">PowerShell</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 20: 입금보고서 매칭 -->
+            <div class="project-card ops" data-href="deposit-matching.html">
+                <div class="project-content">
+                    <span class="project-category">Finance RPA</span>
+                    <h2 class="project-title">입금보고서 매칭</h2>
+                    <p class="project-subtitle">ERP 입금과 쇼핑몰 주문 자동 대조</p>
+                    <p class="project-description">
+                        입금 내역과 쇼핑몰 주문을 한 건씩 맞춰 사업자번호를 입력하던 일을 자동화했습니다. 두 사이트를 동시에 조작해 이름과 금액으로 매칭합니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Playwright</span>
+                        <span class="tag">CustomTkinter</span>
+                        <span class="tag">PyInstaller</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 21: 광고 ROAS 리포트 -->
+            <div class="project-card data" data-href="meta-roas.html">
+                <div class="project-content">
+                    <span class="project-category">Marketing Data</span>
+                    <h2 class="project-title">광고 ROAS 리포트</h2>
+                    <p class="project-subtitle">Meta 광고 시간대별 성과 원클릭 리포트</p>
+                    <p class="project-description">
+                        광고 관리자 화면을 보며 옮겨 적던 시간대별 성과를 Meta Marketing API로 수집해, ROAS·CPA가 계산된 엑셀 3시트 리포트를 버튼 하나로 만듭니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Meta Marketing API</span>
+                        <span class="tag">pandas</span>
+                        <span class="tag">openpyxl</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 22: 법인계좌 자동조회 -->
+            <div class="project-card ops" data-href="bank-account-sync.html">
+                <div class="project-content">
+                    <span class="project-category">Finance System</span>
+                    <h2 class="project-title">법인계좌 자동조회</h2>
+                    <p class="project-subtitle">계좌 거래내역 5분 주기 수집과 사내 조회 화면</p>
+                    <p class="project-description">
+                        여러 법인계좌의 입출금을 은행 사이트마다 확인하던 일을 바꿨습니다. 5분마다 거래내역을 중복 없이 DB에 쌓고, 사내 웹 화면에서 조회합니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">SOAP API</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 23: 매장별 발주파일 -->
+            <div class="project-card ops" data-href="store-order.html">
+                <div class="project-content">
+                    <span class="project-category">Ops Automation</span>
+                    <h2 class="project-title">매장별 발주파일</h2>
+                    <p class="project-subtitle">발주 시트를 매장별 업로드 파일로 1클릭 변환</p>
+                    <p class="project-description">
+                        매장 6곳의 발주 수량과 배송 정보를 업로드 양식에 옮겨 적던 일을 자동화했습니다. 양식 복제, 정렬, 배송정보 입력, 저장까지 버튼 하나로 처리합니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Excel VBA</span>
+                        <span class="tag">동적 헤더 매칭</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 24: 도매관리 런처 -->
+            <div class="project-card ops" data-href="wholesale-launcher.html">
+                <div class="project-content">
+                    <span class="project-category">Web RPA</span>
+                    <h2 class="project-title">도매관리 런처</h2>
+                    <p class="project-subtitle">주문 등록·인보이스 저장·주문 삭제 원클릭 실행</p>
+                    <p class="project-description">
+                        도매관리 웹사이트에서 건별로 하던 주문 등록, 인보이스 다운로드, 주문 삭제를 비개발자도 쓸 수 있는 데스크톱 앱 하나로 묶었습니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Tkinter</span>
+                        <span class="tag">Selenium</span>
+                        <span class="tag">subprocess</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 25: 주간 매출 집계 -->
+            <div class="project-card data" data-href="weekly-sales.html">
+                <div class="project-content">
+                    <span class="project-category">Data Automation</span>
+                    <h2 class="project-title">주간 매출 집계</h2>
+                    <p class="project-subtitle">POS 판매내역 CSV로 4종 집계표 자동 작성</p>
+                    <p class="project-description">
+                        영수증 단위 POS 데이터를 매주 손으로 분류하고 합산하던 일을 자동화했습니다. 분류별·프로모션별·제품군별·상품별 집계와 객단가용 영수증 수를 한 번에 채웁니다.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Excel VBA</span>
+                        <span class="tag">Dictionary</span>
+                        <span class="tag">ListObject</span>
+                        <span class="tag">텍스트 정규화</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         
@@ -979,6 +1164,10 @@
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
     card.addEventListener('click', () => {
+        if (card.dataset.href) {
+            window.location.href = card.dataset.href;
+            return;
+        }
         const title = card.querySelector('.project-title').textContent;
         
         if (title.includes('먼쓸리')) {
