@@ -1,512 +1,264 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="Digital Transformation Specialist 이경현의 포트폴리오. 업무 자동화 및 급여 시스템 구축 전문가.">
-    <meta property="og:title" content="LKH - Payroll & Automation Specialist">
-    <meta property="og:description" content="비효율적인 업무 프로세스를 0(Zero)으로 만듭니다.">
-    <meta property="og:type" content="website">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Digital Transformation Specialist 이경현의 포트폴리오. 업무 자동화 및 급여 시스템 구축 전문가.">
+<meta property="og:title" content="LKH - Payroll & Automation Specialist">
+<meta property="og:description" content="비효율적인 업무 프로세스를 0(Zero)으로 만듭니다.">
+<meta property="og:type" content="website">
+<title>LKH - Digital Transformation Specialist</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#000000;
+    --yellow:#FFE600;
+    --paper:#F4F2EC;
+    --white:#FFFFFF;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    --mono:"SF Mono",ui-monospace,Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    padding:64px 24px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:680px;margin:0 auto;}
 
-    <title>LKH - Digital Transformation Specialist</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #151515;
-            --card-bg: #1a1a1a;
-            --accent-purple: #a78bfa;
-            --accent-purple-dark: #8b5cf6;
-            --accent-purple-light: #c4b5fd;
-            --accent-blue: #60a5fa;
-            --accent-green: #34d399;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #606060;
-            --border-color: rgba(167, 139, 250, 0.2);
-            --glow-purple: rgba(167, 139, 250, 0.4);
-        }
+  /* 헤더 */
+  .badge{
+    display:inline-block;
+    background:var(--ink);color:var(--white);
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.2em;
+    padding:7px 14px;
+    transform:rotate(-1.5deg);
+  }
+  h1{
+    margin-top:28px;
+    font-size:46px;font-weight:900;
+    line-height:1.25;letter-spacing:-.02em;
+    word-break:keep-all;
+  }
+  h1 mark{
+    background:var(--yellow);
+    padding:0 8px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .lead{
+    margin-top:20px;
+    font-size:16px;font-weight:600;
+    word-break:keep-all;
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* 메타 티켓 */
+  .meta{
+    margin-top:36px;
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .meta div{padding:14px 18px;}
+  .meta div + div{border-left:3px solid var(--ink);}
+  .meta dt{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .meta dd{font-size:14.5px;font-weight:800;margin-top:2px;}
 
-        html {
-            scroll-behavior: smooth; /* 부드러운 스크롤 이동 */
-        }
+  /* 단계 카드 */
+  .steps{margin-top:64px;display:grid;gap:36px;}
+  .card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:28px 30px 32px;
+  }
+  .card .head{
+    display:flex;align-items:center;gap:16px;
+    margin-bottom:12px;
+  }
+  .card .n{
+    flex:none;
+    width:44px;height:44px;
+    background:var(--yellow);
+    border:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:900;
+  }
+  .card h3{
+    font-size:18px;font-weight:900;letter-spacing:-.01em;
+    line-height:1.4;word-break:keep-all;
+  }
+  .card .desc{font-size:14.5px;font-weight:500;word-break:keep-all;}
+  .card .desc b{font-weight:800;background:var(--yellow);padding:0 4px;}
 
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: var(--primary-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+  .card .path{
+    display:inline-block;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:12.5px;font-weight:700;
+    background:var(--ink);color:var(--white);
+    padding:6px 12px;
+  }
 
-        /* 배경 장식 */
-        .bg-decoration {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none; opacity: 0.3;
-            transition: opacity 0.3s;
-        }
-        .bg-decoration::before {
-            content: ''; position: absolute; top: -50%; right: -20%;
-            width: 1000px; height: 1000px;
-            background: radial-gradient(circle, var(--accent-purple) 0%, transparent 60%);
-            border-radius: 50%; filter: blur(120px);
-            animation: float 25s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(80px, 80px) scale(1.15); }
-        }
+  figure{margin-top:18px;}
+  figure .frame{border:3px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 40px;
-            position: relative;
-            z-index: 1;
-        }
+  /* 푸터 스탬프 */
+  footer{
+    margin-top:64px;
+    text-align:center;
+  }
+  footer .stamp{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12px;font-weight:700;letter-spacing:.24em;
+    border:3px solid var(--ink);
+    padding:10px 22px;
+    transform:rotate(1.2deg);
+    background:var(--yellow);
+    box-shadow:5px 5px 0 var(--ink);
+  }
 
-        /* Navigation */
-        nav {
-            position: absolute; top: 0; left: 0; width: 100%;
-            padding: 40px 60px;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 10;
-        }
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px; font-weight: 600;
-            color: var(--accent-purple-light); letter-spacing: 1px;
-        }
+  @media (max-width:600px){
+    body{padding:40px 16px 72px;}
+    h1{font-size:33px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:3px solid var(--ink);}
+    .card{padding:22px 20px 26px;box-shadow:6px 6px 0 var(--ink);}
+  }
 
-        /* SECTION 1: Intro / Name */
-        .intro-section {
-            height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-            position: relative;
-        }
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:16px;flex-wrap:wrap;}
+  .logo{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.2em;}
+  .navlink{
+    display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;
+    color:var(--ink);text-decoration:none;border:3px solid var(--ink);background:var(--white);
+    padding:6px 12px;box-shadow:5px 5px 0 var(--ink);
+  }
+  .navlink:hover{background:var(--yellow);}
+  .meta dd{font-size:26px;font-weight:900;letter-spacing:-.01em;}
+  .section-label{margin-top:72px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;}
+  .section-title{margin-top:8px;font-size:28px;font-weight:900;letter-spacing:-.01em;word-break:keep-all;}
+  .bigcta{
+    display:block;margin-top:48px;text-align:center;text-decoration:none;color:var(--ink);
+    background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+    padding:26px 24px;font-size:22px;font-weight:900;letter-spacing:-.01em;
+  }
+  .bigcta span{display:block;margin-top:4px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;}
+  .bigcta:hover{background:var(--yellow);}
+  a.navlink,a.bigcta,a.pcard{transition:transform .12s, box-shadow .12s;}
+  a.navlink:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
+  a.bigcta:hover,a.pcard:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--ink);}
+  @media (max-width:600px){
+    .meta dd{font-size:22px;}
+    .section-title{font-size:24px;}
+    .bigcta{font-size:19px;box-shadow:6px 6px 0 var(--ink);}
+  }
 
-        .my-role {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-purple); font-size: 14px; letter-spacing: 4px;
-            margin-bottom: 20px; animation: fadeInUp 1s ease-out both;
-        }
-
-        .my-name {
-            /* clamp 함수로 반응형 폰트 사이즈 적용 */
-            font-size: clamp(50px, 10vw, 120px);
-            font-weight: 900; line-height: 1.2;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #fff 30%, var(--text-secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        .my-name .dot { color: var(--accent-purple); -webkit-text-fill-color: var(--accent-purple); }
-
-        .intro-summary {
-            max-width: 600px; margin: 0 auto 50px;
-            font-size: 20px; color: var(--text-secondary); line-height: 1.6;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-        .intro-summary strong { color: #fff; font-weight: 700; }
-
-        /* Impact Ticker (Mini) */
-        .impact-container {
-            display: inline-flex; gap: 50px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px 40px; border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInUp 1s ease-out 0.6s both;
-            margin-bottom: 40px;
-        }
-        .impact-box { text-align: center; }
-        .impact-num {
-            display: block; font-size: 32px; font-weight: 700;
-            color: var(--accent-purple-light); font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 5px;
-        }
-        .impact-txt {
-            font-size: 11px; color: var(--text-secondary);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .divider { width: 1px; background: rgba(255,255,255,0.1); }
-
-        /* Scroll Hint (Clickable) */
-        .scroll-hint {
-            position: absolute; bottom: 40px;
-            font-family: 'JetBrains Mono', monospace; font-size: 12px;
-            color: var(--text-muted); 
-            animation: bounce 2s infinite;
-            text-decoration: none;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .scroll-hint:hover { color: var(--accent-purple); }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* SECTION 2: Experience Log */
-        .experience-section {
-            padding: 100px 0 150px;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center; margin-bottom: 80px;
-        }
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 54px; font-weight: 700; margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple-light));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        /* Timeline Styling */
-        .timeline-container {
-            position: relative; max-width: 800px; margin: 0 auto; padding-left: 50px;
-        }
-        .timeline-container::before {
-            content: ''; position: absolute; top: 0; left: 15px; width: 2px; height: 100%;
-            background: linear-gradient(to bottom, var(--accent-purple), transparent);
-            box-shadow: 0 0 15px var(--accent-purple);
-        }
-        .timeline-item { position: relative; margin-bottom: 60px; }
-        
-        .timeline-marker {
-            position: absolute; top: 0; left: -41px;
-            width: 14px; height: 14px; background: var(--primary-bg);
-            border: 2px solid var(--accent-purple); border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-purple); z-index: 2;
-            transition: all 0.3s ease;
-        }
-        .timeline-item:hover .timeline-marker {
-            background: var(--accent-purple); box-shadow: 0 0 20px var(--accent-purple);
-        }
-
-        .timeline-content {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 20px; padding: 30px; transition: all 0.3s ease;
-        }
-        .timeline-item:hover .timeline-content {
-            transform: translateX(10px); border-color: var(--accent-purple);
-            background: rgba(26, 26, 26, 0.8);
-        }
-
-        .timeline-header-row {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-        }
-        .timeline-date {
-            font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent-purple-light);
-        }
-        .status-badge {
-            font-family: 'JetBrains Mono', monospace; font-size: 10px;
-            padding: 4px 8px; border-radius: 4px; font-weight: 700;
-        }
-        .status-badge.running {
-            background: rgba(52, 211, 153, 0.2); color: var(--accent-green);
-            border: 1px solid rgba(52, 211, 153, 0.3); animation: blink 2s infinite;
-        }
-        .status-badge.completed {
-            background: rgba(255, 255, 255, 0.1); color: var(--text-muted);
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        .timeline-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
-        .timeline-role { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 15px; }
-        .timeline-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
-        .timeline-tech-list {
-            display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: 15px;
-        }
-        .timeline-tech-list li {
-            font-family: 'JetBrains Mono', monospace; font-size: 11px;
-            padding: 4px 10px; background: rgba(167, 139, 250, 0.1);
-            border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; color: var(--accent-purple-light);
-            transition: all 0.3s;
-        }
-        /* 주요 스킬 강조 */
-        .timeline-tech-list li.highlight {
-            color: var(--accent-green);
-            border-color: rgba(52, 211, 153, 0.3);
-            background: rgba(52, 211, 153, 0.05);
-        }
-
-        /* Portfolio Button Area */
-        .cta-container {
-            text-align: center; margin-top: 80px;
-        }
-        .btn-portfolio-large {
-            background: transparent;
-            color: var(--accent-purple-light);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px; padding: 25px 60px;
-            border: 1px solid var(--accent-purple); border-radius: 50px;
-            cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase; letter-spacing: 3px;
-            position: relative; overflow: hidden;
-        }
-        .btn-portfolio-large:hover {
-            background: var(--accent-purple); color: #000;
-            box-shadow: 0 0 40px var(--glow-purple);
-            transform: translateY(-5px); font-weight: 700;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            .bg-decoration { opacity: 0.15; } /* 모바일에서 배경 흐리게 */
-
-            .intro-summary { font-size: 16px; padding: 0 20px; }
-
-            /* 통계 박스 최적화 */
-            .impact-container {
-                display: flex; flex-direction: row; flex-wrap: nowrap;
-                width: calc(100% - 20px); 
-                margin: 30px auto 0;
-                padding: 20px 0; gap: 0;
-                justify-content: space-evenly; align-items: center;
-                background: rgba(255, 255, 255, 0.03);
-                border-radius: 20px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .impact-box { flex: 1; min-width: 0; text-align: center; }
-            .impact-num { font-size: 17px; margin-bottom: 5px; font-weight: 700; white-space: nowrap; }
-            .impact-txt { font-size: 9px; letter-spacing: 0; white-space: nowrap; opacity: 0.8; }
-            .divider { width: 1px; height: 25px; background: rgba(255, 255, 255, 0.1); margin: 0; }
-
-            .timeline-container { padding-left: 50px; padding-right: 20px; }
-            .timeline-container::before { left: 15px; }
-            .timeline-marker { left: -41px; }
-
-            .btn-portfolio-large {
-                padding: 20px 10px; font-size: 13px; letter-spacing: 1px;
-                width: 100%; white-space: nowrap;
-            }
-        }
-    </style>
+  .card .when{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .card .when .d{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;}
+  .card .when .s{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;border:2px solid var(--ink);padding:1px 7px;}
+  .card .when .s.run{background:var(--yellow);}
+  .card .role{font-size:13.5px;font-weight:700;margin:-6px 0 10px 60px;}
+  .card .chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+  .card .chips span{font-family:var(--mono);font-size:11.5px;font-weight:700;background:var(--ink);color:var(--white);padding:4px 9px;}
+  @media (max-width:600px){ .card .role{margin-left:0;} }
+</style>
 </head>
 <body>
-    <div class="bg-decoration"></div>
+<div class="doc">
 
-    <nav>
-        <div class="logo">LKH.STUDIO</div>
-    </nav>
+  <div class="topbar">
+    <span class="logo">LKH.STUDIO</span>
+    <a class="navlink" href="portfolio.html">PROJECTS &rarr;</a>
+  </div>
 
-    <section class="intro-section">
-        <span class="my-role">PAYROLL & AUTOMATION SPECIALIST</span>
-        <h1 class="my-name">이경현<span class="dot"></span></h1>
-        
-        <div class="intro-summary">
-            <p>
-                <strong>Digital Transformation</strong>을 통해<br>
-                비효율적인 업무 프로세스를 <strong>0(Zero)</strong>으로 만듭니다.
-            </p>
-        </div>
+  <header>
+    <span class="badge">PAYROLL &amp; AUTOMATION SPECIALIST</span>
+    <h1>비효율적인 업무를<br><mark>0(Zero)</mark>으로 만듭니다</h1>
+    <p class="lead">이경현입니다. 급여·인사·운영 업무의 반복 작업을 찾아 자동화로 바꿉니다. 지금까지 만든 자동화 프로젝트는 25개입니다.</p>
+    <dl class="meta">
+      <div><dt>Hours Saved</dt><dd>15,400+</dd></div>
+      <div><dt>Accuracy</dt><dd>99.9%</dd></div>
+      <div><dt>Processes</dt><dd>45+</dd></div>
+    </dl>
+  </header>
 
-        <div class="impact-container">
-            <div class="impact-box">
-                <span class="impact-num" data-target="15400" data-suffix="+">0</span>
-                <span class="impact-txt">Hours Saved</span>
-            </div>
-            <div class="divider"></div>
-            <div class="impact-box">
-                <span class="impact-num" data-target="99.9" data-suffix="%">0</span>
-                <span class="impact-txt">Accuracy</span>
-            </div>
-            <div class="divider"></div>
-            <div class="impact-box">
-                <span class="impact-num" data-target="45" data-suffix="+">0</span>
-                <span class="impact-txt">Processes</span>
-            </div>
-        </div>
+  <p class="section-label" id="experience">EXPERIENCE LOG / 경력</p>
+  <h2 class="section-title">시스템을 업그레이드해 온 여정</h2>
+  <div class="steps" style="margin-top:28px">
+    <div class="card">
+      <div class="when"><span class="d">2026.01 - PRESENT</span><span class="s run">RUNNING</span></div>
+      <div class="head">
+        <div class="n">26</div>
+        <h3>와이브랜즈</h3>
+      </div>
+      <p class="role">HR &amp; General Affairs (인사총무)</p>
+      <p class="desc">급여·4대보험·근태 업무와 매출 집계·발주·입금 대조 업무를 자동화했습니다. 이 기간에 만든 <b>프로젝트 11개</b>를 포트폴리오에 정리했습니다.</p>
+      <div class="chips"><span>Excel VBA</span><span>Python</span><span>RPA</span><span>Data Pipeline</span></div>
+    </div>
+    <div class="card">
+      <div class="when"><span class="d">2025.06 - PRESENT</span><span class="s run">RUNNING</span></div>
+      <div class="head">
+        <div class="n">25</div>
+        <h3>LG CNC</h3>
+      </div>
+      <p class="role">Payroll &amp; Automation Specialist</p>
+      <p class="desc">급여/퇴직금 정산 100% 자동화 구축. 월 마감 소요 시간 <b>5일 → 1일</b> 단축.</p>
+      <div class="chips"><span>VBA</span><span>Large Scale Data</span><span>Payroll</span></div>
+    </div>
+    <div class="card">
+      <div class="when"><span class="d">2022.12 - 2025.05</span><span class="s">COMPLETED</span></div>
+      <div class="head">
+        <div class="n">22</div>
+        <h3>(주) 그린피플</h3>
+      </div>
+      <p class="role">Process Innovation Manager</p>
+      <p class="desc">사내 수작업 프로세스 진단 및 툴 도입. 휴먼 에러율 <b>0%</b> 달성.</p>
+      <div class="chips"><span>Process Design</span><span>Excel VBA</span><span>Python</span></div>
+    </div>
+    <div class="card">
+      <div class="when"><span class="d">2021.07 - 2022.03</span><span class="s">COMPLETED</span></div>
+      <div class="head">
+        <div class="n">21</div>
+        <h3>(주) 쿠메푸드</h3>
+      </div>
+      <p class="role">E-commerce Operation</p>
+      <p class="desc">주문 수집 및 발주. 고객 CS관리.</p>
+    </div>
+    <div class="card">
+      <div class="when"><span class="d">2019.10 - 2019.12</span><span class="s">COMPLETED</span></div>
+      <div class="head">
+        <div class="n">19</div>
+        <h3>연세세브란스 체크업</h3>
+      </div>
+      <p class="role">Customer Service &amp; Admin</p>
+      <p class="desc">고객 1:1 응대 및 관리.</p>
+    </div>
+    <div class="card">
+      <div class="when"><span class="d">2014.11 - 2016.11</span><span class="s">COMPLETED</span></div>
+      <div class="head">
+        <div class="n">14</div>
+        <h3>KIM &amp; CHANG 법률사무소</h3>
+      </div>
+      <p class="role">General Administration Team</p>
+      <p class="desc">내/외부 서류 관리 및 다량 내용증명 관리.</p>
+    </div>
+  </div>
 
-        <a href="#experience" class="scroll-hint">SCROLL FOR HISTORY ↓</a>
-    </section>
+  <a class="bigcta" href="portfolio.html">프로젝트 25개 보러 가기 &rarr;<span>VIEW PORTFOLIO &amp; PROJECTS</span></a>
 
-    <section id="experience" class="experience-section container reveal">
-        <div class="section-header">
-            <h2 class="section-title">Experience Log</h2>
-            <p style="color:var(--text-secondary);">시스템을 업그레이드해온 여정</p>
-        </div>
+  <footer>
+    <span class="stamp">FROM MANUAL TO ZERO</span>
+  </footer>
 
-        <div class="timeline-container">
-            <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                    <div class="timeline-header-row">
-                        <span class="timeline-date">2025.06 - PRESENT</span>
-                        <span class="status-badge running">RUNNING</span>
-                    </div>
-                    <h3 class="timeline-title">LG Biztechon</h3>
-                    <span class="timeline-role">Payroll & Automation Specialist</span>
-                    <p class="timeline-desc">급여/퇴직금 정산 100% 자동화 구축. 월 마감 소요 시간 5일 → 1일 단축.</p>
-                    <ul class="timeline-tech-list">
-                        <li class="highlight">VBA</li>
-                        <li>Large Scale Data</li>
-                        <li class="highlight">Payroll</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                    <div class="timeline-header-row">
-                        <span class="timeline-date">2022.12 - 2025.05</span>
-                        <span class="status-badge completed">COMPLETED</span>
-                    </div>
-                    <h3 class="timeline-title">(주) 그린피플</h3>
-                    <span class="timeline-role">Process Innovation Manager</span>
-                    <p class="timeline-desc">사내 수작업 프로세스 진단 및 툴 도입. 휴먼 에러율 0% 달성.</p>
-                    <ul class="timeline-tech-list">
-                        <li>Process Design</li>
-                        <li class="highlight">Excel VBA</li>
-                        <li class="highlight">Python</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                    <div class="timeline-header-row">
-                        <span class="timeline-date">2021.07 - 2022.03</span>
-                        <span class="status-badge completed">COMPLETED</span>
-                    </div>
-                    <h3 class="timeline-title">(주) 쿠메푸드</h3>
-                    <span class="timeline-role">E-commerce Operation</span>
-                    <p class="timeline-desc">주문 수집 및 발주. 고객 CS관리</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                    <div class="timeline-header-row">
-                        <span class="timeline-date">2019.10 - 2019.12 </span>
-                        <span class="status-badge completed">COMPLETED</span>
-                    </div>
-                    <h3 class="timeline-title">연세세브란스 체크업</h3>
-                    <span class="timeline-role">Customer Service & Admin</span>
-                    <p class="timeline-desc">고객 1:1 응대 및 관리.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                    <div class="timeline-header-row">
-                        <span class="timeline-date">2014.11 - 2016.11</span>
-                        <span class="status-badge completed">COMPLETED</span>
-                    </div>
-                    <h3 class="timeline-title">KIM & CHANG 법률사무소</h3>
-                    <span class="timeline-role">General Administration Team</span> <p class="timeline-desc">
-                        내/외부 서류 관리 및 다량 내용증명 관리
-                    </p>
-                </div>
-            </div>
-
-            <div class="cta-container">
-                <button class="btn-portfolio-large" onclick="location.href='portfolio.html'">
-                    VIEW PORTFOLIO & PROJECTS →
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Scroll Reveal (스크롤 시 요소 등장 애니메이션)
-            const revealElements = document.querySelectorAll('.reveal');
-            
-            const revealOnScroll = () => {
-                const windowHeight = window.innerHeight;
-                const elementVisible = 100;
-
-                revealElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    if (elementTop < windowHeight - elementVisible) {
-                        element.classList.add('active');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll(); // 초기 로드 시 실행
-
-            // 2. Number Counter Animation (부드러운 카운팅 최적화)
-            const counters = document.querySelectorAll('.impact-num');
-            let hasAnimated = false; // 한 번만 실행되도록 플래그 설정
-
-            const animateImpactNumbers = () => {
-                if(hasAnimated) return;
-                hasAnimated = true;
-
-                counters.forEach(counter => {
-                    const target = +counter.getAttribute('data-target');
-                    const suffix = counter.getAttribute('data-suffix') || '';
-                    const duration = 2000; // 2초
-                    let startTime = null;
-
-                    const step = (timestamp) => {
-                        if (!startTime) startTime = timestamp;
-                        const progress = Math.min((timestamp - startTime) / duration, 1);
-                        
-                        // Ease-out 효과
-                        const easeOut = 1 - Math.pow(1 - progress, 3);
-                        const currentNum = target * easeOut;
-
-                        if (target % 1 !== 0) {
-                            counter.innerText = currentNum.toFixed(1) + suffix;
-                        } else {
-                            counter.innerText = Math.floor(currentNum).toLocaleString() + suffix;
-                        }
-
-                        if (progress < 1) {
-                            window.requestAnimationFrame(step);
-                        } else {
-                            // 최종값 보정
-                            counter.innerText = (target % 1 !== 0 ? target : target.toLocaleString()) + suffix;
-                        }
-                    };
-
-                    window.requestAnimationFrame(step);
-                });
-            };
-            
-            // 0.8초 후 애니메이션 시작
-            setTimeout(animateImpactNumbers, 800);
-
-            // 3. Parallax Effect (배경 움직임)
-            const decoration = document.querySelector('.bg-decoration');
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                if(decoration) decoration.style.transform = `translateY(${scrolled * 0.3}px)`;
-            });
-        });
-    </script>
+</div>
 </body>
 </html>
