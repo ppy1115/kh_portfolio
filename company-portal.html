@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사내 통합 포털 - HR Automation Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  /* ============================================================
+     EDITORIAL NOTICE — 확정 디자인 토큰. 값을 바꾸지 말 것.
+     색 3개, 서체 2벌, 괘선, 넓은 여백이 이 스타일의 전부다.
+     ============================================================ */
+  :root{
+    --ink:#0E0E0E;      /* 먹 — 본문, 괘선 */
+    --gray:#6B6B6B;     /* 회색 — 캡션, 보조 정보 */
+    --paper:#FFFFFF;    /* 종이 */
+    --serif:"Noto Serif KR","Nanum Myeongjo",serif;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.75;
+    padding:88px 24px 120px;   /* 넓은 여백 — 줄이지 말 것 */
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:640px;margin:0 auto;}
+
+  /* ── 괘선 (신문 마스트헤드) ── */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:12px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;
+  }
+  .masthead .no{color:var(--gray);letter-spacing:.14em;}
+  .rule-thick{border:0;border-top:3px solid var(--ink);margin:14px 0 3px;}
+  .rule-thin{border:0;border-top:1px solid var(--ink);}
+
+  /* ── 헤드라인 ── */
+  .headline{margin:52px 0 0;}
+  .headline h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:42px;            /* 제목만 있는 짧은 문서는 38px로 낮춰도 됨 */
+    line-height:1.32;
+    letter-spacing:-.015em;
+    word-break:keep-all;
+  }
+  .deck{
+    margin-top:22px;
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:17px;
+    line-height:1.8;
+    word-break:keep-all;
+  }
+
+  /* ── 메타 그리드 (시행일·대상·담당) ── */
+  .meta{
+    margin:44px 0 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+  .meta div{padding:14px 4px 13px;}
+  .meta div + div{border-left:1px solid var(--ink);padding-left:20px;}
+  .meta dt{
+    font-size:11px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .meta dd{font-size:14.5px;font-weight:600;margin-top:3px;}
+
+  /* 채움 표시 — 사용자가 확정해야 하는 값. 배포 전 실제 값으로 교체 */
+  .fill{border-bottom:1.5px dotted var(--ink);padding-bottom:1px;}
+
+  /* ── 섹션 + 킥커 제목 (섹션 2개 이상일 때만 번호 사용) ── */
+  section{margin-top:88px;}
+  .kicker{
+    display:flex;align-items:baseline;gap:16px;
+    margin-bottom:26px;
+  }
+  .kicker .num{
+    font-family:var(--serif);
+    font-size:15px;font-weight:700;font-variant-numeric:lining-nums;
+  }
+  .kicker h2{
+    font-family:var(--serif);
+    font-size:24px;font-weight:700;letter-spacing:-.01em;
+  }
+  .kicker::after{
+    content:"";flex:1;border-top:1px solid var(--ink);
+    transform:translateY(-6px);
+  }
+  p.body{font-size:15.5px;word-break:keep-all;}
+  p.body + p.body{margin-top:14px;}
+
+  /* ── 변경 전/후 비교 — 변경 전은 회색+취소선 ── */
+  .switch{
+    margin-top:34px;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .switch .col{padding:26px 4px 28px;}
+  .switch .col + .col{border-left:1px solid var(--ink);padding-left:30px;}
+  .switch .tag{
+    font-size:11px;font-weight:700;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .switch .name{
+    font-family:var(--serif);
+    font-size:23px;font-weight:700;
+    margin-top:10px;line-height:1.4;
+  }
+  .switch .before .name{
+    color:var(--gray);
+    text-decoration:line-through;
+    text-decoration-thickness:1.5px;
+  }
+  .switch .desc{font-size:13.5px;color:var(--gray);margin-top:8px;word-break:keep-all;}
+  .switch .after .desc{color:var(--ink);}
+
+  /* ── 번호 단계 — 순서 있는 방법 안내 전용 ── */
+  .step{display:grid;grid-template-columns:72px 1fr;margin-top:48px;}
+  .step:first-of-type{margin-top:34px;}
+  .step .n{
+    font-family:var(--serif);
+    font-size:34px;font-weight:700;line-height:1;
+    font-variant-numeric:lining-nums;
+  }
+  .step h3{
+    font-size:16.5px;font-weight:700;
+    line-height:1.5;word-break:keep-all;
+  }
+  .step .st-desc{font-size:14.5px;margin-top:8px;word-break:keep-all;}
+
+  /* ── 도판 — 이미지는 반드시 base64 내장 ── */
+  figure{margin:22px 0 0;}
+  figure .frame{border:1px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}   /* 세로형·좁은 스크린샷용 */
+  figcaption{
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px solid var(--ink);
+    font-size:12px;color:var(--gray);
+    letter-spacing:.02em;
+  }
+  figcaption b{
+    font-weight:700;color:var(--ink);
+    letter-spacing:.14em;text-transform:uppercase;
+    margin-right:10px;
+  }
+
+  /* ── 유의사항 박스 ── */
+  .notice{
+    margin-top:34px;
+    border:1.5px solid var(--ink);
+    padding:30px 34px 32px;
+  }
+  .notice .nb-title{
+    font-family:var(--serif);
+    font-size:16px;font-weight:700;
+    margin-bottom:16px;
+  }
+  .notice ul{list-style:none;}
+  .notice li{
+    position:relative;
+    padding-left:20px;
+    font-size:14.5px;
+    word-break:keep-all;
+  }
+  .notice li + li{margin-top:11px;}
+  .notice li::before{
+    content:"—";
+    position:absolute;left:0;
+    font-weight:600;
+  }
+
+  /* ── 푸터 — 하단 괘선은 항상, 맺음말·서명은 정식 공지일 때만 ── */
+  footer{margin-top:88px;}
+  footer .closing{
+    text-align:center;
+    font-family:var(--serif);
+    font-size:15.5px;
+    line-height:2;
+    word-break:keep-all;
+  }
+  footer .sign{
+    text-align:center;
+    margin-top:26px;
+    font-size:12px;font-weight:700;
+    letter-spacing:.26em;text-transform:uppercase;
+  }
+  footer .rules{margin-top:34px;}
+  footer .rules .rule-thin{margin-bottom:3px;}
+  footer .rules .rule-thick{margin:0;}
+
+  /* ── 반응형 ── */
+  @media (max-width:600px){
+    body{padding:52px 20px 80px;}
+    .headline h1{font-size:31px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:1px solid var(--ink);padding-left:4px;}
+    .switch{grid-template-columns:1fr;}
+    .switch .col + .col{border-left:0;border-top:1px solid var(--ink);padding-left:4px;}
+    .step{grid-template-columns:52px 1fr;}
+    .step .n{font-size:27px;}
+    section{margin-top:64px;}
+    .notice{padding:24px 22px;}
+  }
+
+  a{color:var(--ink);}
+  .masthead a{text-decoration:none;}
+  .masthead a:hover{text-decoration:underline;text-underline-offset:4px;}
+  .meta dd.big{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:4px;}
+  p.body b,.st-desc b{font-weight:700;}
+  .caption{margin-top:10px;font-size:12.5px;color:var(--gray);letter-spacing:.02em;word-break:keep-all;}
+  .caption b{color:var(--ink);font-weight:700;letter-spacing:.14em;margin-right:8px;}
+  .stack{margin-top:18px;font-size:12.5px;color:var(--gray);letter-spacing:.04em;word-break:keep-all;}
+
+  /* 성과 표 */
+  .results{margin-top:34px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .results .row{display:grid;grid-template-columns:1fr auto;gap:20px;padding:16px 4px;align-items:baseline;}
+  .results .row + .row{border-top:1px solid var(--ink);}
+  .results .k{font-size:14.5px;font-weight:600;word-break:keep-all;}
+  .results .v{font-family:var(--serif);font-size:18px;font-weight:700;text-align:right;}
+  .results .v b{font-weight:900;}
+
+  /* 링크 버튼 (괘선형) */
+  .more{
+    display:block;margin-top:56px;padding:22px 4px;text-decoration:none;
+    border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);
+    font-family:var(--serif);font-size:22px;font-weight:700;
+  }
+  .more span{display:block;margin-top:4px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--gray);}
+  .more:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px;}
+
+  @media (max-width:600px){
+    .results .row{grid-template-columns:1fr;gap:2px;}
+    .results .v{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+  <header>
+    <div class="masthead">
+      <span><a href="portfolio.html">&larr; 전체 프로젝트</a></span>
+      <span class="no">Internal Platform</span>
+    </div>
+    <hr class="rule-thick">
+    <hr class="rule-thin">
+
+    <div class="headline">
+      <h1>흩어진 업무 화면을<br>포털 하나로 묶었습니다</h1>
+      <p class="deck">영업관리, 재무, 인사, 근태 화면을 한 번의 로그인으로 오갑니다. 탭마다 권한을 따로 주고, 데이터는 모두 사내 DB 한 곳에서 읽습니다.</p>
+    </div>
+    <div class="switch">
+      <div class="col before">
+        <div class="tag">Before</div>
+        <div class="name">수작업</div>
+        <div class="desc">업무마다 다른 프로그램과 엑셀 파일을 따로 열어 확인</div>
+      </div>
+      <div class="col after">
+        <div class="tag">After</div>
+        <div class="name">자동화</div>
+        <div class="desc">한 번 로그인으로 권한 있는 탭만 바로 확인</div>
+      </div>
+    </div>
+    <p class="stack">Node.js · Express · PostgreSQL · Docker · Cloudflare Tunnel</p>
+  </header>
+
+  <section>
+    <div class="kicker"><span class="num">01</span><h2>작동 방식</h2></div>
+    <div class="step">
+      <div class="n">1</div>
+      <div>
+        <h3>통합 로그인(SSO)</h3>
+        <p class="st-desc">판매 대시보드 계정으로 포털까지 함께 로그인합니다. 다른 기기에서 같은 계정으로 들어오면 <b>기존 세션이 자동으로 끊깁니다</b>.</p>
+        <p class="caption"><b>경로</b>포털 &gt; 로그인</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div>
+        <h3>역할·탭 권한</h3>
+        <p class="st-desc">마스터·관리자·일반 3가지 역할을 두고, 마스터가 사용자×탭 표에서 <b>탭별 열람 권한</b>을 체크해 부여합니다.</p>
+        <p class="caption"><b>경로</b>포털 &gt; 관리 &gt; 권한관리</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div>
+        <h3>홈</h3>
+        <p class="st-desc">오늘 할 일과 날짜별 달력 메모를 계정별로 서버에 저장합니다. 어느 기기에서 열어도 그대로 보입니다.</p>
+        <p class="caption"><b>경로</b>포털 &gt; 홈</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <div>
+        <h3>업무 탭</h3>
+        <p class="st-desc">영업관리(판매 대시보드), 재무(자금일보), 인사(재직·급여 기준정보), 매장 출근 기록 탭을 제공합니다.</p>
+        <p class="caption"><b>경로</b>포털 &gt; 영업관리 / 재무 / 인사</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">5</div>
+      <div>
+        <h3>안전한 연결</h3>
+        <p class="st-desc">포털 서버가 내부망에서 대시보드를 대신 호출해, <b>내부 계정 정보가 브라우저에 노출되지 않습니다</b>.</p>
+        <p class="caption"><b>경로</b>포털 서버 &gt; 프록시</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">6</div>
+      <div>
+        <h3>무인 운영</h3>
+        <p class="st-desc">컨테이너가 재부팅 뒤 자동으로 다시 뜨고, 수집 지연이 생기면 화면 상단에 경고 배너가 뜹니다.</p>
+        <p class="caption"><b>경로</b>Docker &gt; 자동 복구</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="num">02</span><h2>성과</h2></div>
+    <div class="results">
+      <div class="row"><span class="k">통합한 업무 화면</span><span class="v">5개 탭</span></div>
+      <div class="row"><span class="k">로그인</span><span class="v"><b>1회</b> (SSO)</span></div>
+      <div class="row"><span class="k">운영 환경</span><span class="v">PC 1대 · Docker 컨테이너</span></div>
+    </div>
+    <p class="caption">사내 전용 시스템이라 화면 공개 대신 구조만 소개합니다.</p>
+  </section>
+
+  <footer>
+    <div class="sign">LKH.STUDIO</div>
+    <div class="rules">
+      <hr class="rule-thin">
+      <hr class="rule-thick">
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
