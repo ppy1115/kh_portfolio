@@ -1,158 +1,343 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>급여작업 자동화 시스템 - HR Automation Portfolio</title>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>급여작업 자동화 시스템 - HR Automation Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  /* ============================================================
+     EDITORIAL NOTICE — 확정 디자인 토큰. 값을 바꾸지 말 것.
+     색 3개, 서체 2벌, 괘선, 넓은 여백이 이 스타일의 전부다.
+     ============================================================ */
   :root{
-    --ink:#000000;
-    --yellow:#FFE600;
-    --paper:#F4F2EC;
-    --white:#FFFFFF;
+    --ink:#0E0E0E;      /* 먹 — 본문, 괘선 */
+    --gray:#6B6B6B;     /* 회색 — 캡션, 보조 정보 */
+    --paper:#FFFFFF;    /* 종이 */
+    --serif:"Noto Serif KR","Nanum Myeongjo",serif;
     --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
-    --mono:"SF Mono",ui-monospace,Consolas,"Courier New",monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
-    font-family:var(--sans);background:var(--paper);color:var(--ink);
-    line-height:1.7;padding:64px 24px 96px;-webkit-font-smoothing:antialiased;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.75;
+    padding:88px 24px 120px;   /* 넓은 여백 — 줄이지 말 것 */
+    -webkit-font-smoothing:antialiased;
   }
-  .container{max-width:860px;margin:0 auto;}
+  .doc{max-width:640px;margin:0 auto;}
 
-  /* 상단 */
-  .back-button{
-    display:inline-block;margin-bottom:28px;
-    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;
-    color:var(--ink);text-decoration:none;border:3px solid var(--ink);background:var(--white);
-    padding:6px 12px;box-shadow:5px 5px 0 var(--ink);transition:transform .12s, box-shadow .12s;
+  /* ── 괘선 (신문 마스트헤드) ── */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:12px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;
   }
-  .back-button:hover{background:var(--yellow);transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
-  header{display:block;}
-  .project-tag{
-    display:inline-block;background:var(--ink);color:var(--white);
-    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-    padding:7px 14px;transform:rotate(-1.5deg);
+  .masthead .no{color:var(--gray);letter-spacing:.14em;}
+  .rule-thick{border:0;border-top:3px solid var(--ink);margin:14px 0 3px;}
+  .rule-thin{border:0;border-top:1px solid var(--ink);}
+
+  /* ── 헤드라인 ── */
+  .headline{margin:52px 0 0;}
+  .headline h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:42px;            /* 제목만 있는 짧은 문서는 38px로 낮춰도 됨 */
+    line-height:1.32;
+    letter-spacing:-.015em;
+    word-break:keep-all;
   }
-  h1{margin-top:28px;font-size:46px;font-weight:900;line-height:1.25;letter-spacing:-.02em;word-break:keep-all;}
-  h1 mark{background:var(--yellow);padding:0 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
-  .subtitle{margin-top:14px;font-size:17px;font-weight:700;word-break:keep-all;}
-
-  .stats-hero{
-    margin-top:36px;background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
-    display:grid;grid-template-columns:repeat(3,1fr);
-  }
-  .stat-box{padding:16px 20px;}
-  .stat-box + .stat-box{border-left:3px solid var(--ink);}
-  .stat-number{font-size:24px;font-weight:900;letter-spacing:-.01em;line-height:1.35;word-break:keep-all;}
-  .stat-label{order:-1;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
-  .stat-box{display:flex;flex-direction:column;gap:4px;}
-
-  /* 본문 */
-  section{margin-top:72px;}
-  h2{
-    font-size:28px;font-weight:900;letter-spacing:-.01em;line-height:1.35;word-break:keep-all;
-    padding-top:16px;border-top:3px solid var(--ink);margin-bottom:20px;
-  }
-  h3{margin-top:36px;margin-bottom:12px;font-size:20px;font-weight:900;word-break:keep-all;}
-  h4{margin-top:22px;margin-bottom:8px;font-size:16px;font-weight:800;word-break:keep-all;}
-  p{font-size:15px;font-weight:500;margin-top:10px;word-break:keep-all;}
-  ul,ol{margin:10px 0 0 22px;}
-  li{font-size:15px;font-weight:500;margin-top:6px;word-break:keep-all;}
-  li p{margin-top:4px;font-size:14px;}
-  strong{font-weight:800;}
-
-  .problem-box{
-    margin-top:8px;background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
-    padding:24px 28px 26px;
-  }
-  .problem-box h4{margin-top:0;font-size:18px;font-weight:900;}
-  .problem-box h4::before{
-    content:"PROBLEM";display:block;margin-bottom:6px;
-    font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;
-  }
-  .problem-box + p{margin-top:22px;}
-
-  .comparison{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:8px;}
-  .comparison-card{
-    background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:20px 24px 22px;
-  }
-  .comparison-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;}
-  .comparison-value{margin-top:6px;font-size:30px;font-weight:900;line-height:1.3;letter-spacing:-.01em;word-break:keep-all;}
-  .comparison-card.after .comparison-value span,
-  .comparison-card.after .comparison-value{display:inline;background:var(--yellow);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
-  .comparison-card.after .comparison-title{display:block;margin-bottom:6px;}
-  .comparison-card p{font-size:14px;}
-
-  .tech-tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;}
-  .tag{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--ink);color:var(--white);padding:5px 10px;}
-
-  .modules-grid{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:28px;align-items:start;}
-  .module-card{
-    background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
-    padding:20px 24px 22px;cursor:pointer;transition:transform .12s, box-shadow .12s;
-  }
-  .module-card:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--ink);}
-  .module-card.active{grid-column:1 / -1;cursor:default;}
-  .module-card.active:hover{transform:none;box-shadow:8px 8px 0 var(--ink);}
-  .module-header{display:flex;justify-content:space-between;align-items:center;}
-  .module-number{
-    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;
-    background:var(--yellow);border:3px solid var(--ink);padding:2px 9px;
-  }
-  .expand-icon{font-family:var(--mono);font-size:12px;font-weight:700;transition:transform .2s;}
-  .module-card.active .expand-icon{transform:rotate(180deg);}
-  .module-title{margin-top:14px;font-size:18px;font-weight:900;}
-  .module-desc{margin-top:6px;font-size:14px;}
-  .module-details{display:none;margin-top:18px;padding-top:6px;border-top:3px solid var(--ink);}
-  .module-card.active .module-details{display:block;}
-
-  .code-block{margin-top:14px;background:var(--ink);color:var(--white);border:3px solid var(--ink);overflow-x:auto;}
-  .code-block pre{padding:14px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.65;white-space:pre;}
-
-  .impact-grid{margin-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-  .impact-card{background:var(--white);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:20px 22px 22px;}
-  .impact-value{display:inline;font-size:28px;font-weight:900;letter-spacing:-.01em;background:var(--yellow);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
-  .impact-label{margin-top:10px;font-size:13.5px;font-weight:600;word-break:keep-all;}
-
-  .section-divider{display:flex;align-items:center;gap:16px;margin:80px 0 -40px;}
-  .section-divider .line{flex:1;height:3px;background:var(--ink);}
-  .section-divider .label{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;background:var(--ink);color:var(--white);padding:6px 12px;}
-
-  blockquote{
-    margin:36px 0 0;background:var(--white);border:3px solid var(--ink);border-left-width:12px;
-    padding:20px 24px;font-size:16px;font-weight:800;word-break:keep-all;
+  .deck{
+    margin-top:22px;
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:17px;
+    line-height:1.8;
+    word-break:keep-all;
   }
 
-  footer.stampbar{margin-top:72px;text-align:center;}
-  footer.stampbar .stamp{
-    display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.24em;
-    border:3px solid var(--ink);padding:10px 22px;transform:rotate(1.2deg);
-    background:var(--yellow);box-shadow:5px 5px 0 var(--ink);
+  /* ── 메타 그리드 (시행일·대상·담당) ── */
+  .meta{
+    margin:44px 0 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
   }
+  .meta div{padding:14px 4px 13px;}
+  .meta div + div{border-left:1px solid var(--ink);padding-left:20px;}
+  .meta dt{
+    font-size:11px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .meta dd{font-size:14.5px;font-weight:600;margin-top:3px;}
+
+  /* 채움 표시 — 사용자가 확정해야 하는 값. 배포 전 실제 값으로 교체 */
+  .fill{border-bottom:1.5px dotted var(--ink);padding-bottom:1px;}
+
+  /* ── 섹션 + 킥커 제목 (섹션 2개 이상일 때만 번호 사용) ── */
+  section{margin-top:88px;}
+  .kicker{
+    display:flex;align-items:baseline;gap:16px;
+    margin-bottom:26px;
+  }
+  .kicker .num{
+    font-family:var(--serif);
+    font-size:15px;font-weight:700;font-variant-numeric:lining-nums;
+  }
+  .kicker h2{
+    font-family:var(--serif);
+    font-size:24px;font-weight:700;letter-spacing:-.01em;
+  }
+  .kicker::after{
+    content:"";flex:1;border-top:1px solid var(--ink);
+    transform:translateY(-6px);
+  }
+  p.body{font-size:15.5px;word-break:keep-all;}
+  p.body + p.body{margin-top:14px;}
+
+  /* ── 변경 전/후 비교 — 변경 전은 회색+취소선 ── */
+  .switch{
+    margin-top:34px;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .switch .col{padding:26px 4px 28px;}
+  .switch .col + .col{border-left:1px solid var(--ink);padding-left:30px;}
+  .switch .tag{
+    font-size:11px;font-weight:700;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .switch .name{
+    font-family:var(--serif);
+    font-size:23px;font-weight:700;
+    margin-top:10px;line-height:1.4;
+  }
+  .switch .before .name{
+    color:var(--gray);
+    text-decoration:line-through;
+    text-decoration-thickness:1.5px;
+  }
+  .switch .desc{font-size:13.5px;color:var(--gray);margin-top:8px;word-break:keep-all;}
+  .switch .after .desc{color:var(--ink);}
+
+  /* ── 번호 단계 — 순서 있는 방법 안내 전용 ── */
+  .step{display:grid;grid-template-columns:72px 1fr;margin-top:48px;}
+  .step:first-of-type{margin-top:34px;}
+  .step .n{
+    font-family:var(--serif);
+    font-size:34px;font-weight:700;line-height:1;
+    font-variant-numeric:lining-nums;
+  }
+  .step h3{
+    font-size:16.5px;font-weight:700;
+    line-height:1.5;word-break:keep-all;
+  }
+  .step .st-desc{font-size:14.5px;margin-top:8px;word-break:keep-all;}
+
+  /* ── 도판 — 이미지는 반드시 base64 내장 ── */
+  figure{margin:22px 0 0;}
+  figure .frame{border:1px solid var(--ink);}
+  figure img{display:block;width:100%;height:auto;}
+  figure.narrow .frame{max-width:290px;}   /* 세로형·좁은 스크린샷용 */
+  figcaption{
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px solid var(--ink);
+    font-size:12px;color:var(--gray);
+    letter-spacing:.02em;
+  }
+  figcaption b{
+    font-weight:700;color:var(--ink);
+    letter-spacing:.14em;text-transform:uppercase;
+    margin-right:10px;
+  }
+
+  /* ── 유의사항 박스 ── */
+  .notice{
+    margin-top:34px;
+    border:1.5px solid var(--ink);
+    padding:30px 34px 32px;
+  }
+  .notice .nb-title{
+    font-family:var(--serif);
+    font-size:16px;font-weight:700;
+    margin-bottom:16px;
+  }
+  .notice ul{list-style:none;}
+  .notice li{
+    position:relative;
+    padding-left:20px;
+    font-size:14.5px;
+    word-break:keep-all;
+  }
+  .notice li + li{margin-top:11px;}
+  .notice li::before{
+    content:"—";
+    position:absolute;left:0;
+    font-weight:600;
+  }
+
+  /* ── 푸터 — 하단 괘선은 항상, 맺음말·서명은 정식 공지일 때만 ── */
+  footer{margin-top:88px;}
+  footer .closing{
+    text-align:center;
+    font-family:var(--serif);
+    font-size:15.5px;
+    line-height:2;
+    word-break:keep-all;
+  }
+  footer .sign{
+    text-align:center;
+    margin-top:26px;
+    font-size:12px;font-weight:700;
+    letter-spacing:.26em;text-transform:uppercase;
+  }
+  footer .rules{margin-top:34px;}
+  footer .rules .rule-thin{margin-bottom:3px;}
+  footer .rules .rule-thick{margin:0;}
+
+  /* ── 반응형 ── */
+  @media (max-width:600px){
+    body{padding:52px 20px 80px;}
+    .headline h1{font-size:31px;}
+    .meta{grid-template-columns:1fr;}
+    .meta div + div{border-left:0;border-top:1px solid var(--ink);padding-left:4px;}
+    .switch{grid-template-columns:1fr;}
+    .switch .col + .col{border-left:0;border-top:1px solid var(--ink);padding-left:4px;}
+    .step{grid-template-columns:52px 1fr;}
+    .step .n{font-size:27px;}
+    section{margin-top:64px;}
+    .notice{padding:24px 22px;}
+  }
+
+  a{color:var(--ink);}
+  .masthead a{text-decoration:none;}
+  .masthead a:hover{text-decoration:underline;text-underline-offset:4px;}
+  .meta dd.big{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:4px;}
+  p.body b,.st-desc b{font-weight:700;}
+  .caption{margin-top:10px;font-size:12.5px;color:var(--gray);letter-spacing:.02em;word-break:keep-all;}
+  .caption b{color:var(--ink);font-weight:700;letter-spacing:.14em;margin-right:8px;}
+  .stack{margin-top:18px;font-size:12.5px;color:var(--gray);letter-spacing:.04em;word-break:keep-all;}
+
+  /* 성과 표 */
+  .results{margin-top:34px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .results .row{display:grid;grid-template-columns:1fr auto;gap:20px;padding:16px 4px;align-items:baseline;}
+  .results .row + .row{border-top:1px solid var(--ink);}
+  .results .k{font-size:14.5px;font-weight:600;word-break:keep-all;}
+  .results .v{font-family:var(--serif);font-size:18px;font-weight:700;text-align:right;}
+  .results .v b{font-weight:900;}
+
+  /* 링크 버튼 (괘선형) */
+  .more{
+    display:block;margin-top:56px;padding:22px 4px;text-decoration:none;
+    border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);
+    font-family:var(--serif);font-size:22px;font-weight:700;
+  }
+  .more span{display:block;margin-top:4px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--gray);}
+  .more:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px;}
 
   @media (max-width:600px){
-    body{padding:40px 16px 72px;}
-    h1{font-size:33px;}
-    h2{font-size:23px;}
-    .stats-hero{grid-template-columns:1fr;}
-    .stat-box + .stat-box{border-left:0;border-top:3px solid var(--ink);}
-    .comparison,.impact-grid{grid-template-columns:1fr;gap:22px;}
-    .modules-grid{grid-template-columns:1fr;gap:22px;}
-    .problem-box,.comparison-card,.module-card,.impact-card{box-shadow:6px 6px 0 var(--ink);}
-    .problem-box{padding:20px 20px 22px;}
+    .results .row{grid-template-columns:1fr;gap:2px;}
+    .results .v{text-align:left;}
+  }
+
+  .container{max-width:640px;margin:0 auto;}
+  header .subtitle{margin-top:22px;font-family:var(--serif);font-size:17px;line-height:1.8;word-break:keep-all;}
+  .stats-hero{
+    margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  }
+  .stat-box{display:flex;flex-direction:column;padding:14px 4px 13px;}
+  .stat-box + .stat-box{border-left:1px solid var(--ink);padding-left:20px;}
+  .stat-label{order:-1;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);}
+  .stat-number{margin-top:4px;font-family:var(--serif);font-size:21px;font-weight:700;line-height:1.4;word-break:keep-all;}
+
+  section > h2{
+    display:flex;align-items:baseline;gap:16px;margin-bottom:26px;
+    font-family:var(--serif);font-size:24px;font-weight:700;letter-spacing:-.01em;word-break:keep-all;
+  }
+  section > h2::after{content:"";flex:1;min-width:24px;border-top:1px solid var(--ink);transform:translateY(-6px);}
+  section h3{margin:44px 0 12px;font-family:var(--serif);font-size:19px;font-weight:700;word-break:keep-all;}
+  section h4{margin:24px 0 8px;font-size:15.5px;font-weight:700;word-break:keep-all;}
+  section p{font-size:15.5px;margin-top:12px;word-break:keep-all;}
+  section ul,section ol{margin:10px 0 0 22px;}
+  section li{font-size:15px;margin-top:6px;word-break:keep-all;}
+  section li p{margin-top:4px;font-size:14px;}
+  strong{font-weight:700;}
+
+  .problem-box{margin-top:6px;border:1.5px solid var(--ink);padding:30px 34px 32px;}
+  .problem-box h4{margin-top:0;margin-bottom:16px;font-family:var(--serif);font-size:16px;font-weight:700;}
+  .problem-box ul{list-style:none;margin-left:0;}
+  .problem-box li{position:relative;padding-left:20px;font-size:14.5px;}
+  .problem-box li + li{margin-top:11px;}
+  .problem-box li::before{content:"—";position:absolute;left:0;font-weight:600;}
+
+  .comparison{margin-top:6px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .comparison-card{padding:26px 4px 28px;}
+  .comparison-card + .comparison-card{border-left:1px solid var(--ink);padding-left:30px;}
+  .comparison-title{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);}
+  .comparison-value{margin-top:10px;font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.4;word-break:keep-all;}
+  .comparison-card.before .comparison-value{color:var(--gray);text-decoration:line-through;text-decoration-thickness:1.5px;}
+  .comparison-card p{margin-top:8px;font-size:13.5px;color:var(--gray);}
+  .comparison-card.after p{color:var(--ink);}
+
+  .tech-tags{margin-top:18px;font-size:12.5px;color:var(--gray);letter-spacing:.04em;}
+  .tech-tags .tag + .tag::before{content:" · ";}
+
+  .modules-grid{margin-top:22px;border-bottom:1px solid var(--ink);}
+  .module-card{border-top:1px solid var(--ink);padding:22px 4px 24px;cursor:pointer;}
+  .module-header{display:flex;justify-content:space-between;align-items:baseline;}
+  .module-number{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--gray);}
+  .expand-icon{font-size:12px;color:var(--gray);transition:transform .2s;}
+  .module-card.active .expand-icon{transform:rotate(180deg);}
+  .module-title{margin-top:6px !important;font-family:var(--serif);font-size:19px !important;font-weight:700;}
+  .module-desc{margin-top:4px !important;font-size:14.5px !important;}
+  .module-card:hover .module-title{text-decoration:underline;text-underline-offset:5px;}
+  .module-details{display:none;margin-top:16px;padding-left:18px;border-left:1px solid var(--ink);cursor:auto;}
+  .module-card.active .module-details{display:block;}
+
+  .code-block{margin-top:14px;border:1px solid var(--ink);overflow-x:auto;}
+  .code-block pre{padding:14px 18px;font-family:Consolas,"SF Mono",ui-monospace,monospace;font-size:12.5px;line-height:1.7;white-space:pre;}
+
+  .impact-grid{margin-top:6px;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .impact-card{padding:20px 4px 22px;}
+  .impact-card + .impact-card{border-left:1px solid var(--ink);padding-left:20px;}
+  .impact-value{font-family:var(--serif);font-size:24px;font-weight:900;line-height:1.35;word-break:keep-all;}
+  .impact-label{margin-top:8px;font-size:13px;color:var(--gray);word-break:keep-all;}
+
+  .section-divider{display:flex;align-items:center;gap:16px;margin:96px 0 -56px;}
+  .section-divider .line{flex:1;border-top:3px solid var(--ink);}
+  .section-divider .label{font-size:12px;font-weight:700;letter-spacing:.22em;}
+
+  blockquote{margin:56px 0 0;padding:28px 4px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    text-align:center;font-family:var(--serif);font-size:17px;line-height:2;word-break:keep-all;}
+
+  @media (max-width:600px){
+    .stats-hero,.comparison,.impact-grid{grid-template-columns:1fr;}
+    .stat-box + .stat-box,.comparison-card + .comparison-card,.impact-card + .impact-card{border-left:0;border-top:1px solid var(--ink);padding-left:4px;}
+    section > h2{font-size:21px;}
+    .problem-box{padding:24px 22px;}
   }
 </style>
 </head>
 <body>
 
     <div class="container">
-        <a href="portfolio.html" class="back-button">&larr; ALL PROJECTS</a>
-
         <header>
-            <span class="project-tag">HR Automation • Payroll Processing</span>
-            <h1><mark>급여작업 자동화</mark></h1>
+    <div class="masthead">
+      <span><a href="portfolio.html">&larr; 전체 프로젝트</a></span>
+      <span class="no">HR Automation • Payroll Processing</span>
+    </div>
+    <hr class="rule-thick">
+    <hr class="rule-thin">
+            <div class="headline"><h1>급여작업 자동화</h1></div>
             <p class="subtitle">해외 급여 지급공제 관리를 완전 자동화한 13개 모듈 통합 시스템</p>
             
             <div class="stats-hero">
@@ -740,7 +925,13 @@ Else:
                 - 13개 모듈이 하나로 연결되어 반나절 걸리던 급여작업을 클릭 몇 번으로 완료합니다.
             </blockquote>
         </section>
-        <footer class="stampbar"><span class="stamp">LKH.STUDIO / AUTOMATION</span></footer>
+  <footer>
+    <div class="sign">LKH.STUDIO</div>
+    <div class="rules">
+      <hr class="rule-thin">
+      <hr class="rule-thick">
+    </div>
+  </footer>
     </div>
 
     <script>
