@@ -263,10 +263,120 @@
   .exp .d b{font-weight:700;}
   .exp .stack{margin-top:10px;}
   @media (max-width:600px){ .exp{grid-template-columns:1fr;gap:6px;} }
+
+  body.locked{overflow:hidden;}
+  .lock{
+    position:fixed;inset:0;z-index:100;background:var(--paper);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;transition:transform .6s cubic-bezier(.7,0,.3,1), opacity .6s;
+  }
+  .lock[hidden]{display:none;}
+  .lock.open{transform:translateY(-100%);opacity:0;}
+  .lock .inner{width:100%;max-width:640px;}
+  .lock .clock{margin-top:72px;text-align:center;font-family:var(--serif);font-size:96px;font-weight:900;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums lining-nums;}
+  .lock .date{margin-top:16px;text-align:center;font-family:var(--serif);font-size:18px;}
+  .lock .who{margin-top:56px;text-align:center;font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--gray);}
+  .slider{
+    position:relative;margin:20px auto 0;max-width:380px;height:64px;
+    border:1px solid var(--ink);user-select:none;-webkit-user-select:none;touch-action:none;
+  }
+  .slider .label{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;
+    font-size:15px;font-weight:600;letter-spacing:.04em;
+    background:linear-gradient(90deg,var(--gray) 0%,var(--gray) 40%,var(--ink) 50%,var(--gray) 60%,var(--gray) 100%);
+    background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 2.4s linear infinite;
+  }
+  @keyframes shine{from{background-position:100% 0;}to{background-position:-100% 0;}}
+  .slider .knob{
+    position:absolute;top:3px;left:3px;width:56px;height:56px;border:0;cursor:grab;
+    background:var(--ink);color:var(--paper);font-size:22px;font-family:var(--serif);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .slider .knob:active{cursor:grabbing;}
+  .slider .knob:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+  .lock .skip{
+    display:block;margin:22px auto 0;background:none;border:0;cursor:pointer;
+    font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--gray);
+    text-decoration:underline;text-underline-offset:4px;
+  }
+  @media (max-width:600px){ .lock .clock{font-size:72px;} }
+  @media (prefers-reduced-motion:reduce){
+    .slider .label{animation:none;color:var(--gray);background:none;}
+    .lock{transition:none;}
+  }
 </style>
 </head>
 <body>
 <div class="doc">
+
+  <div class="lock" id="lock" hidden role="dialog" aria-modal="true" aria-label="잠금 화면">
+    <div class="inner">
+      <div class="masthead"><span>LKH.STUDIO</span><span class="no">Portfolio</span></div>
+      <hr class="rule-thick">
+      <hr class="rule-thin">
+      <div class="clock" id="lockClock">00:00</div>
+      <div class="date" id="lockDate"></div>
+      <div class="who">PAYROLL &amp; AUTOMATION SPECIALIST · 이경현</div>
+      <div class="slider" id="lockSlider">
+        <span class="label">밀어서 잠금해제</span>
+        <button type="button" class="knob" id="lockKnob" aria-label="잠금해제 (Enter 또는 오른쪽 방향키)">&rarr;</button>
+      </div>
+      <button type="button" class="skip" id="lockSkip">바로 들어가기</button>
+    </div>
+  </div>
+<script>
+(function () {
+  var KEY = 'lkh-unlocked';
+  var lock = document.getElementById('lock');
+  try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+  lock.hidden = false;
+  document.body.classList.add('locked');
+
+  var clock = document.getElementById('lockClock'), date = document.getElementById('lockDate');
+  var DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  function tick() {
+    var d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    date.textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + DAYS[d.getDay()] + '요일';
+  }
+  tick();
+  var timer = setInterval(tick, 10000);
+
+  var slider = document.getElementById('lockSlider'), knob = document.getElementById('lockKnob');
+  var startX = 0, x = 0, dragging = false;
+  function max() { return slider.clientWidth - knob.offsetWidth - 6; }
+  function move(v) { x = Math.max(0, Math.min(v, max())); knob.style.transform = 'translateX(' + x + 'px)'; }
+
+  function unlock() {
+    clearInterval(timer);
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    move(max());
+    lock.classList.add('open');
+    document.body.classList.remove('locked');
+    setTimeout(function () { lock.hidden = true; }, 650);
+  }
+
+  knob.addEventListener('pointerdown', function (e) {
+    dragging = true; startX = e.clientX - x; knob.setPointerCapture(e.pointerId);
+    knob.style.transition = 'none';
+  });
+  knob.addEventListener('pointermove', function (e) { if (dragging) move(e.clientX - startX); });
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    if (x >= max() * 0.85) { unlock(); return; }
+    knob.style.transition = 'transform .3s cubic-bezier(.3,1.4,.6,1)';
+    move(0);
+  }
+  knob.addEventListener('pointerup', end);
+  knob.addEventListener('pointercancel', end);
+  knob.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); unlock(); }
+  });
+  document.getElementById('lockSkip').addEventListener('click', unlock);
+})();
+</script>
   <header>
     <div class="masthead">
       <span>LKH.STUDIO · Portfolio</span>
